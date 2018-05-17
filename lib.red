@@ -9,6 +9,8 @@ Red [
 .use: func [locals [block!] body [block!]][
 
     .doc [
+        .title: {.use function}
+        .snippet-url: 
 
         .description: {.use allows to create light section for structuring your code
             with local variables without creating a more heavier function, object or file which breaks linearity and makes harder to read and understand your code.
@@ -17,9 +19,9 @@ Red [
         .alias: [use]
 
         .example: [
-            ; paste .doc .use and use in red console before pasting the example below
+            ; paste .doc and .use functions in red console before pasting the example below
             count: 10
-            use [count][
+            .use [count][
                 count: 0
                 count: count + 1
                 print count ; 1
