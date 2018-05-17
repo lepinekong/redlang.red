@@ -10,7 +10,7 @@ Red [
 
     .doc [
         .title: {.use function}
-        .snippet-url: 
+        .snippet-url: http://mycodesnippets.space/redlang/use
 
         .description: {.use allows to create light section for structuring your code
             with local variables without creating a more heavier function, object or file which breaks linearity and makes harder to read and understand your code.
