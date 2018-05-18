@@ -3,11 +3,11 @@ Red [
 ]
 
 ;for remote execution
-unless value? '.string.compose [
-    github-url-entry: https://gist.github.com/lepinekong/f007c5358104f0469d8b1ea7da11650e
-    lib: get-github-url github-url-entry %.system.libraries.string.red
-    do read lib    
-]
+; unless value? '.string.compose [
+;     github-url-entry: https://gist.github.com/lepinekong/f007c5358104f0469d8b1ea7da11650e
+;     lib: get-github-url github-url-entry %.system.libraries.string.red
+;     do read lib    
+; ]
 
 .to-powershell: function[.powershell-command [string! block!]][
 
