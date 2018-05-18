@@ -200,7 +200,7 @@ Red [
             either value? '.system.path [
                 root-path: .system.path
             ][
-                root-path: system/options/path
+                root-path: get in system/options 'path
             ]
             
         ][
