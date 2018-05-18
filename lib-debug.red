@@ -1,0 +1,60 @@
+Red [
+    Title: ""
+]
+
+.do-trace: function [.line-number [integer!] '.block [word! block! unset!] .file [file! url! string!]
+/filter that-contains [string! file! url!]
+][
+
+	{
+
+        #### Example:
+        - [x] [1]. 
+        
+```
+        f: function [.file .argument][
+            do-trace 2 [
+                probe .argument
+            ] .file
+        ]
+        f %test-this-file.red "test this file"
+```
+
+        - [x] [2]. 
+        
+```
+        g: function [.file .argument][
+            do-trace/filter 2 [
+                probe .argument
+            ] .file "test" 
+        ]
+        g %this-should-not-be-traced.red "this file should not be traced"
+
+```
+
+
+    }
+
+    file: form .file
+    if filter [
+            either not find file that-contains [exit][
+        ]
+    ]
+
+    switch type?/word get/any '.block [
+        unset! [
+            print {TODO:}
+        ]
+        block! [
+
+            .do-events/no-wait
+            print  [file "line" .line-number ": "]
+            .do-events/no-wait
+            do :.block
+            ask "pause..."
+        ]
+    ]
+
+]
+
+do-trace: :.do-trace
