@@ -423,3 +423,33 @@ get-static-root-path:  function['.root-path [word! string! file! unset!] /local 
         throw error 'script 'expect-arg .root-path
     ]
 ]
+
+get-static-dependencies-vars:  function['.dependencies-vars [block! string! word! unset!] 
+/local static-dependencies-vars static-counter][
+
+    static-dependencies-vars: []
+
+    static-counter: []
+
+    either 0 = length? static-counter [
+        append static-counter 0
+    ][
+        static-counter/1: static-counter/1 + 1
+    ]    
+
+    switch/default type?/word get/any '.dependencies-vars [
+        unset! word! string! [
+            either 0 = length? static-dependencies-vars [
+                return none
+            ][
+                return static-dependencies-vars
+            ]
+        ]
+        block! [
+            static-dependencies-vars: copy .dependencies-vars
+            return static-dependencies-vars
+        ]
+    ] [
+        throw error 'script 'expect-arg .dependencies-vars
+    ]
+]
