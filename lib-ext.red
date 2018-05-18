@@ -197,7 +197,12 @@ Red [
     ][
         static-root-path: get-static-root-path ""
         either none? static-root-path [
-            root-path: .system.path
+            either value? '.system.path [
+                root-path: .system.path
+            ][
+                root-path: system/options/path
+            ]
+            
         ][
             root-path: static-root-path
         ]
