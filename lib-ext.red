@@ -390,3 +390,31 @@ Red [
         throw-error 'script 'expect-arg .src
     ]
 ]
+
+; dependencies
+
+get-static-root-path:  function['.root-path [word! string! file! unset!] /local static-root-path][
+
+    static-root-path: []
+
+    switch/default type?/word get/any '.root-path [
+        unset! string! word! [
+            either 0 = length? static-root-path [
+                return none
+            ][
+                return static-root-path/1
+            ]
+        ]
+        file! [
+            either 0 = length? static-root-path [
+                append static-root-path .root-path
+            ][
+                static-root-path/1: .root-path
+            ]
+
+            return static-root-path/1
+        ]
+    ] [
+        throw error 'script 'expect-arg .root-path
+    ]
+]
