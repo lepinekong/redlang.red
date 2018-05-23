@@ -2,6 +2,13 @@ Red [
     Title: "code.analyze.red"
 ]
 
+.list-funcs: function[red-file][
+    src: read red-file
+    src-block: load src
+    list: .func.name.list src-block 
+]
+list-funcs: :.list-funcs
+
 .func.name.list: function[src-block /local .func-name-list][
 
     .func-name-list: copy []
