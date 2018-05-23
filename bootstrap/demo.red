@@ -2,7 +2,7 @@ Red [
     Title: "Bootstrap demo"
 ]
 
-do read %../bootstrap.red
+do read http://redlang.red/bootstrap.red
 
 html-content: {<h1 class="margin-base-vertical">Subscribe:</h1>
 				<form class="margin-base-vertical">
