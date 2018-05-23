@@ -2,7 +2,6 @@ Red [
     Title: "demo.red"
 ]
 
-do read %../do-trace.red 
 do read %../bootstrap.red
 
 create-bootstrap-page ; create a bootstrap page
