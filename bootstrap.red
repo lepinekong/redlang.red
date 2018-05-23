@@ -26,7 +26,7 @@ Red [
     ]
 ]
 
-
+do read http://redlang.red/html5.red
 
 emit-nav: function[/inverse /rounded-corner][
 
