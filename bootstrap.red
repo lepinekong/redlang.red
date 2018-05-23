@@ -43,6 +43,30 @@ Red [
 
 do read http://redlang.red/html.red
 
+.bootstrap.page.create: function[][
+    return system/words/it: Bootstrap.Page.Gen html5-template
+]
+bootstrap.page.create: :.bootstrap.page.create
+create-bootstrap-page: :.bootstrap.page.create
+
+.bootstrap.title: function[.title][
+    return system/words/it: Bootstrap.Page.Gen/title system/words/it .title
+]
+bootstrap.title: :.bootstrap.title
+bootstrap-title: :.bootstrap.title
+
+.bootstrap.nav: function[][
+
+    brand: ["Navbar with Search-Bar" https://getbootstrap.com/]
+    menu-options: [ [Home "#"] ["Page 1" "#"] ["Page 2" "#"] ["Page 3" "#"] ]
+
+    Bootstrap-Nav: Bootstrap.Nav.Gen brand menu-options
+    return system/words/it: Bootstrap.Page.Gen/nav-bar system/words/it Bootstrap-Nav
+]
+bootstrap.nav: :.bootstrap.nav
+bootstrap-nav: :.bootstrap.nav
+
+
 emit-nav: function[/inverse /rounded-corner][
 
     html: copy {}

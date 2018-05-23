@@ -32,7 +32,60 @@ html5-template: {
 </html>    
 }
 
-html.compose: function [
+html.page.create: function[/language .language][
+    html5: copy html5-template
+    if language [
+        parse-rule: [
+            thru {<html lang="} mark-start: to {"} mark-end: 
+            (change/part mark-start .language mark-end)
+        ]
+        parse html5 parse-rule
+    ]
+    system/words/it: .html.compose html5
+]
+
+create-html-page: :html.page.create
+
+.div.insert:  function['.class [word! lit-word! string!] /within '.class-parent [word! lit-word! string!] /local ][
+    switch/default type?/word get/any '.class [
+        unset! [
+
+        ]
+        string! word! lit-word! [
+
+            class: form .class
+
+            either within [
+                class-parent: form .class-parent
+
+                old-class: class
+                old-parent: class-parent
+                
+                class-parent: old-class
+                class-child: old-parent
+                
+                do-trace 64 [
+                    ;print "line 64"
+                    ?? class-parent
+                    ?? class-child
+                ] %html.red
+
+                return system/words/it: html.compose/insert-div/within-div/tab system/words/it class-child class-parent 3
+            ][
+                return system/words/it: html.compose/insert-div/tab system/words/it class 2
+            ]
+
+            
+        ]
+    ] [
+        throw error 'script 'expect-arg .html
+    ]
+]
+.insert-div: :.div.insert
+insert-div: :.div.insert
+
+
+.html.compose: function [
     .html5 [string!] 
     /insert .html 
     /insert-div .div-class 
@@ -65,7 +118,19 @@ html.compose: function [
             ]
 
         ][
-            append html5 div-class
+            either find html5 "</body>" [
+                parse html5 [
+                    to "</body>" start: (
+                        insert start rejoin [
+                            div-class 
+                            newline
+                        ]
+                    )
+                ]
+            ][
+                append html5 div-class
+            ]
+            
         ]
         return html5
     ]
@@ -83,4 +148,7 @@ html.compose: function [
         ]
     ]
 
+    return html5
 ]
+
+html.compose: :.html.compose
