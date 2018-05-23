@@ -14,6 +14,7 @@ Comment {
 
 Red [
     Title: "bootstrap.red"
+    Build: 1.0.0.1
     Github-Url: https://gist.github.com/lepinekong/31223dda30fd28fc61c686f7780c6962
     History: [
         v0.8: {Nav-Bar component}
@@ -23,6 +24,7 @@ Red [
         - Background Image
         - ...
     ]
+
         
     Bootstrap-Tutorials: [
 
