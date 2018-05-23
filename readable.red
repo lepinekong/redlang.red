@@ -869,21 +869,5 @@ if .spike [
 ]
 markdown-gen: :.markdown-gen
 
-.copy-file: function[what-file to-file][
-    write/binary to-file read/binary what-file
-]
 
-update-lib: function[][
-    .copy-file %ReAdABLE.Human.Format.lib.red %../.github/lib.red
-    .copy-file %ReAdABLE.Human.Format.lib.red %../.github/src/lib/ReAdABLE.Human.Format.lib.red
-]
-
-Update-lib-authoring: function[][
-    .copy-file to-red-file 
-        "C:\rebol\.system.user\.code\.domains\.apps\Authoring\libraries\.system.user.apps.authoring.library.red" 
-        %../.github/authoring.lib.red
-]
-
-;Update-lib-authoring
-update-lib
 
