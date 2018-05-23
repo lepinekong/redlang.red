@@ -9,6 +9,23 @@ Red [
 ]
 list-funcs: :.list-funcs
 
+.get-func-body: function[.func-name red-file][
+
+    ;.func-name: 'emit-nav
+    src: read red-file
+    src-block: load src
+    Ctx: Context src-block
+
+    if ((body-of Ctx) = []) [
+        new-code: .code.analyze code
+        Ctx: Context new-code
+        func-src: get in Ctx .func-name 
+    ]
+]
+get-func-body: :.get-func-body
+get-func-spec: :.get-func-body
+
+
 .func.name.list: function[src-block /local .func-name-list][
 
     .func-name-list: copy []
