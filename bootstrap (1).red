@@ -14,6 +14,7 @@ Comment {
 
 Red [
     Title: "bootstrap.red"
+    Url: http://redlang.red/bootstrap.red
     Github-Url: https://gist.github.com/lepinekong/31223dda30fd28fc61c686f7780c6962
     History: [
         v0.8: {Nav-Bar component}
@@ -23,23 +24,9 @@ Red [
         - Background Image
         - ...
     ]
-        
-    Bootstrap-Tutorials: [
-
-        Nav-Bar: [
-            https://www.tutorialrepublic.com/twitter-bootstrap-tutorial/bootstrap-navbar.php
-            https://medium.freecodecamp.org/building-your-first-bootstrap-4-0-site-b54bbff6bc55
-            http://formoid.com/articles/bootstrap-navbar-example-1382.html
-        ]
-
-        Landing-Page: [
-            https://www.williamghelfi.com/blog/2013/08/04/bootstrap-in-practice-a-landing-page/
-        ]
-    ]
-
 ]
 
-do read http://redlang.red/html.red
+do read http://redlang.red/html5.red
 
 emit-nav: function[/inverse /rounded-corner][
 
@@ -232,4 +219,5 @@ Bootstrap.Page.Gen: function[
     return html5
 
 ]
+
 
