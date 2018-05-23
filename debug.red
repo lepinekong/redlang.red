@@ -1,7 +1,8 @@
 Red [
-    Title: "lib-debug.red"
+    Title: "debug.red"
     Alias: [
         "do-trace.red"
+        "lib-debug.red"
     ]    
 ]
 

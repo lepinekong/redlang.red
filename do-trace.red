@@ -1,8 +1,8 @@
 Red [
-    Title: "lib-debug.red"
+    Title: "do-trace.red"
     Alias: [
-        "do-trace.red"
-    ]    
+        "lib-debug.red"
+    ]
 ]
 
 .do-trace: function [.line-number [integer!] '.block [word! block! unset!] .file [file! url! string!]
