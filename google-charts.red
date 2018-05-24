@@ -237,7 +237,7 @@ chart: :.google-chart
 	]
 
 	view reduce [
-		title .title
+		'title .title
 		'image image
 	]
 ]
