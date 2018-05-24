@@ -16,10 +16,6 @@ Red [
 	]
 ]
 
-if not value? 'use [
-	do read http://redlang.red/lib.red
-]
-
 Rebol [
 	Title: "Google Chart API"
 	Version: 0.1.3
@@ -30,6 +26,11 @@ Rebol [
 	File: %google-charts.r
 	Purpose: {Generates a URL to access the Google Charts API}
 ]
+
+if not value? 'use [
+	do read http://redlang.red/lib.red
+]
+
 
 chart: use [
 	root types ; settings
