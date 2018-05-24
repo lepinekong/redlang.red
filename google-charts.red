@@ -232,12 +232,12 @@ chart: :.google-chart
 		]
 	]
 
-	if none? title [
+	if not title [
 		.title: "pie chart"
 	]
 
 	view reduce [
-		;'title .title
+		'title .title
 		'image image
 	]
 ]
