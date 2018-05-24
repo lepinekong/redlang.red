@@ -201,7 +201,7 @@ Rebol [
 google-chart: :.google-chart
 chart: :.google-chart
 
-.google-pie-chart: function[.data][
+.google-pie-chart: function[.data /title .title][
 
 	; https://developers.google.com/chart/image/docs/gallery/pie_charts
 
@@ -232,7 +232,12 @@ chart: :.google-chart
 		]
 	]
 
+	if none? title [
+		.title: "pie chart"
+	]
+
 	view reduce [
+		title .title
 		'image image
 	]
 ]
