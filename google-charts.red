@@ -1,40 +1,3 @@
-Comment: {
-
-; https://developers.google.com/chart/image/docs/gallery/pie_charts
-; example:
-
-do read http://redlang.red/google-charts.red
-
-clip-data: {Adsense Revenue^-300
-Sponsors^-500
-Gifts^-50
-Others^-58}
-
-view reduce [
-	'image google-chart [
-		title: "Revenue"
-		size: 650x300
-		type: 'pie
-
-		; extract raw data
-		delimiters: charset "^/^-"
-		data: split clip-data delimiters
-		labels: extract data 2
-		data: extract/index data 2 2
-
-		; format data and labels
-		sum: 0
-		forall data [sum: sum + data/1: to-integer data/1]
-		forall data [change data round 100 * data/1 / sum]
-		forall labels [
-			labels/1: rejoin [labels/1 " " data/(index? labels) "%"]
-		]
-	]
-]
-
-
-}
-
 Red [
 	Title: "Google Charts API"
     Reference: http://ross-gill.com/page/Google_Charts_and_REBOL
@@ -75,6 +38,41 @@ Rebol [
 	map uses envelop ; core functions
 	form-simple form-color form-list form-lists form-data ; type helpers
 ][
+
+	Comment: {
+	; example:
+
+	do read http://redlang.red/google-charts.red
+
+	clip-data: {Adsense Revenue^-300
+	Sponsors^-500
+	Gifts^-50
+	Others^-58}
+
+	view reduce [
+		'image google-chart [
+			title: "Revenue"
+			size: 650x300
+			type: 'pie
+
+			; extract raw data
+			delimiters: charset "^/^-"
+			data: split clip-data delimiters
+			labels: extract data 2
+			data: extract/index data 2 2
+
+			; format data and labels
+			sum: 0
+			forall data [sum: sum + data/1: to-integer data/1]
+			forall data [change data round 100 * data/1 / sum]
+			forall labels [
+				labels/1: rejoin [labels/1 " " data/(index? labels) "%"]
+			]
+		]
+	]
+
+	}	
+
 	root: http://chart.apis.google.com/chart?
 
 	types: [
@@ -204,6 +202,8 @@ google-chart: :.google-chart
 chart: :.google-chart
 
 .google-pie-chart: function[.data][
+
+	; https://developers.google.com/chart/image/docs/gallery/pie_charts
 
 	comment: {
 		;usage example:
