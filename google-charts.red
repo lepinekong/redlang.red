@@ -201,7 +201,7 @@ Rebol [
 google-chart: :.google-chart
 chart: :.google-chart
 
-google-pie-chart:  function['.data [word! block! unset!] /title .title /local ][
+.google-pie-chart:  function['.data [word! block! unset!] /title .title /local ][
 	switch/default type?/word get/any '.data [
 		unset! [
 			.data: [
@@ -214,9 +214,9 @@ google-pie-chart:  function['.data [word! block! unset!] /title .title /local ][
 		]
 		word! block! [
 			either title [
-				.google-pie-chart/title .data .title
+				..google-pie-chart/title .data .title
 			][
-				.google-pie-chart .data
+				..google-pie-chart .data
 			]
 			
 		]
@@ -225,7 +225,7 @@ google-pie-chart:  function['.data [word! block! unset!] /title .title /local ][
 	]
 ]
 
-.google-pie-chart: function[.data /title .title][
+..google-pie-chart: function[.data /title .title][
 
 	; https://developers.google.com/chart/image/docs/gallery/pie_charts
 
@@ -267,7 +267,8 @@ google-pie-chart:  function['.data [word! block! unset!] /title .title /local ][
 ]
 
 .pie-chart: :.google-pie-chart
-pie-chart: :.google-pie-chart
+google-pie-chart: :.google-pie-chart
+pie-chart: :.pie-chart
 
 
 
