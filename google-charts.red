@@ -201,6 +201,25 @@ Rebol [
 google-chart: :.google-chart
 chart: :.google-chart
 
+google-pie-chart:  function['.data [word! block! unset!] /title .title /local ][
+	switch/default type?/word get/any '.data [
+		unset! [
+			.data: [
+				"Adsense Revenue" 300
+				"Sponsors" 500
+				"Gifts" 50
+				"Others" 58
+			]
+			.google-pie-chart .data
+		]
+		word! block! [
+			.google-pie-chart .data
+		]
+	] [
+		throw error 'script 'expect-arg .data
+	]
+]
+
 .google-pie-chart: function[.data /title .title][
 
 	; https://developers.google.com/chart/image/docs/gallery/pie_charts
@@ -242,7 +261,6 @@ chart: :.google-chart
 	]
 ]
 
-google-pie-chart: :.google-pie-chart
 .pie-chart: :.google-pie-chart
 pie-chart: :.google-pie-chart
 
