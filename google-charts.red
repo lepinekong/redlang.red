@@ -1,5 +1,6 @@
 Comment: {
 
+; https://developers.google.com/chart/image/docs/gallery/pie_charts
 ; example:
 
 do read http://redlang.red/google-charts.red
@@ -10,7 +11,7 @@ Gifts^-50
 Others^-58}
 
 view reduce [
-	'image chart [
+	'image google-chart [
 		title: "Revenue"
 		size: 650x300
 		type: 'pie
@@ -69,7 +70,7 @@ Rebol [
 ]
 
 
-chart: use [
+.google-chart: use [
 	root types ; settings
 	map uses envelop ; core functions
 	form-simple form-color form-list form-lists form-data ; type helpers
@@ -198,4 +199,7 @@ chart: use [
 		rejoin [root debug next out*]
 	]
 ]
+
+google-chart: :.google-chart
+chart: :.google-chart
 
