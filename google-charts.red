@@ -203,3 +203,43 @@ Rebol [
 google-chart: :.google-chart
 chart: :.google-chart
 
+.google-pie-chart: function[.data][
+
+	comment: {
+		;usage example:
+		pie-chart [
+			"Adsense Revenue" 300
+			"Sponsors" 500
+			"Gifts" 50
+			"Others" 58
+		]	
+	}
+
+	image: chart [
+		title: "Revenue"
+		size: 650x300
+		type: 'pie
+
+		labels: extract .data 2
+		data: extract/index .data 2 2
+
+		sum: 0
+		forall data [sum: sum + data/1: to-integer data/1]
+		forall data [change data round 100 * data/1 / sum]
+		
+		forall labels [
+			labels/1: rejoin [labels/1 " " data/(index? labels) "%"]
+		]
+	]
+
+	view reduce [
+		'image image
+	]
+]
+
+google-pie-chart: :.google-pie-chart
+.pie-chart: :.google-pie-chart
+pie-chart: :.google-pie-chart
+
+
+
