@@ -1,3 +1,39 @@
+Comment: {
+
+; example:
+
+do read http://redlang.red/google-charts.red
+
+clip-data: {Adsense Revenue^-300
+Sponsors^-500
+Gifts^-50
+Others^-58}
+
+view reduce [
+	'image chart [
+		title: "Revenue"
+		size: 650x300
+		type: 'pie
+
+		; extract raw data
+		delimiters: charset "^/^-"
+		data: split clip-data delimiters
+		labels: extract data 2
+		data: extract/index data 2 2
+
+		; format data and labels
+		sum: 0
+		forall data [sum: sum + data/1: to-integer data/1]
+		forall data [change data round 100 * data/1 / sum]
+		forall labels [
+			labels/1: rejoin [labels/1 " " data/(index? labels) "%"]
+		]
+	]
+]
+
+
+}
+
 Red [
 	Title: "Google Charts API"
     Reference: http://ross-gill.com/page/Google_Charts_and_REBOL
@@ -162,3 +198,4 @@ chart: use [
 		rejoin [root debug next out*]
 	]
 ]
+
