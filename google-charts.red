@@ -213,7 +213,12 @@ google-pie-chart:  function['.data [word! block! unset!] /title .title /local ][
 			.google-pie-chart .data
 		]
 		word! block! [
-			.google-pie-chart .data
+			either title [
+				.google-pie-chart/title .data .title
+			][
+				.google-pie-chart .data
+			]
+			
 		]
 	] [
 		throw error 'script 'expect-arg .data
