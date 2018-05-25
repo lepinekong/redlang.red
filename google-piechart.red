@@ -28,6 +28,10 @@ do read http://redlang.red/googlecharts.red
 	]
 ]
 
+.pie-chart: :.google-pie-chart
+google-pie-chart: :.google-pie-chart
+pie-chart: :.pie-chart
+
 ..google-pie-chart: function[.data /title .title][
 
 	; https://developers.google.com/chart/image/docs/gallery/pie_charts
@@ -69,9 +73,7 @@ do read http://redlang.red/googlecharts.red
 	]
 ]
 
-.pie-chart: :.google-pie-chart
-google-pie-chart: :.google-pie-chart
-pie-chart: :.pie-chart
+
 
 
 
