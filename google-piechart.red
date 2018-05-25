@@ -1,8 +1,8 @@
 Red [
-    Title: "google-pie-chart.red"
+    Title: "google-piechart.red"
 ]
 
-do read http://redlang.red/google-charts.red
+do read http://redlang.red/googlecharts.red
 
 .google-pie-chart:  function['.data [word! block! unset!] /title .title /local ][
 	switch/default type?/word get/any '.data [
