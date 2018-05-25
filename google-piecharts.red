@@ -1,5 +1,5 @@
 Red [
-    Title: "google-piechart.red"
+    Title: "google-piecharts.red"
 ]
 
 do read http://redlang.red/googlecharts.red
