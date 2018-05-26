@@ -4,7 +4,7 @@ Red [
 
 do read http://redlang.red/googlecharts.red
 
-.google-pie-chart:  function['.data [word! block! unset!] /title .title /local ][
+.google-pie-chart:  function[.data [block! unset!] /title .title /local ][
 	switch/default type?/word get/any '.data [
 		unset! [
 			.data: [
