@@ -1,7 +1,6 @@
-
 Red [
     Title: "google-piecharts.red"
-    Build: 1.0.0.0
+    Build: 1.0.0.2
 ]
 
 do read http://redlang.red/googlecharts.red
@@ -76,8 +75,10 @@ pie-chart: :.pie-chart
 		]
 	]
 
-	view reduce [
+	?? image
+	view win: reduce [
 		'title .title
 		'image image
 	]
+	
 ]
