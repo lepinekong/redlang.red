@@ -1,3 +1,4 @@
+
 Red [
     Title: "google-piecharts.red"
     Build: 1.0.0.0
@@ -5,7 +6,7 @@ Red [
 
 do read http://redlang.red/googlecharts.red
 
-.google-pie-chart:  function[.data [block! unset!] /title .title /local ][
+.google-pie-chart:  function[.data [block! string!  word! unset!] /title .title /local ][
 	switch/default type?/word get/any '.data [
 		unset! [
             ; default data for demo purpose
@@ -17,8 +18,14 @@ do read http://redlang.red/googlecharts.red
 			]
 			.google-pie-chart .data
 		]
-		word! block! [
+		block! string! word! [
+
 			either title [
+				if block? .title [
+					old-data: .data
+					.data: copy .title
+					.title: form old-data
+				]				
 				..google-pie-chart/title .data .title
 			][
 				..google-pie-chart .data
