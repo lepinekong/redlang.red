@@ -1,5 +1,6 @@
 Red [
     Title: "google-piecharts.red"
+    Build: 1.0.0.0
 ]
 
 do read http://redlang.red/googlecharts.red
@@ -7,6 +8,7 @@ do read http://redlang.red/googlecharts.red
 .google-pie-chart:  function[.data [block! unset!] /title .title /local ][
 	switch/default type?/word get/any '.data [
 		unset! [
+            ; default data for demo purpose
 			.data: [
 				"Adsense Revenue" 300
 				"Sponsors" 500
@@ -46,8 +48,12 @@ pie-chart: :.pie-chart
 		]	
 	}
 
-	image: chart [
-		title: "Revenue"
+    if not title [
+		.title: "pie chart"
+	]
+
+	image: chart compose [
+		title: (.title)
 		size: 650x300
 		type: 'pie
 
@@ -63,18 +69,8 @@ pie-chart: :.pie-chart
 		]
 	]
 
-	if not title [
-		.title: "pie chart"
-	]
-
 	view reduce [
 		'title .title
 		'image image
 	]
 ]
-
-
-
-
-
-
