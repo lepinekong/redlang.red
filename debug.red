@@ -52,6 +52,7 @@ Red [
         block! [
 
             .do-events/no-wait
+            print "---------------------------------"
             print  [file "line" .line-number ": "]
             .do-events/no-wait
             do :.block
