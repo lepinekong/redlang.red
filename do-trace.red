@@ -3,6 +3,7 @@ Red [
     Alias: [
         "lib-debug.red"
     ]
+    Build: 1.0.0.1
 ]
 
 .do-trace: function [.line-number [integer!] '.block [word! block! unset!] .file [file! url! string!]
