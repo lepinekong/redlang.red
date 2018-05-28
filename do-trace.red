@@ -54,7 +54,7 @@ Red [
             print  [file "line" .line-number ": "]
             .do-events/no-wait
             do :.block
-            ask "pause..."
+            ask rejoin ["pause on line " .line-number "..."]
         ]
     ]
 
