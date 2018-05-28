@@ -3,6 +3,7 @@ Red [
     Alias: [
         "lib-debug.red"
     ]
+    Build: 1.0.0.1
 ]
 
 .do-trace: function [.line-number [integer!] '.block [word! block! unset!] .file [file! url! string!]
@@ -54,7 +55,7 @@ Red [
             print  [file "line" .line-number ": "]
             .do-events/no-wait
             do :.block
-            ask "pause..."
+            ask rejoin ["pause on line " .line-number "..."]
         ]
     ]
 
