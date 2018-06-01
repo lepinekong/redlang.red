@@ -13,7 +13,7 @@ Red [
 
 .do-trace: function [.line-number [integer!] '.block [word! block! unset!] .file [file! url! string!]
 /filter that-contains [string! file! url!]
-/update-lines .script-path
+/update .script-path
 ][
 
 	{
@@ -45,7 +45,7 @@ Red [
 
     }
 
-    if update-lines [
+    if update [
         .do-trace-update-lines .script-path
     ]
 
