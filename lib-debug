@@ -11,6 +11,8 @@ Red [
     }
 ]
 
+
+
 .do-trace: function [.line-number [integer!] '.block [word! block! unset!] .file [file! url! string!]
 /filter that-contains [string! file! url!]
 /update .script-path
@@ -124,7 +126,7 @@ do-trace: :.do-trace
         any [
             to "do-trace" thru "[" (count: count + 1)
             thru "]" (count: count - 1)
-            thru "%" start: copy old-filename [to ".red" | to ".read"] copy extension [to "^/" | to " "] ending:
+            thru "%" start: copy old-filename [to ".red" | to ".read"] copy extension [ to " " | to "^/"] ending:
             (
 
                 if (old-filename <> {" start: copy old-filename [to "}) [
