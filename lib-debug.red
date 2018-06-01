@@ -1,8 +1,14 @@
 Red [
-    Title: "lib-debug.red"
-    Alias: [
-        "do-trace.red"
-    ]    
+    Title: "do-trace.red"
+    duplicates: [
+        "do-trace"
+        "lib-debug.red"
+        "debug.red"
+    ]
+    Build: 1.0.0.2
+    History: {
+        - added .do-trace-update-lines
+    }
 ]
 
 .do-trace: function [.line-number [integer!] '.block [word! block! unset!] .file [file! url! string!]
@@ -51,16 +57,20 @@ Red [
         block! [
 
             .do-events/no-wait
+            print newline
+            print "---------------------------------"
             print  [file "line" .line-number ": "]
             .do-events/no-wait
             do :.block
-            ask "pause..."
+            ask rejoin ["pause on line " .line-number "..."]
         ]
     ]
 
 ]
 
 do-trace: :.do-trace
+
+
 
 ; dependencies
 
@@ -80,3 +90,75 @@ do-trace: :.do-trace
         ]
     ]
 ] 
+
+.do-trace-update-lines: function[script-path][
+
+    source-code-lines: read/lines script-path
+    
+
+    forall source-code-lines [
+
+        line-number: index? source-code-lines
+        source-code-line: source-code-lines/1
+        old-source-code-line: source-code-line
+        source-code-line: replace-line-number source-code-line line-number
+        
+
+        either line-number = 1 [
+            write %temp.red source-code-line
+        ][
+            write/append %temp.red source-code-line
+        ]
+
+        write/append %temp.red rejoin ["" newline]
+        
+    ]
+
+
+    source-code: read %temp.red
+    parse source-code parse-rule: [
+        (count: 0)
+        any [
+            to "do-trace" thru "[" (count: count + 1)
+            thru "]" (count: count - 1)
+            thru "%" start: copy old-filename [to ".red" | to ".read"] copy extension [to "^/" | to " "] ending:
+            (
+
+                if (old-filename <> {" start: copy old-filename [to "}) [
+
+                    script-filename: .get-short-filename script-path                     
+                    change/part start script-filename ending
+                ]
+
+            )
+
+        ]
+    ]   
+
+    write %temp2.red source-code
+]
+
+do-trace-update-lines: :.do-trace-update-lines
+
+; dependencies
+
+.replace-line-number: function[source-code-line new-line-number][
+    
+    parse-rule: [   
+        thru "do-trace" thru " "  start: copy line-number to " " ending: (
+            try [
+                line-number: to-integer to-float line-number
+                change/part start new-line-number ending 
+            ]
+            count: 0
+        )
+
+    ]
+
+    parse source-code-line parse-rule
+
+    return source-code-line    
+]
+
+replace-line-number: :.replace-line-number
+

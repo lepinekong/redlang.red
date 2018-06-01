@@ -1,7 +1,9 @@
 Red [
     Title: "do-trace.red"
-    Alias: [
+    duplicates: [
+        "do-trace"
         "lib-debug.red"
+        "debug.red"
     ]
     Build: 1.0.0.2
     History: {
