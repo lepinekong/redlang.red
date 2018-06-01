@@ -5,7 +5,7 @@ Red [
         "lib-debug.red"
         "debug.red"
     ]
-    Build: 1.0.0.2
+    Build: 1.0.0.3
     History: {
         - added .do-trace-update-lines
     }
@@ -13,6 +13,7 @@ Red [
 
 .do-trace: function [.line-number [integer!] '.block [word! block! unset!] .file [file! url! string!]
 /filter that-contains [string! file! url!]
+/update .script-path
 ][
 
 	{
@@ -44,6 +45,10 @@ Red [
 
     }
 
+    if update [
+        .do-trace-update-lines .script-path
+    ]
+
     file: form .file
     if filter [
             either not find file that-contains [exit][
@@ -69,8 +74,6 @@ Red [
 ]
 
 do-trace: :.do-trace
-
-
 
 ; dependencies
 
@@ -136,6 +139,8 @@ do-trace: :.do-trace
     ]   
 
     write %temp2.red source-code
+    write-clipboard source-code
+    print "do-trace update written to clipboard"
 ]
 
 do-trace-update-lines: :.do-trace-update-lines
