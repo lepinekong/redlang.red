@@ -1,5 +1,8 @@
 Red [
     Title: "lib-files.red"
+    In: [
+        %authoring.red
+    ]
 ]
 
 .get-short-filename: function[.filepath [file! url!] /wo-extension /without-extension][
