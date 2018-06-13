@@ -3,6 +3,7 @@ Red [
     Alias: [
         crud-csv
     ]
+    Build: 1.0.0.1
 ]
 
 read-csv: function[data-file][
@@ -11,6 +12,7 @@ read-csv: function[data-file][
         print rejoin [data-file " doesn't exist."]
         return false
     ]
+
 
     lines: skip Read/lines data-file 1 ; skip first csv header line 
     records: copy []
@@ -22,8 +24,14 @@ read-csv: function[data-file][
 ]
 
 
-save-csv: function[records data-file][
-    write/lines file-path lines
+save-csv: function[records data-file /header .header][
+
+    whole-records: copy []
+    if header [
+        append whole-records .header
+    ]
+    append whole-records records
+    write/lines data-file whole-records
 ]
 
 add-csv: function[records record][
@@ -59,6 +67,17 @@ search-csv: function[records searched-value][
     return records-numbers
 ]
 
+update-csv: function[records record-number record][
+
+    if (record-number > 1) [
+        repeat i (record-number - 1) [
+            records: next records
+        ]
+    ]
+    change/only records record
+    records: head records
+    return records
+]
 
 delete-csv: function[records record-number-or-search-string][
 

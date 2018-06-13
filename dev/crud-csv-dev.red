@@ -3,6 +3,7 @@ Red [
     Alias: [
         crud-csv
     ]
+    Build: 1.0.0.1
 ]
 
 read-csv: function[data-file][
