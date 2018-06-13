@@ -23,7 +23,7 @@ read-csv: function[data-file][
 
 
 save-csv: function[records data-file][
-    write/lines data-file lines
+    write/lines data-file records
 ]
 
 add-csv: function[records record][
