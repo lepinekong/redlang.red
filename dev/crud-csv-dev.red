@@ -59,6 +59,15 @@ search-csv: function[records searched-value][
     return records-numbers
 ]
 
+update-csv: function[records record-number record][
+
+    if (record-number > 1) [
+        repeat i (record-number - 1) [
+            records: next records
+        ]
+    ]
+    change/only records record
+]
 
 delete-csv: function[records record-number-or-search-string][
 
