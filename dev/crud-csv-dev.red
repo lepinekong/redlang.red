@@ -12,6 +12,7 @@ read-csv: function[data-file][
         return false
     ]
 
+
     lines: skip Read/lines data-file 1 ; skip first csv header line 
     records: copy []
 
@@ -22,8 +23,14 @@ read-csv: function[data-file][
 ]
 
 
-save-csv: function[records data-file][
-    write/lines data-file records
+save-csv: function[records data-file /header .header][
+
+    whole-records: copy []
+    if header [
+        append whole-records .header
+    ]
+    append whole-records records
+    write/lines data-file whole-records
 ]
 
 add-csv: function[records record][
