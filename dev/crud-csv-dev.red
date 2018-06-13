@@ -67,6 +67,7 @@ update-csv: function[records record-number record][
         ]
     ]
     change/only records record
+    return records
 ]
 
 delete-csv: function[records record-number-or-search-string][
