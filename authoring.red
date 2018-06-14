@@ -1,6 +1,12 @@
 Red [
     Title: ".system.user.apps.authoring.library.red"
-    Url: https://gist.github.com/lepinekong/7574892bfefe7e53e7bd4dd4759f30f8
+    Alias: [
+        %authoring
+    ]
+    Urls: [
+        http://redlang.red/authoring
+        https://gist.github.com/lepinekong/7574892bfefe7e53e7bd4dd4759f30f8
+    ]
     History: [
         v1.0: {initial version}
         V1.1: {+ .get-github-url}
@@ -8,6 +14,7 @@ Red [
         V1.2: {+ .to-json}
         v1.2.1: [{+ .get-file-extension} https://gist.githubusercontent.com/lepinekong/7574892bfefe7e53e7bd4dd4759f30f8/raw/96a7e9345212a7b24fabc643d380268d10235cdd/.system.user.apps.authoring.library.red]
         v2.0.0: {+ .copy-file}
+        v2.0.1: {+ .get-vars}
     ]
 ]
 
@@ -454,6 +461,15 @@ to-reAdABLE: :.to-reAdABLE
 ]
 
 build-markup: :.build-markup
+
+.get-vars: function[template][
+    vars: copy []
+    rules: [any [thru "<%" copy var to "%>" (append vars var)]]
+    parse template rules
+    return vars
+]
+
+get-vars: :.get-vars
 
 .string.expand: function[.string-template [string!] .block-vars[block!]][
 
