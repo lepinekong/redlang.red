@@ -1,5 +1,10 @@
 Red [
     Title: "build-markup.red"
+    Build: 1.0.0.1
+    Version: 1.0.0
+    History: [
+        1.0.0 {.get-vars: return unique vars}
+    ]
     Alias: [
         build-markup
     ]
@@ -46,7 +51,7 @@ build-markup: :.build-markup
     vars: copy []
     rules: [any [thru "<%" copy var to "%>" (append vars var)]]
     parse template rules
-    return vars
+    return unique vars
 ]
 
 get-vars: :.get-vars
