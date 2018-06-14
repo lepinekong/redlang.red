@@ -1,9 +1,10 @@
 Red [
     Title: "build-markup.red"
-    Build: 1.0.0.2
-    Version: 1.0.0
+    Build: 1.0.0.3
+    Version: 1.0.1
     History: [
-        1.0.0 {.get-vars: return unique vars}
+        1.0.0 {Initial version}
+        1.0.1 {.get-vars: return unique vars}
     ]
     Alias: [
         %build-markup
