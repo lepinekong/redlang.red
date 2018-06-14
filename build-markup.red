@@ -1,12 +1,12 @@
 Red [
     Title: "build-markup.red"
-    Build: 1.0.0.1
+    Build: 1.0.0.2
     Version: 1.0.0
     History: [
         1.0.0 {.get-vars: return unique vars}
     ]
     Alias: [
-        build-markup
+        %build-markup
     ]
     Published-url: [
         http://redlang.red/build-markup
