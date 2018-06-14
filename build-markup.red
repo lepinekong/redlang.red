@@ -3,6 +3,9 @@ Red [
     Alias: [
         build-markup
     ]
+    Published-url: [
+        http://redlang.red/build-markup
+    ]
     Included-in: [
         http://redlang.red/authoring.red
     ]
@@ -53,5 +56,7 @@ get-vars: :.get-vars
     return build-markup/bind .string-template Context Compose .block-vars
 ]
 
+expand-string: :.string.expand
+string.expand: :.string.expand
 string-expand: :.string.expand
 .expand: :.string.expand
