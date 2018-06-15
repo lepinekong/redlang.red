@@ -1,10 +1,11 @@
 Red [
     Title: "build-markup.red"
-    Build: 1.0.0.3
-    Version: 1.0.1
+    Build: 1.0.0.4
+    Version: 1.0.2
     History: [
         1.0.0 {Initial version}
         1.0.1 {.get-vars: return unique vars}
+        1.0.2 {.render-template}
     ]
     Alias: [
         %build-markup
@@ -56,6 +57,14 @@ build-markup: :.build-markup
 ]
 
 get-vars: :.get-vars
+
+.render-template: function[.template-path][
+    vars: get-vars content: read .template-path
+    foreach var vars [set to-word var ask rejoin [var ": "]]
+    write-clipboard out: build-markup content
+    return out
+]
+render-template: :.render-template
 
 .string.expand: function[.string-template [string!] .block-vars[block!]][
 
