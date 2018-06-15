@@ -2,6 +2,8 @@ Red [
     Title: "trading-journal.red"
 ]
 
+do read http://redlang.red/do-trace.red
+
 do read http://redlang.red/crud-readable.red
 ;do read %../../crud-readable.red
 
@@ -13,7 +15,7 @@ if not exists? data-file [
 ]
 
 transactions: read-readable %db/trading-journal.read
-?? transactions
+
 
 transactions: Add-Readable transactions 'T-2017.12.08-0001 [
 
@@ -28,7 +30,11 @@ transactions: Add-Readable transactions 'T-2017.12.08-0001 [
 
 ]
 
-?? transactions
+
+do-trace 33 [
+    ?? transactions
+] %trading-journal.red
+
 
 transactions: Update-Readable transactions 'T-2017.12.08-0001 [
     .SYMBOL: AAPL
@@ -44,11 +50,15 @@ transactions: Update-Readable transactions 'T-2017.12.08-0001 [
     ]
 ]
 
-?? transactions
+do-trace 53 [
+    ?? transactions
+] %trading-journal.red
 
 transactions: Update-Readable transactions 'T-2017.12.08-0001/.NOTES/NOTE2 {NOTE 2 CHANGED}  
 
-?? transactions
+do-trace 59 [
+    ?? transactions
+] %trading-journal.red
 
 
 
