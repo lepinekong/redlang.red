@@ -23,7 +23,7 @@ transactions: Add-Readable transactions 'T-2017.12.08-0001 [
 
 ?? transactions
 
-Update-Readable transactions 'T-2017.12.08-0001 [
+transactions: Update-Readable transactions 'T-2017.12.08-0001 [
     .SYMBOL: AAPL
     .CURRENCY: DOLLAR
     .BROKER: GOLDMAN-SACHS

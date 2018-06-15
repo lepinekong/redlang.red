@@ -5,9 +5,10 @@ Red [
         "lib-debug.red"
         "debug.red"
     ]
-    Build: 1.0.0.3
+    Build: 1.0.0.4
     History: {
         - added .do-trace-update-lines
+        - added file in line pause
     }
 ]
 
@@ -69,7 +70,7 @@ do read http://redlang.red/lib-files
             print  [file "line" .line-number ": "]
             .do-events/no-wait
             do :.block
-            ask rejoin ["pause on line " .line-number "..."]
+            ask rejoin ["pause in " file " on line " .line-number "..."]
         ]
     ]
 
