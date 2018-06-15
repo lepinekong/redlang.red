@@ -68,7 +68,7 @@ Add-ReAdABLE: function[.readable-source [file! url! block!] .key [string! word! 
 
     readable-block: .get-readable-block .readable-source
 
-    .change-key-value: function[.block [block!] .key [word!] val][
+    .change-key-value: function[.block [block!] .key [string! word! path!] val][
 
         block: copy .block
         
