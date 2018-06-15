@@ -15,7 +15,7 @@ do read http://redlang.red/do-trace.red
 
 Read-ReAdABLE: :.Read-ReAdABLE
 
-Add-ReAdABLE: function[.readable-source [file! url! block!] .key [word!] .value][
+Add-ReAdABLE: function[.readable-source [file! url! block!] .key [string! word! path!] .value][
 
     {Example:
         T-2017.12.08-0001: [
