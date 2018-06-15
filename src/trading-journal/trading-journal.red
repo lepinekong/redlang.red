@@ -2,7 +2,9 @@ Red [
     Title: "trading-journal.red"
 ]
 
-do read http://redlang.red/crud-readable.red
+;do read http://redlang.red/crud-readable.red
+do read %../../crud-readable.red
+
 transactions: read-readable %db/trading-journal.read
 ?? transactions
 
