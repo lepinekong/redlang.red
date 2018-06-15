@@ -1,11 +1,12 @@
 Red [
     Title: "build-markup.red"
-    Build: 1.0.0.4
-    Version: 1.0.2
+    Build: 1.0.0.5
+    Version: 1.0.3
     History: [
         1.0.0 {Initial version}
         1.0.1 {.get-vars: return unique vars}
         1.0.2 {.render-template}
+        1.0.3 {render: :.render-template}
     ]
     Alias: [
         %build-markup
@@ -66,6 +67,7 @@ get-vars: :.get-vars
     return out
 ]
 render-template: :.render-template
+render: :.render-template
 
 .string.expand: function[.string-template [string!] .block-vars[block!]][
 
