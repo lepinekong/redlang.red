@@ -17,7 +17,6 @@ if not exists? data-file [
 transactions: read-readable %db/trading-journal.read
 
 transactions: Add-Readable transactions 'T-2017.12.08-0001 [
-
     .SYMBOL: AAPL
     .CURRENCY: DOLLAR
     .BROKER: GOLDMAN-SACHS         
@@ -26,14 +25,9 @@ transactions: Add-Readable transactions 'T-2017.12.08-0001 [
     .QTY-ENTRY: 100
     .PRICE-ENTRY: 175.95
     .DATETIME-ENTRY: 18/12/2017
-
 ]
 
-
-do-trace 33 [
-    ?? transactions
-] %trading-journal.red
-
+do-trace 30 [?? transactions] %trading-journal.red
 
 transactions: Update-Readable transactions 'T-2017.12.08-0001 [
     .SYMBOL: AAPL
@@ -49,15 +43,11 @@ transactions: Update-Readable transactions 'T-2017.12.08-0001 [
     ]
 ]
 
-do-trace 53 [
-    ?? transactions
-] %trading-journal.red
+do-trace 46 [?? transactions] %trading-journal.red
 
 transactions: Update-Readable transactions 'T-2017.12.08-0001/.NOTES/NOTE2 {NOTE 2 CHANGED}  
 
-do-trace 59 [
-    ?? transactions
-] %trading-journal.red
+do-trace 50 [?? transactions] %trading-journal.red
 
 
 
