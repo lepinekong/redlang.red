@@ -62,6 +62,7 @@ get-vars: :.get-vars
     vars: get-vars content: read .template-path
     foreach var vars [set to-word var ask rejoin [var ": "]]
     write-clipboard out: build-markup content
+    print "Rendered output has been copied to clipboard."
     return out
 ]
 render-template: :.render-template
