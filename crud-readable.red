@@ -2,7 +2,7 @@ Red [
     Title: "crud-readable.red"
 ]
 
-do read http://redlang.red/do-trace
+do read http://redlang.red/do-trace.red
 
 .Read-ReAdABLE: function [.ReAdABLE-path][
 
@@ -46,7 +46,7 @@ Add-ReAdABLE: function[.readable-source [file! url! block!] .key [word!] .value]
     ] %crud-readable.red
     
 
-    .append-key-value: function[.block [block!] .key [word!] .value][
+    .append-key-value: function[.block [block!] .key [string! word! path!] .value][
 
             do-trace 51 [
                 ?? .block
@@ -64,7 +64,7 @@ Add-ReAdABLE: function[.readable-source [file! url! block!] .key [word!] .value]
 
 ]
 
-.update-reAdABLE: function [.readable-source [file! url! block!] .key [word!] .value][
+.update-reAdABLE: function [.readable-source [file! url! block!] .key [string! word! path!] .value][
 
     readable-block: .get-readable-block .readable-source
 

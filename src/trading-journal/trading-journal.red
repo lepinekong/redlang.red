@@ -39,6 +39,10 @@ transactions: Update-Readable transactions 'T-2017.12.08-0001 [
 
 ?? transactions
 
+transactions: Update-Readable transactions 'T-2017.12.08-0001/.NOTES/NOTE2 {NOTE 2 CHANGED}  
+
+?? transactions
+
 
 
 
