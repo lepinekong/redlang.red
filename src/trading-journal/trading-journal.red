@@ -5,7 +5,6 @@ Red [
 do read http://redlang.red/do-trace.red
 
 do read http://redlang.red/crud-readable.red
-;do read %../../crud-readable.red
 
 data-file: %db/trading-journal.read
 if not exists? data-file [
