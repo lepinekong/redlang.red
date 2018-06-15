@@ -1,5 +1,6 @@
 Red [
     Title: "trading-journal.red"
+    demo: {do read http://redlang.red/src/trading-journal.red}
 ]
 
 do read http://redlang.red/do-trace.red
