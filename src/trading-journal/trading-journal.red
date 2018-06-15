@@ -15,7 +15,6 @@ if not exists? data-file [
 
 transactions: read-readable %db/trading-journal.read
 
-
 transactions: Add-Readable transactions 'T-2017.12.08-0001 [
 
     .SYMBOL: AAPL
