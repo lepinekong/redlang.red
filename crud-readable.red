@@ -2,8 +2,6 @@ Red [
     Title: "crud-readable.red"
 ]
 
-do read http://redlang.red/do-trace.red
-
 .Read-ReAdABLE: function [.ReAdABLE-path][
 
     {Example: 
@@ -40,20 +38,9 @@ Add-ReAdABLE: function[.readable-source [file! url! block!] .key [string! word! 
     ][
         readable-block: .readable-source
     ]
-
-    do-trace 44 [
-        ?? readable-block
-    ] %crud-readable.red
     
 
     .append-key-value: function[.block [block!] .key [string! word! path!] .value][
-
-            do-trace 51 [
-                ?? .block
-                ?? .key
-                ?? .value
-            ] %crud-readable.red
-            
 
             append/only .block to-set-word .key
             append/only .block .value

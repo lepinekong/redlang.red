@@ -2,8 +2,15 @@ Red [
     Title: "trading-journal.red"
 ]
 
-;do read http://redlang.red/crud-readable.red
-do read %../../crud-readable.red
+do read http://redlang.red/crud-readable.red
+;do read %../../crud-readable.red
+
+data-file: %db/trading-journal.read
+if not exists? data-file [
+    make-dir %db
+    write data-file read http://redlang.red/src/trading-journal/db/trading-journal.read
+    print rejoin ["Created " clean-path data-file]
+]
 
 transactions: read-readable %db/trading-journal.read
 ?? transactions
