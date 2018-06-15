@@ -64,63 +64,82 @@ Add-ReAdABLE: function[.readable-source [file! url! block!] .key [word!] .value]
 
 ]
 
+.update-reAdABLE: function [.readable-source [file! url! block!] .key [word!] .value][
 
+    readable-block: .get-readable-block .readable-source
 
-.change-key-value: function[.block [block!] .key val][
+    .change-key-value: function[.block [block!] .key [word!] val][
 
-    block: copy .block
-    
-    key: form .key
-    MULTI-KEYS?: (find key "/")
-    if MULTI-KEYS? [
+        block: copy .block
+        
+        key: form .key
+        MULTI-KEYS?: (find key "/")
+        if MULTI-KEYS? [
 
-        keys: split key "/"
+            keys: split key "/"
 
-        count: length? keys
-        reverse-keys: reverse copy keys      
-            
-        forall reverse-keys [
+            count: length? keys
+            reverse-keys: reverse copy keys      
+                
+            forall reverse-keys [
 
-            index: index? reverse-keys
+                index: index? reverse-keys
 
-            LAST-KEY?: (index >= count)
-            if NOT LAST-KEY? [
-                key: reverse-keys/1
-                next-key: reverse-keys/2
+                LAST-KEY?: (index >= count)
+                if NOT LAST-KEY? [
+                    key: reverse-keys/1
+                    next-key: reverse-keys/2
 
-                either count >= 3 [
-                    
-                    either (count - index) >= 2 [
+                    either count >= 3 [
                         
-                        next-next-key: reverse-keys/3
-                        block: select block to-word next-next-key
+                        either (count - index) >= 2 [
+                            
+                            next-next-key: reverse-keys/3
+                            block: select block to-word next-next-key
 
+                        ][
+                            
+                            block: copy .block
+
+                            
+                        ]
                     ][
-                        
                         block: copy .block
-
-                        
                     ]
-                ][
-                    block: copy .block
+
+                    target-block: select block to-word next-key
+                    target-block: .change-key-value target-block to-word key val
+                    val: copy target-block
+
                 ]
-
-                target-block: select block to-word next-key
-                target-block: .change-key-value target-block to-word key val
-                val: copy target-block
-
             ]
+
+            block: .change-key-value block to-word next-key target-block
+
+            return block 
         ]
+        
+        index: index? find block to-word key
 
-        block: .change-key-value block to-word next-key target-block
+        next-index: index + 1
+        block/:next-index: val
 
-        return block 
+        return block
+    ] 
+
+    return .change-key-value readable-block .key .value
+
+]
+
+update-reAdABLE: :.update-reAdABLE
+
+; ------------- dependencies
+
+.get-readable-block: function [.readable-source][
+    either not block? .readable-source [
+        readable-block: .read-readable .readable-source
+    ][
+        readable-block: .readable-source
     ]
-    
-    index: index? find block to-word key
-
-    next-index: index + 1
-    block/:next-index: val
-
-    return block
-] 
+    return readable-block
+]
