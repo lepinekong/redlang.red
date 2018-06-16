@@ -3,7 +3,7 @@ Red [
     Alias: [
         crud-csv
     ]
-    Build: 1.0.0.9
+    Build: 1.0.1.0
     History-Latest: [
         1.0.0.1 {First version}
         1.0.0.2 {Optionally return a header for read-csv}
@@ -14,7 +14,7 @@ Red [
     ]
 ]
 
-read-csv: function[data-file /header /flat][
+.read-csv: function[data-file /header /flat][
 
     if not exists? data-file [
         print rejoin [data-file " doesn't exist."]
@@ -42,7 +42,9 @@ read-csv: function[data-file /header /flat][
     
 ]
 
-save-csv: function[+data-file +records /header +header][
+read-csv: :.read-csv
+
+.save-csv: function[+data-file +records /header +header][
 
     if block? +data-file [
         file: +records
@@ -68,14 +70,27 @@ save-csv: function[+data-file +records /header +header][
     write/lines +data-file -whole-records
 ] 
 
-add-csv: function[+records-or-file record][
-    {
-        Example:
-        add-csv {05/07/2018,05/07/2020,Tablette Windows 10,Microsoft - SURFACE PRO I5 256GB,1,1376.55€,DARTY LES HALLES 907037 / 9543295,to repair}
-    }
+save-csv: :.save-csv
+
+.add-csv-record: function[+records [block!] +record [block! string!]][
+
+    either not block? +record [
+        -record: split +record ","
+    ][
+        -record: +record
+    ]
+
+    append/only +records +record
+    return +records
+
+]
+
+add-csv-record: :.add-csv-record
+
+.add-csv: function[+records-or-file [block! file!] record [block! string!]][
 
     either not block? +records-or-file [
-        ;it must be a file
+        ;file case
         -data-file: +records-or-file
         -records: read-csv -data-file
     ][
@@ -89,13 +104,15 @@ add-csv: function[+records-or-file record][
     append/only -records record
 
     if not block? +records-or-file [
-        ;it must be a file
+        ;file case
         save-csv -data-file records
     ]
     return records
 
-    
 ]
+
+add-csv: :.add-csv
+add-csv-file: :.add-csv
 
 search-csv: function[records searched-value][
 
