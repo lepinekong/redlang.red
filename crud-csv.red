@@ -3,7 +3,7 @@ Red [
     Alias: [
         crud-csv
     ]
-    Build: 1.0.0.3
+    Build: 1.0.0.4
     History-Latest: [
         1.0.0.1 {First version}
         1.0.0.2 {Optionally return a header for read-csv}
@@ -27,7 +27,9 @@ read-csv: function[data-file /header /flat][
 
     either not header [
         return records
-    ][
+    ]
+    ;--------------------- for header ------------------------------    
+    [
         header: split (first all-lines) ","
         unless flat [
             return append [] compose/only [ (header) (records)]
