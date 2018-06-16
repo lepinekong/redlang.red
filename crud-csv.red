@@ -3,14 +3,15 @@ Red [
     Alias: [
         crud-csv
     ]
-    Build: 1.0.0.2
+    Build: 1.0.0.3
     History-Latest: [
         1.0.0.1 {First version}
         1.0.0.2 {Optionally return a header for read-csv}
+        1.0.0.3 {Optionally return flat records with header for read-csv}
     ]
 ]
 
-read-csv: function[data-file /header][
+read-csv: function[data-file /header /flat][
 
     if not exists? data-file [
         print rejoin [data-file " doesn't exist."]
@@ -24,10 +25,14 @@ read-csv: function[data-file /header][
         append/only records split lines/1 ","
     ]
 
-    either header [
+    either not header [
         return records
     ][
-        return append [] compose/only [ (first all-lines) (records)]
+        header: split (first all-lines) ","
+        unless flat [
+            return append [] compose/only [ (header) (records)]
+        ]
+        return append [] compose [ (header) (records)]
     ]
     
 ]
