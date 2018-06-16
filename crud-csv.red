@@ -3,7 +3,7 @@ Red [
     Alias: [
         crud-csv
     ]
-    Build: 1.0.0.5
+    Build: 1.0.0.6
     History-Latest: [
         1.0.0.1 {First version}
         1.0.0.2 {Optionally return a header for read-csv}
@@ -120,5 +120,29 @@ delete-csv: function[records record-number-or-search-string][
     return records
 ]
 
+;============================= utilities functions ====================================
+
+.block-to-comma-delimited-string: function[.block [block!] /separator .separator][
+    delimited-string: copy ""
+    n: length? .block
+
+    unless separator [
+        .separator: ","
+    ]
+
+    forall .block [
+        element: .block/1
+        i: index? .block
+        
+        either i < n [
+            delimited-string: rejoin [delimited-string element .separator]
+        ][
+            delimited-string: rejoin [delimited-string element]
+        ]
+    ]
+]
+
+block-to-comma-delimited-string: :.block-to-comma-delimited-string
+block-to-csv-line: :.block-to-comma-delimited-string
 
 
