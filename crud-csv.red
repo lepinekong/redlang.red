@@ -3,13 +3,14 @@ Red [
     Alias: [
         crud-csv
     ]
-    Build: 1.0.0.8
+    Build: 1.0.0.9
     History-Latest: [
         1.0.0.1 {First version}
         1.0.0.2 {Optionally return a header for read-csv}
         1.0.0.3 {Optionally return flat records with header for read-csv}
         1.0.0.5 {Start fixing save-csv when header arg is a block instead of a delimited comma string}
         1.0.0.8 {End fixing save-csv when header arg is a block instead of a delimited comma string}
+        1.0.0.9 {add-csv : +case not block? +records-or-file}
     ]
 ]
 
@@ -67,17 +68,33 @@ save-csv: function[+data-file +records /header +header][
     write/lines +data-file -whole-records
 ] 
 
-add-csv: function[records record][
+add-csv: function[+records-or-file record][
     {
         Example:
         add-csv {05/07/2018,05/07/2020,Tablette Windows 10,Microsoft - SURFACE PRO I5 256GB,1,1376.55€,DARTY LES HALLES 907037 / 9543295,to repair}
     }
+
+    either not block? +records-or-file [
+        ;it must be a file
+        -data-file: +records-or-file
+        -records: read-csv -data-file
+    ][
+        -records: +records-or-file
+    ]
+
     if not block? record [
         record: split record ","
     ]
 
-    append/only records record
+    append/only -records record
+
+    if not block? +records-or-file [
+        ;it must be a file
+        save-csv -data-file records
+    ]
     return records
+
+    
 ]
 
 search-csv: function[records searched-value][
