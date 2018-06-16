@@ -1,6 +1,7 @@
 Red [
     Title: "trading-journal.red"
     demo: {do read http://redlang.red/src/trading-journal.red}
+    purpose: {Demo for CRUD-ReAdABLE}
 ]
 
 do read http://redlang.red/do-trace.red

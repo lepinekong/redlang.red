@@ -3,24 +3,33 @@ Red [
     Alias: [
         crud-csv
     ]
-    Build: 1.0.0.1
+    Build: 1.0.0.2
+    History-Latest: [
+        1.0.0.1 {First version}
+        1.0.0.2 {Optionally return a header for read-csv}
+    ]
 ]
 
-read-csv: function[data-file][
+read-csv: function[data-file /header][
 
     if not exists? data-file [
         print rejoin [data-file " doesn't exist."]
         return false
     ]
 
-
-    lines: skip Read/lines data-file 1 ; skip first csv header line 
+    lines: skip (all-lines: Read/lines data-file) 1 ; skip first csv header line 
     records: copy []
 
     forall lines [
         append/only records split lines/1 ","
     ]
-    return records
+
+    either header [
+        return records
+    ][
+        return append [] compose/only [ (first all-lines) (records)]
+    ]
+    
 ]
 
 
