@@ -3,13 +3,13 @@ Red [
     Alias: [
         crud-csv
     ]
-    Build: 1.0.0.7
+    Build: 1.0.0.8
     History-Latest: [
         1.0.0.1 {First version}
         1.0.0.2 {Optionally return a header for read-csv}
         1.0.0.3 {Optionally return flat records with header for read-csv}
         1.0.0.5 {Start fixing save-csv when header arg is a block instead of a delimited comma string}
-        1.0.0.7 {End fixing save-csv when header arg is a block instead of a delimited comma string}
+        1.0.0.8 {End fixing save-csv when header arg is a block instead of a delimited comma string}
     ]
 ]
 
@@ -41,7 +41,13 @@ read-csv: function[data-file /header /flat][
     
 ]
 
-save-csv: function[+records data-file /header +header][
+save-csv: function[+data-file +records /header +header][
+
+    if block? +data-file [
+        file: +records
+        +records: +data-file
+        +data-file: file
+    ]
 
     -whole-records: copy []
     if header [
@@ -51,11 +57,15 @@ save-csv: function[+records data-file /header +header][
         ][
             -header: +header
         ]
-        append -whole-records -header
+        append -whole-records -header     
     ]
-    append -whole-records +records
-    write/lines data-file -whole-records
-]
+    
+    forall +records [
+        append -whole-records block-to-csv-line +records/1
+    ]  
+
+    write/lines +data-file -whole-records
+] 
 
 add-csv: function[records record][
     {
