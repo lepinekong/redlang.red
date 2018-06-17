@@ -5,7 +5,7 @@ Red [
 
 do read http://redlang.red/build-markup.red
 
-.render-template: function[>template-path /out >output-path [file!] /no-out][
+.render-template: function[>template-path /out >output-path [file!] /no-return][
 
     vars: .get-vars content: read >template-path
 
@@ -20,7 +20,7 @@ do read http://redlang.red/build-markup.red
         print "Rendered output has been copied to clipboard."
     ]
 
-    unless no-out [
+    unless no-return [
         return out>
     ]
     
