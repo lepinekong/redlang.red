@@ -1,5 +1,5 @@
 Red [
-    Title: "templating.red"
+    Title: "templating"
 ]
 
 do read http://redlang.red/templating.red
