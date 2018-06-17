@@ -3,7 +3,7 @@ Red [
     Alias: [
         crud-csv
     ]
-    Build: 1.0.1.0
+    Build: 1.0.1.1
     History-Latest: [
         1.0.0.1 {First version}
         1.0.0.2 {Optionally return a header for read-csv}
@@ -11,6 +11,7 @@ Red [
         1.0.0.5 {Start fixing save-csv when header arg is a block instead of a delimited comma string}
         1.0.0.8 {End fixing save-csv when header arg is a block instead of a delimited comma string}
         1.0.0.9 {add-csv : +case not block? +records-or-file}
+        1.0.1.1 {fix block-to-csv-line does not allow string! for its .block argument}
     ]
 ]
 
@@ -50,12 +51,12 @@ Red [
 
 read-csv: :.read-csv
 
-.save-csv: function[+data-file +records /header +header][
+.save-csv: function[>data-file +records /header +header][
 
-    if block? +data-file [
+    if block? >data-file [
         file: +records
-        +records: +data-file
-        +data-file: file
+        +records: >data-file
+        >data-file: file
     ]
 
     -whole-records: copy []
@@ -73,7 +74,7 @@ read-csv: :.read-csv
         append -whole-records block-to-csv-line +records/1
     ]  
 
-    write/lines +data-file -whole-records
+    write/lines >data-file -whole-records
 ] 
 
 save-csv: :.save-csv
@@ -196,6 +197,7 @@ delete-csv: function[records record-number-or-search-string][
 ]
 
 block-to-comma-delimited-string: :.block-to-comma-delimited-string
+.block-to-csv-line: :.block-to-comma-delimited-string
 block-to-csv-line: :.block-to-comma-delimited-string
 
 

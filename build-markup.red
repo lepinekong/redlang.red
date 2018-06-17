@@ -68,10 +68,10 @@ Red [
 
 build-markup: :.build-markup
 
-.get-vars: function[template][
+.get-vars: function[>template][
     vars: copy []
     rules: [any [thru "<%" copy var to "%>" (append vars var)]]
-    parse template rules
+    parse >template rules
     return unique vars
 ]
 
