@@ -5,7 +5,7 @@ Red [
 
 do read http://redlang.red/build-markup.red
 
-.render-template: function[>template-path /output >output-path [file!] /no-out][
+.render-template: function[>template-path /out >output-path [file!] /no-out][
 
     vars: .get-vars content: read >template-path
 
@@ -13,7 +13,7 @@ do read http://redlang.red/build-markup.red
         set to-word var ask rejoin [var ": "]
     ]
 
-    either output [
+    either out [
         write >output-path out>
     ][
         write-clipboard out>: .build-markup content
