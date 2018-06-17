@@ -14,7 +14,13 @@ Red [
     ]
 ]
 
-.read-csv: function[data-file /header /flat][
+.read-csv: function[data-file /header /flat /delimiter +delimiter][
+
+    either delimiter [
+        -delimiter: +delimiter
+    ][
+        -delimiter: ","
+    ]
 
     if not exists? data-file [
         print rejoin [data-file " doesn't exist."]
@@ -25,7 +31,7 @@ Red [
     records: copy []
 
     forall lines [
-        append/only records split lines/1 ","
+        append/only records split lines/1 -delimiter
     ]
 
     either not header [
@@ -33,7 +39,7 @@ Red [
     ]
     ;--------------------- for header ------------------------------    
     [
-        header: split (first all-lines) ","
+        header: split (first all-lines) -delimiter
         unless flat [
             return append [] compose/only [ (header) (records)]
         ]
@@ -169,12 +175,12 @@ delete-csv: function[records record-number-or-search-string][
 
 ;============================= utilities functions ====================================
 
-.block-to-comma-delimited-string: function[.block [block!] /separator .separator][
+.block-to-comma-delimited-string: function[.block [block!] /delimiter .delimiter][
     delimited-string: copy ""
     n: length? .block
 
-    unless separator [
-        .separator: ","
+    unless delimiter [
+        .delimiter: ","
     ]
 
     forall .block [
@@ -182,7 +188,7 @@ delete-csv: function[records record-number-or-search-string][
         i: index? .block
         
         either i < n [
-            delimited-string: rejoin [delimited-string element .separator]
+            delimited-string: rejoin [delimited-string element .delimiter]
         ][
             delimited-string: rejoin [delimited-string element]
         ]

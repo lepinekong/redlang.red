@@ -59,16 +59,6 @@ build-markup: :.build-markup
 
 get-vars: :.get-vars
 
-.render-template: function[.template-path][
-    vars: get-vars content: read .template-path
-    foreach var vars [set to-word var ask rejoin [var ": "]]
-    write-clipboard out: build-markup content
-    print "Rendered output has been copied to clipboard."
-    return out
-]
-render-template: :.render-template
-render: :.render-template
-
 .string.expand: function[.string-template [string!] .block-vars[block!]][
 
     return build-markup/bind .string-template Context Compose .block-vars
