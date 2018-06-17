@@ -24,8 +24,15 @@ Red [
     content [string! file! url!]
     /bind obj [object!] "Object to bind"    ;ability to run in a local context
     /quiet "Do not show errors in the output."
+    /delimiters >delimiters [block!]
     /local out eval value
 ][
+    either delimiters [
+        -delimiters: >delimiters
+    ][
+        -delimiters: ["<%" "%>"]
+    ]
+
     content: either string? content [copy content] [read content]
     out: make string! 126
     eval: func [val /local tmp] [
@@ -38,13 +45,24 @@ Red [
             if not unset? get/any 'tmp [append out :tmp]
         ]
     ]
-    parse content [
-        any [
+
+    rule: copy []
+    any-block: [
             end break
             | "<%" [copy value to "%>" 2 skip | copy value to end] (eval value)
             | copy value [to "<%" | to end] (append out value)
         ]
-    ]
+    append/only rule [any any-block]
+
+    ; rule: [
+    ;     any [
+    ;         end break
+    ;         | "<%" [copy value to "%>" 2 skip | copy value to end] (eval value)
+    ;         | copy value [to "<%" | to end] (append out value)
+    ;     ]
+    ; ]
+
+    parse content rule
     out
 ]
 
