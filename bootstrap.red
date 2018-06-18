@@ -14,10 +14,10 @@ Comment {
 
 Red [
     Title: "bootstrap.red"
-    Build: 1.0.0.1
+    Build: 1.0.0.2
     Github-Url: https://gist.github.com/lepinekong/31223dda30fd28fc61c686f7780c6962
     History: [
-        v0.8: {Nav-Bar component}
+        1.0.0.2 {.bootstrap.page.create: function[/to-clipboard][}
     ]
     TODO: [
         - Jumbotron
@@ -43,10 +43,16 @@ Red [
 
 do read http://redlang.red/html.red
 
-.bootstrap.page.create: function[][
-    return system/words/it: Bootstrap.Page.Gen html5-template
+.bootstrap.page.create: function[/to-clipboard][
+    system/words/it: Bootstrap.Page.Gen html5-template
+    if to-clipboard [
+        write-clipboard system/words/it
+    ]
+    return system/words/it
 ]
+
 bootstrap.page.create: :.bootstrap.page.create
+.create-bootstrap-page: :.bootstrap.page.create
 create-bootstrap-page: :.bootstrap.page.create
 
 .bootstrap.title: function[.title][
