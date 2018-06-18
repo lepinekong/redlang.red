@@ -78,9 +78,26 @@ create-bootstrap-page: :.bootstrap.page.create
     ]        
     return system/words/it
 ]
+
 bootstrap.title: :.bootstrap.title
 .bootstrap-title: :.bootstrap.title
 bootstrap-title: :.bootstrap.title
+
+.bootstrap.background-color: function[>background-color /to-file >file-path /to-clipboard][
+    {example: #A9FFCB}
+    snippet: rejoin [{        body{background: } >background-color {!important;}}] 
+    insert-css-style snippet 
+
+    if to-clipboard [
+        write-clipboard system/words/it
+    ]
+    if to-file [
+        .bootstrap-file: >file-path
+        write >file-path system/words/it
+    ] 
+]
+bootstrap.background-color: :.bootstrap.background-color
+
 
 .bootstrap.nav: function[/to-file >file-path /to-clipboard /brand >brand /menu >menu-options /no-brand /no-menu][
 
