@@ -49,6 +49,7 @@ do read http://redlang.red/html.red
         write-clipboard system/words/it
     ]
     if to-file [
+        .bootstrap-file: >file-path
         write >file-path system/words/it
     ]
     return system/words/it
@@ -58,8 +59,17 @@ bootstrap.page.create: :.bootstrap.page.create
 .create-bootstrap-page: :.bootstrap.page.create
 create-bootstrap-page: :.bootstrap.page.create
 
-.bootstrap.title: function[.title][
-    return system/words/it: Bootstrap.Page.Gen/title system/words/it .title
+.bootstrap.title: function[.title /to-file >file-path /to-clipboard][
+    ;TODO: test existence of system/words/it
+    system/words/it: Bootstrap.Page.Gen/title system/words/it .title
+    if to-clipboard [
+        write-clipboard system/words/it
+    ]
+    if to-file [
+        .bootstrap-file: >file-path
+        write >file-path system/words/it
+    ]        
+    return system/words/it
 ]
 bootstrap.title: :.bootstrap.title
 bootstrap-title: :.bootstrap.title
