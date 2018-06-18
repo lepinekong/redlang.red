@@ -14,10 +14,11 @@ Comment {
 
 Red [
     Title: "bootstrap.red"
-    Build: 1.0.0.2
+    Build: 1.0.0.3
     Github-Url: https://gist.github.com/lepinekong/31223dda30fd28fc61c686f7780c6962
     History: [
         1.0.0.2 {.bootstrap.page.create: function[/to-clipboard][}
+        1.0.0.3 {.bootstrap.nav: function[/to-file >file-path /to-clipboard /brand >brand /menu >menu][}
     ]
     TODO: [
         - Jumbotron
@@ -72,18 +73,42 @@ create-bootstrap-page: :.bootstrap.page.create
     return system/words/it
 ]
 bootstrap.title: :.bootstrap.title
+.bootstrap-title: :.bootstrap.title
 bootstrap-title: :.bootstrap.title
 
-.bootstrap.nav: function[][
+.bootstrap.nav: function[/to-file >file-path /to-clipboard /brand >brand /menu >menu-options /no-brand /no-menu][
 
-    brand: ["Navbar with Search-Bar" https://getbootstrap.com/]
-    menu-options: [ [Home "#"] ["Page 1" "#"] ["Page 2" "#"] ["Page 3" "#"] ]
+    either brand [
+        brand: >brand
+    ][
+        brand: ["Navbar with Search-Bar" https://getbootstrap.com/]
+    ]
+
+    either menu [
+        menu-options: >menu-options
+    ][
+        menu-options: [ [Home "#"] ["Page 1" "#"] ["Page 2" "#"] ["Page 3" "#"] ]
+    ]
 
     Bootstrap-Nav: Bootstrap.Nav.Gen brand menu-options
-    return system/words/it: Bootstrap.Page.Gen/nav-bar system/words/it Bootstrap-Nav
+
+    system/words/it: Bootstrap.Page.Gen/nav-bar system/words/it Bootstrap-Nav
+
+    if to-clipboard [
+        write-clipboard system/words/it
+    ]
+    if to-file [
+        .bootstrap-file: >file-path
+        write >file-path system/words/it
+    ]  
+
+    return system/words/it
 ]
 bootstrap.nav: :.bootstrap.nav
+.bootstrap-nav: :.bootstrap.nav
 bootstrap-nav: :.bootstrap.nav
+.bootstrap-navbar: :.bootstrap.nav
+bootstrap-navbar: :.bootstrap.nav
 
 
 emit-nav: function[/inverse /rounded-corner][
@@ -232,7 +257,9 @@ Bootstrap.Nav.Gen: function [
     html: do code ; white by default
 
     html: emit-container/fixed html ; fluid by default
+
     html: emit-navbar-header html .brand
+
     html: emit-navbar-nav html .menu-options
     if Dropdown-Menu [
         html: emit-navbar-dropdown-menu html .dropdown-menu
