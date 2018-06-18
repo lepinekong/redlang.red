@@ -314,7 +314,12 @@ Bootstrap.Page.Gen: function[
 
 ]
 
-.Bootstrap-background-color: function[>background-color /to-file >file-path /to-clipboard][
+.Bootstrap-background-color: function[/color >background-color /to-file >file-path /to-clipboard][
+    
+    if issue? >background-color [
+        >background-color: mold >background-color
+    ]
+    
     snippet: rejoin [ "        body { background: " >background-color " !important}" ]
     
     .html: .insert-head-css-style/html/snippet system/words/it snippet
@@ -335,19 +340,6 @@ Bootstrap.Page.Gen: function[
 
 Bootstrap-background-color: :.Bootstrap-background-color
 
-; .bootstrap.background-color: function[>background-color /to-file >file-path /to-clipboard][
-;     {example: #A9FFCB}
-;     snippet: rejoin [{        body{background: } >background-color {!important;}}] 
-;     insert-head-css-style snippet 
 
-;     if to-clipboard [
-;         write-clipboard system/words/it
-;     ]
-;     if to-file [
-;         .bootstrap-file: >file-path
-;         write >file-path system/words/it
-;     ] 
-; ]
-; bootstrap.background-color: :.bootstrap.background-color
 
 
