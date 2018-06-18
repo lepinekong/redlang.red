@@ -64,11 +64,11 @@ create-html-page: :html.page.create
                 class-parent: old-class
                 class-child: old-parent
                 
-                do-trace 64 [
-                    ;print "line 64"
-                    ?? class-parent
-                    ?? class-child
-                ] %html.red
+                ; do-trace 64 [
+                ;     ;print "line 64"
+                ;     ?? class-parent
+                ;     ?? class-child
+                ; ] %html.red
 
                 return system/words/it: html.compose/insert-div/within-div/tab system/words/it class-child class-parent 3
             ][
@@ -91,6 +91,7 @@ insert-div: :.div.insert
     /insert-div .div-class 
     /within-div .within-div
     /tab .ntab
+
     ][
 
     tab-refinement: tab
@@ -155,7 +156,41 @@ html.compose: :.html.compose
 
 .append-head: function[.html5 >snippet /style][
     snippet: >snippet
+
     snippet: {    <style type="text/css">
         body { background: navy !important; } /* Adding !important forces the browser to overwrite the default style applied by Bootstrap */
     </style>}
+
+
 ] 
+
+;--------------
+
+.insert-before-tag: function[>html >before-tag >snippet][
+
+    html: >html
+    parse html [
+        to >before-tag start: (
+            insert start rejoin [
+                >snippet 
+                newline
+            ]
+        )
+    ]
+    return html
+]
+
+.insert-css-style: function[>html >css-style][
+    snippet: rejoin [
+    {<style type="text/css">}
+    newline        
+        >css-style
+    newline
+    {</style>}
+    ]
+    return .insert-before-tag >html "</head>" snippet
+]
+
+
+test: .insert-css-style html5-template {body { background: navy !important; } }
+?? test
