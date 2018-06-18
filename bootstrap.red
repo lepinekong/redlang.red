@@ -14,12 +14,13 @@ Comment {
 
 Red [
     Title: "bootstrap.red"
-    Build: 1.0.0.4
+    Build: 1.0.0.5
     Github-Url: https://gist.github.com/lepinekong/31223dda30fd28fc61c686f7780c6962
     History: [
         1.0.0.2 {.bootstrap.page.create: function[/to-clipboard][}
         1.0.0.3 {.bootstrap.nav: function[/to-file >file-path /to-clipboard /brand >brand /menu >menu][}
         1.0.0.4 {Bootstrap-background-color: function[>background-color /to-file >file-path /to-clipboard][}
+        1.0.0.5 {FIX Error in caller: bootstrap-background-color has no refinement called snippet}
     ]
     TODO: [
         - Jumbotron
@@ -331,7 +332,7 @@ Bootstrap.Page.Gen: function[
 .Bootstrap-background-color: function[>background-color /to-file >file-path /to-clipboard][
     snippet: rejoin [ {body { background: } >background-color { !important}} ]
 
-    system/words/it: .insert-css-style system/words/it snippet
+    system/words/it: .insert-css-style/snippet system/words/it snippet
 
     if to-clipboard [
         write-clipboard system/words/it

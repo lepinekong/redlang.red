@@ -2,6 +2,8 @@ Red [
     Title: "html5.red"
 ]
 
+do read http://redlang.red/do-trace
+
 html5-template: {
 <!doctype html>
 
@@ -166,10 +168,16 @@ html.compose: :.html.compose
 
 ;--------------
 
-.insert-before-tag: function[>before-tag >snippet][
+.insert-before-tag: function[/html >html /tag >before-tag /snippet >snippet /to-file >file-path /to-clipboard][
+    
+    
+    either html [
+        .html: >html
+    ][
+        .html: system/words/it
+    ]
 
-    html: system/words/it
-    parse html [
+    parse .html [
         to >before-tag start: (
             insert start rejoin [
                 >snippet 
@@ -177,10 +185,31 @@ html.compose: :.html.compose
             ]
         )
     ]
-    return html
+
+    ;------------------------------------
+
+    html>: .html
+
+    if to-clipboard [
+        write-clipboard html>
+    ]
+    if to-file [
+        write >file-path html>
+    ]
+
+    system/words/it: html>
+    return html>
 ]
 
-.insert-css-style: function[>css-style /to-file >file-path /to-clipboard][
+.insert-css-style: function[/snippet >css-style /html >html /to-file >file-path /to-clipboard][
+
+
+    either html [
+        .html: >html
+    ][
+        .html: system/words/it
+    ]
+
     {Example:
         test: .insert-css-style html5-template {body { background: navy !important; } }
     }
@@ -189,21 +218,28 @@ html.compose: :.html.compose
     newline        
         >css-style
     newline
-        {</style>}
+    {   </style>}
     ]
-    system/words/it: .insert-before-tag "</head>" snippet
+
+    .html: .insert-before-tag/html/tag/snippet >html "</head>" snippet
+
+    ;------------------------------------
+
+    html>: .html
 
     if to-clipboard [
-        write-clipboard system/words/it
+        write-clipboard html>
     ]
     if to-file [
-        .bootstrap-file: >file-path
-        write >file-path system/words/it
+        write >file-path html>
     ]
 
-    return system/words/it
+    system/words/it: html>
+    return html>
 ]
 insert-css-style: :.insert-css-style
+
+test: .insert-css-style/html/snippet/to-clipboard html5-template {body { background: navy !important; } }  
 
 
 
