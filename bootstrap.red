@@ -330,11 +330,7 @@ Bootstrap.Page.Gen: function[
 ]
 
 .Bootstrap-background-color: function[>background-color /to-file >file-path /to-clipboard][
-    snippet: rejoin [ "    body { background: " >background-color " !important}" ]
-
-    do-trace 335 [
-        ?? snippet
-    ] %bootstrap.red
+    snippet: rejoin [ "        body { background: " >background-color " !important}" ]
     
     .html: .insert-css-style/html/snippet system/words/it snippet
 
