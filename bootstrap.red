@@ -330,7 +330,7 @@ Bootstrap.Page.Gen: function[
 ]
 
 .Bootstrap-background-color: function[>background-color /to-file >file-path /to-clipboard][
-    snippet: rejoin [ {body { background: } >background-color { !important}} ]
+    snippet: rejoin [ {    body { background: } >background-color { !important}} ]
 
     .html: .insert-css-style/html/snippet system/words/it snippet
 
@@ -340,11 +340,7 @@ Bootstrap.Page.Gen: function[
     if to-file [
         .bootstrap-file: >file-path
         write >file-path .html
-    ]  
-
-    do-trace 345 [
-        ?? .html
-    ] %bootstrap.red
+    ]
     
     system/words/it: .html
 
