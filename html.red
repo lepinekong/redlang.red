@@ -1,8 +1,9 @@
 Red [
     Title: "html5.red"
-    Build: 1.0.0.0
+    Build: 1.0.0.1
     History: [
         1.0.0.0 {init}
+        1.0.0.1 {to fix Error in caller: parse does not allow none! for its input argument}
     ]
 ]
 
