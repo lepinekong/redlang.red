@@ -68,7 +68,7 @@ bootstrap.page.create: :.bootstrap.page.create
 .create-bootstrap-page: :.bootstrap.page.create
 create-bootstrap-page: :.bootstrap.page.create
 
-.bootstrap.title: function[.title /to-file >file-path /to-clipboard][
+.bootstrap.title: function[/title .title /to-file >file-path /to-clipboard][
     ;TODO: test existence of system/words/it
     system/words/it: Bootstrap.Page.Gen/title system/words/it .title
     if to-clipboard [
