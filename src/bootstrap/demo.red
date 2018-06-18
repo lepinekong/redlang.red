@@ -2,7 +2,8 @@ Red [
     Title: "demo.red"
 ]
 
-do read %../bootstrap.red
+do read http://redlang.red/do-trace
+do read http://redlang.red/bootstrap.red
 
 create-bootstrap-page ; create a bootstrap page
 bootstrap-title "Hello Bootstrap" ; boostrap title is "Hello Boostrap" or add a bootstrap title
