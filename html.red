@@ -181,6 +181,9 @@ html.compose: :.html.compose
 ]
 
 .insert-css-style: function[>html >css-style][
+    {Example:
+        test: .insert-css-style html5-template {body { background: navy !important; } }
+    }
     snippet: rejoin [
     {<style type="text/css">}
     newline        
@@ -190,7 +193,8 @@ html.compose: :.html.compose
     ]
     return .insert-before-tag >html "</head>" snippet
 ]
+insert-css-style: :.insert-css-style
 
 
-test: .insert-css-style html5-template {body { background: navy !important; } }
-?? test
+
+
