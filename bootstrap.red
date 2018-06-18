@@ -44,8 +44,14 @@ Red [
 
 do read http://redlang.red/html.red
 
-.bootstrap.page.create: function[/to-file >file-path /to-clipboard][
+.bootstrap.page.create: function[/background-color >background-color /to-file >file-path /to-clipboard][
+    
     system/words/it: Bootstrap.Page.Gen html5-template
+
+    if background-color [
+        
+    ]
+
     if to-clipboard [
         write-clipboard system/words/it
     ]

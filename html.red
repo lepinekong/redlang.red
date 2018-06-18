@@ -152,3 +152,10 @@ insert-div: :.div.insert
 ]
 
 html.compose: :.html.compose
+
+.append-head: function[.html5 >snippet /style][
+    snippet: >snippet
+    snippet: {    <style type="text/css">
+        body { background: navy !important; } /* Adding !important forces the browser to overwrite the default style applied by Bootstrap */
+    </style>}
+] 
