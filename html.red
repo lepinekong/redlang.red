@@ -215,9 +215,6 @@ html.compose: :.html.compose
         .html: system/words/it
     ]
 
-    {Example:
-        test: .insert-css-style html5-template {body { background: navy !important; } }
-    }
     snippet: rejoin [
     {<style type="text/css">}
     newline        
