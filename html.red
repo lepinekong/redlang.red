@@ -211,7 +211,7 @@ html.compose: :.html.compose
     return html>
 ]
 
-.insert-css-style: function[/snippet >css-style /html >html /to-file >file-path /to-clipboard][
+.insert-css-style: function[ /html >html /snippet >css-style /to-file >file-path /to-clipboard][
 
 
     either html [
