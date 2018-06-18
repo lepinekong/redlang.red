@@ -240,7 +240,7 @@ html.compose: :.html.compose
 ]
 insert-css-style: :.insert-css-style
 
-test: .insert-css-style/html/snippet/to-clipboard html5-template {body { background: navy !important; } }  
+
 
 
 
