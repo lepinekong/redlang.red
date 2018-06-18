@@ -99,7 +99,6 @@ bootstrap-title: :.bootstrap.title
 ]
 bootstrap.background-color: :.bootstrap.background-color
 
-
 .bootstrap.nav: function[/to-file >file-path /to-clipboard /brand >brand /menu >menu-options /no-brand /no-menu][
 
     either brand [
