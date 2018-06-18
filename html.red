@@ -228,7 +228,7 @@ html.compose: :.html.compose
     system/words/it: html>
     return html>
 ]
-insert-css-style: :.insert-css-style
+insert-head-css-style: :.insert-head-css-style
 
 --------------
 
