@@ -1,5 +1,9 @@
 Red [
     Title: "html5.red"
+    Build: 1.0.0.0
+    History: [
+        1.0.0.0 {init}
+    ]
 ]
 
 do read http://redlang.red/do-trace
