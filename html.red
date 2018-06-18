@@ -161,16 +161,7 @@ insert-div: :.div.insert
 
 html.compose: :.html.compose
 
-; .append-head: function[.html5 >snippet /style][
-;     snippet: >snippet
 
-;     snippet: {    <style type="text/css">
-;         body { background: navy !important; } /* Adding !important forces the browser to overwrite the default style applied by Bootstrap */
-;     </style>}
-
-; ] 
-
-;--------------
 
 .insert-before-tag: function[/html >html /tag >before-tag /snippet >snippet /to-file >file-path /to-clipboard][
     
@@ -205,8 +196,7 @@ html.compose: :.html.compose
     return html>
 ]
 
-.insert-css-style: function[ /html >html /snippet >css-style /to-file >file-path /to-clipboard][
-
+.insert-head-css-style: function[ /html >html /snippet >css-style /to-file >file-path /to-clipboard][
 
     either html [
         .html: >html
@@ -239,6 +229,8 @@ html.compose: :.html.compose
     return html>
 ]
 insert-css-style: :.insert-css-style
+
+--------------
 
 
 
