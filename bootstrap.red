@@ -328,7 +328,7 @@ Bootstrap.Page.Gen: function[
 
 ]
 
-Bootstrap-background-color: function[>background-color /to-file >file-path /to-clipboard][
+.Bootstrap-background-color: function[>background-color /to-file >file-path /to-clipboard][
     snippet: rejoin [ {body { background: } >background-color { !important}} ]
 
     system/words/it: .insert-css-style system/words/it snippet
@@ -344,4 +344,7 @@ Bootstrap-background-color: function[>background-color /to-file >file-path /to-c
     return system/words/it
 
 ]
+
+Bootstrap-background-color: :.Bootstrap-background-color
+
 
