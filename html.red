@@ -180,7 +180,7 @@ html.compose: :.html.compose
     return html
 ]
 
-.insert-css-style: function[>html >css-style][
+.insert-css-style: function[>html >css-style /to-file >file-path /to-clipboard][
     {Example:
         test: .insert-css-style html5-template {body { background: navy !important; } }
     }
@@ -191,7 +191,17 @@ html.compose: :.html.compose
     newline
     {</style>}
     ]
-    return .insert-before-tag >html "</head>" snippet
+    system/words/it: .insert-before-tag >html "</head>" snippet
+
+    if to-clipboard [
+        write-clipboard system/words/it
+    ]
+    if to-file [
+        .bootstrap-file: >file-path
+        write >file-path system/words/it
+    ]
+        
+    return system/words/it
 ]
 insert-css-style: :.insert-css-style
 
