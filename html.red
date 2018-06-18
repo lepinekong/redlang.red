@@ -182,6 +182,11 @@ html.compose: :.html.compose
         .html: system/words/it
     ]
 
+    do-trace 185 [
+        ?? .html
+    ] %html.red
+    
+
     parse .html [
         to >before-tag start: (
             insert start rejoin [
