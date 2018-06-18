@@ -1,5 +1,5 @@
 Red [
-    Title: ""
+    Title: "override.red"
 ]
 
 .Red.Func.override: function['.func-name][
