@@ -189,7 +189,7 @@ html.compose: :.html.compose
     newline        
         >css-style
     newline
-    {</style>}
+        {</style>}
     ]
     system/words/it: .insert-before-tag "</head>" snippet
 
