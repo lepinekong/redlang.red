@@ -1,6 +1,9 @@
 Red [
     Title: "templating.red"
-    Build: 1.0.0.1
+    Build: 1.0.0.2
+    History: [
+        1.0.0.2 {asks only unset vars}
+    ]
 ]
 
 do read http://redlang.red/build-markup.red
@@ -12,12 +15,13 @@ do read http://redlang.red/build-markup.red
     do read http://redlang.red/do-trace
     
     foreach var vars [
-
-        var: to-word var     
+        var: to-word var
         either not value? var [
-            set to-word var ask rejoin [var ": "]
+            set var ask rejoin [var ": "]
         ][
-            do rejoin ["?? " var]
+            command: rejoin ["?? " var]
+            do read http://redlang.red/do-trace     
+            do command
         ]
         
     ]
