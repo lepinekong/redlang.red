@@ -9,6 +9,7 @@ do read http://redlang.red/build-markup.red
 
     vars: .get-vars content: read >template-path
 
+    ; bug
     ; foreach var vars [
     ;     either not value? var [
             set to-word var ask rejoin [var ": "]
