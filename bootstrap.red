@@ -46,6 +46,34 @@ Red [
 
 do read http://redlang.red/html.red
 
+.bootstrap: make object! [
+
+    create: function[
+        /background-color >background-color 
+        /to-file >file-path 
+        /to-clipboard
+    ][
+
+        system/words/it: Bootstrap.Page.Gen html5-template
+
+        if background-color [
+            
+        ]
+
+        if to-clipboard [
+            write-clipboard system/words/it
+        ]
+        if to-file [
+            .bootstrap-file: >file-path
+            write >file-path system/words/it
+        ]
+        return system/words/it
+
+    ]
+]
+
+Bootstrap: :.bootstrap
+
 .bootstrap.page.create: function[/background-color >background-color /to-file >file-path /to-clipboard][
     
     system/words/it: Bootstrap.Page.Gen html5-template
@@ -64,9 +92,11 @@ do read http://redlang.red/html.red
     return system/words/it
 ]
 
+.bootstrap.create: :.bootstrap.page.create
 bootstrap.page.create: :.bootstrap.page.create
 .create-bootstrap-page: :.bootstrap.page.create
 create-bootstrap-page: :.bootstrap.page.create
+create-bootstrap: :.bootstrap.page.create
 
 .bootstrap.title: function[/title .title /to-file >file-path /to-clipboard][
     ;TODO: test existence of system/words/it
