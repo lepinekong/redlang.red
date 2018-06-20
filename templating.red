@@ -9,12 +9,16 @@ do read http://redlang.red/build-markup.red
 
     vars: .get-vars content: read >template-path
 
+    do read http://redlang.red/do-trace
+    
     foreach var vars [
-    ;     either not value? var [
+
+        var: to-word var     
+        either not value? var [
             set to-word var ask rejoin [var ": "]
-    ;     ][
-    ;         do rejoin ["?? " var]
-    ;     ]
+        ][
+            do rejoin ["?? " var]
+        ]
         
     ]
 
