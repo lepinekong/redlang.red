@@ -11,7 +11,7 @@ do read http://redlang.red/build-markup.red
 
     ; foreach var vars [
     ;     either not value? var [
-    ;         set to-word var ask rejoin [var ": "]
+            set to-word var ask rejoin [var ": "]
     ;     ][
     ;         do rejoin ["?? " var]
     ;     ]
