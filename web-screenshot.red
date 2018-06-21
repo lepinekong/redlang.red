@@ -26,7 +26,7 @@ do read http://redlang.red/expand-string
         Output-file: >Output-file ; %test-new.png        
     ]
 
-    ?? command
+    ;?? command
 
     either no-wait [
         call command
