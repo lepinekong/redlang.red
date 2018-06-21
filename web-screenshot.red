@@ -2,6 +2,9 @@ Red [
     Title: "web-screenshot.red"
 ]
 
+do read http://redlang.red/file-io.red
+do read http://redlang.red/expand-string
+
 .web-screenshot: function[>Url >Output-folder >Output-file /no-wait][
 
     Url: >Url ; http://miniapps.red/
