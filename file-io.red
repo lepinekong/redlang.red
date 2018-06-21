@@ -10,6 +10,8 @@ Red [
     return >folder
 ]
 
+create-folder: :.create-folder
+
 .write: function[][
     
 ]
