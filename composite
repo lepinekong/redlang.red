@@ -1,0 +1,14 @@
+Red [
+	Author: [@greggirwin @endo @toomasv]
+	Purpose: "COMPOSE for strings"
+	Notes: {
+		TBD: Security model for eval'ing expressions
+		TBD: Decide if support for custom marker and eval contexts are worthwhile
+		TBD: Finalize refinement names
+	}
+	References: [
+		https://github.com/nedzadarek/red-formatting/blob/master/composite.red
+	]	
+]
+
+do read http://redlang.red/composite
