@@ -11,4 +11,4 @@ Red [
 	]	
 ]
 
-do read http://redlang.red/composite
+do read http://redlang.red/composite.red
