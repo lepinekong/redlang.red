@@ -9,6 +9,7 @@ do read http://redlang.red/build-markup.red
     return build-markup/bind .string-template Context Compose .block-vars
 ]
 
+.expand-string: :.string.expand
 expand-string: :.string.expand
 string.expand: :.string.expand
 string-expand: :.string.expand
