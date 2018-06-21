@@ -30,6 +30,8 @@ Red [
     ][
         call/wait command
     ]
+    return to-red-file rejoin [Output-folder Output-file]
 ]
 
 Web-Screenshot: :.web-screenshot
+webscreenshot: .web-screenshot
