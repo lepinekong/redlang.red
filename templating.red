@@ -8,6 +8,15 @@ Red [
 
 do read http://redlang.red/build-markup.red
 
+.get-vars: function[>template][
+    vars: copy []
+    rules: [any [thru "<%" copy var to "%>" (append vars var)]]
+    parse >template rules
+    return unique vars
+]
+
+get-vars: :.get-vars
+
 .render-template: function[>template-path /out >output-path [file!] /no-out][
 
     vars: .get-vars content: read >template-path

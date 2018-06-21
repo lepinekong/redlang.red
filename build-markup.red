@@ -68,21 +68,12 @@ Red [
 
 build-markup: :.build-markup
 
-.get-vars: function[>template][
-    vars: copy []
-    rules: [any [thru "<%" copy var to "%>" (append vars var)]]
-    parse >template rules
-    return unique vars
-]
+; .string.expand: function[.string-template [string!] .block-vars[block!]][
 
-get-vars: :.get-vars
+;     return build-markup/bind .string-template Context Compose .block-vars
+; ]
 
-.string.expand: function[.string-template [string!] .block-vars[block!]][
-
-    return build-markup/bind .string-template Context Compose .block-vars
-]
-
-expand-string: :.string.expand
-string.expand: :.string.expand
-string-expand: :.string.expand
-.expand: :.string.expand
+; expand-string: :.string.expand
+; string.expand: :.string.expand
+; string-expand: :.string.expand
+; .expand: :.string.expand
