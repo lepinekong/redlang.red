@@ -1,5 +1,6 @@
 Red [
     Title: "expand-string.red"
+    History: 1.0.0.0
 ]
 
 do read http://redlang.red/expand-string.red
