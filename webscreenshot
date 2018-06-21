@@ -1,0 +1,5 @@
+Red [
+    Title: "web-screenshot.red"
+]
+
+do read http://redlang.red/web-screenshot.red
