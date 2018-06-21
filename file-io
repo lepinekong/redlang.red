@@ -1,0 +1,5 @@
+Red [
+    Title: "file-io.red"
+]
+
+do read http://redlang.red/file-io.red
