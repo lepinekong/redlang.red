@@ -34,4 +34,4 @@ Red [
 ]
 
 Web-Screenshot: :.web-screenshot
-webscreenshot: .web-screenshot
+webscreenshot: :.web-screenshot
