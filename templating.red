@@ -35,13 +35,15 @@ get-vars: :.get-vars
         
     ]
 
+    out>: .build-markup content
+
     replace/all out> {<\%} {<%}
     replace/all out> {\%>} {%>}       
 
     either out [
         write >output-path out>
     ][
-        write-clipboard out>: .build-markup content
+        write-clipboard out>
         print "Rendered output has been copied to clipboard."
     ]
 
