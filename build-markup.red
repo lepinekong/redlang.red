@@ -85,6 +85,7 @@ build-markup: :.build-markup
     return build-markup/bind .string-template Context Compose .block-vars
 ]
 
+.expand-string: :.string.expand
 expand-string: :.string.expand
 string.expand: :.string.expand
 string-expand: :.string.expand
