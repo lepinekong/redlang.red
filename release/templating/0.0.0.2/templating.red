@@ -1,7 +1,8 @@
 Red [
     Title: "templating.red"
-    Build: 1.0.0.2
+    Build: 1.0.0.3
     History: [
+        1.0.0.3 {escape sequence \%}
         1.0.0.2 {asks only unset vars}
     ]
 ]
@@ -33,10 +34,7 @@ get-vars: :.get-vars
             do command
         ]
         
-    ]
-
-    replace/all out> {<\%} {<%}
-    replace/all out> {\%>} {%>}       
+    ] 
 
     either out [
         write >output-path out>
