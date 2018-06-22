@@ -38,5 +38,7 @@ Red [
     return rejoin cum
 ]
 
-block-to-string: :.block-to-string
+block-to-string: function[>block >delimiter][
+    .block-to-string/block/delimiter >block >delimiter
+]
 
