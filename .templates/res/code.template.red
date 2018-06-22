@@ -11,3 +11,7 @@ Red [
         0.0.0.1 {Initial build}
     ]
 ]
+
+<%short-filename%>: function [  ][
+
+]
