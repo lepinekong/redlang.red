@@ -6,8 +6,9 @@ Red [
     Alias: [
         
     ]
-    Build: 0.0.0.0
+    Build: 0.0.0.2
     History-Latest: [
+        0.0.0.2 {form block/1}
         0.0.0.1 {Initial build}
     ]
 ]
@@ -27,9 +28,9 @@ Red [
         forall .block [
             i: index? .block
             either i < n [
-                keep rejoin [.block/1 .delimiter]
+                keep rejoin [form .block/1 .delimiter]
             ][
-                keep .block/1
+                keep form .block/1
             ]
         ]
     ]
