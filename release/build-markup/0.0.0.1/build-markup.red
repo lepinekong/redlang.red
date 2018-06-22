@@ -1,8 +1,12 @@
 Red [
     Title: "build-markup.red"
-    Build: 0.0.0.3
+    Build: 1.0.0.5
+    Version: 1.0.3
     History: [
-        0.0.0.3 {keep only build-markup}
+        1.0.0 {Initial version}
+        1.0.1 {.get-vars: return unique vars}
+        1.0.2 {.render-template}
+        1.0.3 {render: :.render-template}
     ]
     Alias: [
         %build-markup
@@ -23,22 +27,6 @@ Red [
     /delimiters >delimiters [block!]
     /local out eval value
 ][
-    {
-        Example: 
-        do [
-            build-markup {<%a%>} a: 1
-        ]
-
-        do [
-            f: function[a][
-                build-markup/bind {<%a%>} context compose [a: (a)]
-            ]
-            f a: 1
-        ]  
-
-        or use .expand-string wrapper
-        
-    }
     either delimiters [
         -delimiters: >delimiters
     ][
@@ -80,12 +68,12 @@ Red [
 
 build-markup: :.build-markup
 
-.string.expand: function[.string-template [string!] .block-vars[block!]][
+; .string.expand: function[.string-template [string!] .block-vars[block!]][
 
-    return build-markup/bind .string-template Context Compose .block-vars
-]
+;     return build-markup/bind .string-template Context Compose .block-vars
+; ]
 
-expand-string: :.string.expand
-string.expand: :.string.expand
-string-expand: :.string.expand
-.expand: :.string.expand
+; expand-string: :.string.expand
+; string.expand: :.string.expand
+; string-expand: :.string.expand
+; .expand: :.string.expand

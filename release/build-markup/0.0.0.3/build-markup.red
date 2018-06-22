@@ -2,7 +2,7 @@ Red [
     Title: "build-markup.red"
     Build: 0.0.0.3
     History: [
-        0.0.0.3 {keep only build-markup}
+        0.0.0.3 {.expand-string back}
     ]
     Alias: [
         %build-markup
@@ -23,22 +23,6 @@ Red [
     /delimiters >delimiters [block!]
     /local out eval value
 ][
-    {
-        Example: 
-        do [
-            build-markup {<%a%>} a: 1
-        ]
-
-        do [
-            f: function[a][
-                build-markup/bind {<%a%>} context compose [a: (a)]
-            ]
-            f a: 1
-        ]  
-
-        or use .expand-string wrapper
-        
-    }
     either delimiters [
         -delimiters: >delimiters
     ][
