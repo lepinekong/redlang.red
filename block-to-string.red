@@ -37,3 +37,5 @@ Red [
     return rejoin cum
 ]
 
+block-to-string: :.block-to-string
+
