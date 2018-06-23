@@ -4,7 +4,7 @@ Red [
 	Adaptation: "Lépine KONG"
 	Build: 0.0.0.2
 	Builds: [
-		0.0.0.2.1 {Do: from-json alias}
+		0.0.0.2 {from-json alias}
 		0.0.0.1 {Initial version}
 	]
 	Date: 12-Sep-2017

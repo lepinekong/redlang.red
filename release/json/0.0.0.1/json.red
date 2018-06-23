@@ -2,11 +2,6 @@ Red [
 	Title: "ReAdABLE Human Format - JSON Decoder/Encoder"
 	Author: "Christopher Ross-Gill"
 	Adaptation: "Lépine KONG"
-	Build: 0.0.0.2
-	Builds: [
-		0.0.0.2.1 {Do: from-json alias}
-		0.0.0.1 {Initial version}
-	]
 	Date: 12-Sep-2017
 	Home: http://www.ross-gill.com/page/JSON_and_Rebol
 	File: %.system.libraries.reAdABLE-json.red.red
@@ -349,24 +344,3 @@ to-json: use [
 		if parse compose/only [(data)][here: value][json]
 	]
 ]
-
-.from-json: function[json-string][
-
-{Example:
-	from-json: :.from-json
-	data: from-json read https://api.coinmarketcap.com/v1/ticker/bitcoin/?convert=USD
-	price: to-float data/price_usd
-	?? price
-}	
-
-	data: load-json json-string
-	if block? data [
-		if (length? data) = 1 [
-			data: pick data 1
-		]
-	]
-	return data
-]
-
-
-
