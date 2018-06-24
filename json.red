@@ -9,6 +9,7 @@ Red [
 	]
 	Date: 12-Sep-2017
 	Home: http://www.ross-gill.com/page/JSON_and_Rebol
+	Origin: https://github.com/rgchris/Scripts/blob/master/red/altjson.red
 	File: %.system.libraries.reAdABLE-json.red.red
 	Version: 0.3.6.3
 	Purpose: "Convert a Red block to a JSON string"
