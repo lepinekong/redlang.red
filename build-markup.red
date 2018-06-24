@@ -1,7 +1,8 @@
 Red [
     Title: "build-markup.red"
-    Build: 0.0.0.3
+    Build: 0.0.0.4
     History: [
+        0.0.0.4 {.string-expand alias}
         0.0.0.3 {keep only build-markup}
     ]
     Alias: [
@@ -88,5 +89,6 @@ build-markup: :.build-markup
 .expand-string: :.string.expand
 expand-string: :.string.expand
 string.expand: :.string.expand
+.string-expand: :.string.expand
 string-expand: :.string.expand
 .expand: :.string.expand
