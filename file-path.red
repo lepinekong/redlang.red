@@ -96,3 +96,18 @@ to-file: :.to-file
 ]
 
 to-dir: :.to-dir
+
+.get-parent-folder: function[>thePath][
+    ;system/options/path
+    either file? >thePath[
+        thePath: pick split-path >thePath 1
+    ][
+        thePath: >thePath
+    ]
+    
+    parent-folder: last split to-string thePath "/"
+    return parent-folder
+
+]
+
+get-parent-folder: :.get-parent-folder
