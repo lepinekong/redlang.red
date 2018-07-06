@@ -1,0 +1,5 @@
+Red [
+    Title: "sha256.red"
+]
+
+do read https://redlang.red/sha256.red
