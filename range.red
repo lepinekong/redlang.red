@@ -6,21 +6,29 @@ Red [
     ]
 ]
 
-.range: function[>min >max /random /part n [integer!]][
+.range: function[>min >max /random /dices n [integer!]][
     sysRandom: :system/words/random
     min: >min
     max: >max
     block: collect [repeat i (>max - min + 1) [keep (i + min - 1)]]  
-    if random [
+    randomize: function[block][
         sysRandom/seed now/time
         block: sysRandom block
     ]
-    if part [
-        block: copy/part block n
+    if random [
+        block: randomize block      
     ]
+    if dices [
+        .dices: copy []
+        repeat i n [
+            append .dices first randomize block
+        ]
+        return .dices
+    ]      
     return block
 ]
 range: :.range
 
-;usage example:
-;probe range/random/part 1 6 2
+;usage examples:
+;probe range/random 1 6 ; [5 6 3 1 2 4]
+;probe range/dices 1 6 2 ; [5 2]
