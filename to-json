@@ -1,0 +1,10 @@
+Red [
+    Title: "to-json.red"
+    Based-on: [
+        Library: "Altjson"
+        Author: "Christopher Ross-Gill"
+    ]
+
+]
+
+do https://redlang.red/to-json.red
