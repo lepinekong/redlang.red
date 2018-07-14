@@ -3,4 +3,4 @@ Red [
 ]
 
 
-do https://redlang.red/copy-file
+do https://redlang.red/copy-file.red
