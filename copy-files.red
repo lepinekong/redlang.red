@@ -9,7 +9,7 @@ copy-file: function [>source >target][
 
 copy-files: function[>list [block!]][
 
-    forall >list [
+    forall list: >list [
         files: list/1
         source: files/1
         target: files/2
