@@ -14,3 +14,5 @@ Red [
 		keep none
 	]
 ]
+
+use: :.use
