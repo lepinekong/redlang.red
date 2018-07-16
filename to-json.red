@@ -11,7 +11,10 @@ do https://redlang.red/altjson
 
 .to-json: :to-json ; for overriding to-json
 
-to-json: function[>block [block!] /compact /no-clipboard /no-tab-replace][   
+to-json: function[
+    >block [block! word!]
+    /compact /no-clipboard-output /no-tab-replace 
+][
 
     ;--- tab replace feature ---
 
@@ -41,13 +44,13 @@ to-json: function[>block [block!] /compact /no-clipboard /no-tab-replace][
     ;---------------------------
 
     ;--- clipboard feature ---
-    to-clipboard: function [>data][
-        write-clipboard >data
-        print ["output written to clipboard:"]
-        print >data
-    ]
 
-    unless no-clipboard [
+    unless no-clipboard-output [
+        to-clipboard: function [>data][
+            write-clipboard >data
+            print ["output written to clipboard:"]
+            print >data
+        ]        
         to-clipboard json-data
     ]
     ;--------------------------
