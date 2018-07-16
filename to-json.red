@@ -27,7 +27,7 @@ to-json: function[>block [block!] /compact /no-clipboard][
     to-clipboard: function [>data][
         write-clipboard >data
         print ["output written to clipboard:"]
-        probe >data
+        print >data
     ]
 
     unless no-clipboard [
