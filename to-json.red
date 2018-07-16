@@ -7,16 +7,32 @@ Red [
 
 ]
 
-do https://redlang.red/altjson.red
-do https://redlang.red/do-trace
+do https://redlang.red/altjson
 
 .to-json: :to-json ; for overriding to-json
 
-to-json: function[>block [block!] /compact][   
+to-json: function[>block [block!] /compact /no-clipboard][   
 
-    unless compact [
-        return .to-json/pretty .block
+    ;--- json conversion feature ---
+    either compact [
+        json-data: .to-json/pretty .block
+    ][
+        json-data: .to-json .block
     ]
-    return .to-json .block
+    ;--------------------------
+
+    ;--- clipboard feature ---
+    to-clipboard: function [>data][
+        write-clipboard >data
+        print ["output written to clipboard:"]
+        probe >data
+    ]
+
+    unless no-clipboard [
+        to-clipboard json-data
+    ]
+    ;--------------------------
+
+    return json-data
     
 ]
