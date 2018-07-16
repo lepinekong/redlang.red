@@ -13,6 +13,8 @@ do https://redlang.red/altjson
 
 to-json: function[>block [block!] /compact /no-clipboard][   
 
+    .block: >block
+    
     ;--- json conversion feature ---
     either compact [
         json-data: .to-json/pretty .block
