@@ -1,0 +1,4 @@
+Red []
+
+code: load-thru https://redlang.red/altjson.red
+do code
