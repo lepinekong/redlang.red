@@ -27,6 +27,7 @@ to-json: function[
                 new-sub-block: copy []
                 foreach [field value] sub-block [
                     value: replace/all value tab ""
+                    value: replace/all value "    " ""
                     append new-sub-block reduce [field value]
                 ]
                 append/only .block new-sub-block
