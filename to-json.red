@@ -13,8 +13,23 @@ do https://redlang.red/altjson
 
 to-json: function[
     >block [block! word!]
-    /compact /no-clipboard-output /no-tab-replace 
+    /compact /no-clipboard-output 
+    /no-tab-replace /no-newline
 ][
+
+    if no-newline [
+        .block: copy []
+        forall >block [
+            sub-block: >block/1
+            new-sub-block: copy []
+            foreach [field value] sub-block [
+                value: replace/all value newline " "
+                append new-sub-block reduce [field value]
+            ]
+            append/only .block new-sub-block
+        ] 
+        >block: copy .block       
+    ]
 
     ;--- tab replace feature ---
 
