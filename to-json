@@ -7,4 +7,17 @@ Red [
 
 ]
 
-do https://redlang.red/to-json.red
+__DEBUG_MODE__: true
+
+lib-url: https://redlang.red/to-json.red
+
+either __DEBUG_MODE__ [
+    lib-code: load-thru/update lib-url
+    do lib-code
+][
+    lib-code: load-thru lib-url
+    do lib-code
+]
+
+
+
