@@ -4,6 +4,9 @@ Red [
         Library: "Altjson"
         Author: "Christopher Ross-Gill"
     ]
+    Builds: [
+        0.0.0.1 {Initial version}
+    ]
 
 ]
 
@@ -16,6 +19,8 @@ to-json: function[
     /compact /no-clipboard-output 
     /no-tab-replace /no-newline
 ][
+
+    ;--- no-newline feature ---
 
     if no-newline [
         .block: copy []
@@ -30,6 +35,7 @@ to-json: function[
         ] 
         >block: copy .block       
     ]
+    ;---------------------------
 
     ;--- tab replace feature ---
 
