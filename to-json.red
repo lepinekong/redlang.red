@@ -8,13 +8,15 @@ Red [
 ]
 
 do https://redlang.red/altjson.red
+do https://redlang.red/do-trace
 
-.to-json: :to-json
-to-json: function[block [block!] /compact][
+.to-json: :to-json ; for overriding to-json
+
+to-json: function[>block [block!] /compact][   
 
     unless compact [
-        return .to-json/pretty block
+        return .to-json/pretty .block
     ]
-    return .to-json block
+    return .to-json .block
     
 ]
