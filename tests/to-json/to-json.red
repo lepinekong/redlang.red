@@ -3,13 +3,7 @@ Red [
     Based-on: [
         Library: "Altjson"
         Author: "Christopher Ross-Gill"
-    ]
-
-    Builds: [
-        0.0.0.3.3 {if no-newline [: still bug; looping forever}
-        0.0.0.3.2 {if no-newline [: bug}
-        0.0.0.3.1 {reintegrate 0.0.0.1 to-clipboard}        
-    ]     
+    ]    
 
 ]
 
