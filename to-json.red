@@ -11,9 +11,26 @@ do https://redlang.red/altjson
 
 .to-json: :to-json ; for overriding to-json
 
-to-json: function[>block [block!] /compact /no-clipboard][   
+to-json: function[>block [block!] /compact /no-clipboard /no-tab-replace][   
 
-    .block: >block
+    ;--- tab replace feature ---
+
+        either no-tab-replace [
+            .block: >block
+        ][
+            .block: copy []
+            forall >block [
+                sub-block: >block/1
+                new-sub-block: copy []
+                foreach [field value] sub-block [
+                    value: replace/all value tab ""
+                    append new-sub-block reduce [field value]
+                ]
+                append/only .block new-sub-block
+            ]
+        ]
+
+    ;---------------------------
 
     ;--- json conversion feature ---
     either compact [
@@ -21,7 +38,7 @@ to-json: function[>block [block!] /compact /no-clipboard][
     ][
         json-data: .to-json/pretty .block
     ]
-    ;--------------------------
+    ;---------------------------
 
     ;--- clipboard feature ---
     to-clipboard: function [>data][
