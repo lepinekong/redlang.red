@@ -1,3 +1,9 @@
+<!--
+; just to avoid bug with do read
+templating: ""
+
+set to-word rejoin ["--" ">"] "templating library loaded" 
+-->
 
 <!doctype html>
 
@@ -5,7 +11,7 @@
     <head>
     <meta charset="utf-8">
 
-    <title>Hello World</title>
+    <title>Templating Library</title>
     <meta name="description" content="The HTML5 Herald">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="me">
@@ -20,12 +26,21 @@
     <!--[if lt IE 9]>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
     <![endif]-->
-    <style type="text/css">
-        body { background: #000000 !important}
-    </style>
-</head>
+    
+    </head>
 
     <body>
-        <script src=""></script>
+        Templating Library
     </body>
 </html>    
+
+<!--
+
+Red [
+    Title: "templating"
+]
+
+set to-word rejoin ["--" ">"] "templating library loaded"
+print "loaded"
+do https://redlang.red/templating.red    
+-->
