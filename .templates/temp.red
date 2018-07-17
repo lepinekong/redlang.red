@@ -1,9 +1,10 @@
 <!--
 ; just to avoid bug with do read
-<%short-file-name%>: ""
+templating: ""
 
 set to-word rejoin ["--" ">"] "templating library loaded" 
 -->
+
 
 <!doctype html>
 
@@ -40,6 +41,6 @@ Red [
     Title: "templating"
 ]
 
-set to-word rejoin ["--" ">"] "<%title%>"
-do https://redlang.red/<%short-file-name%>.red
+set to-word rejoin ["--" ">"] "templating library loaded"
+do https://redlang.red/templating.red    
 -->
