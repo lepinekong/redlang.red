@@ -1,14 +1,9 @@
 <!--
-Red []
 ; just to avoid bug with do read
+<%short-file-name%>: ""
 
-<title>
-	<%short-filename%>: ""
-</title>
-set to-word rejoin ["--" ">"] "<%short-filename%> loaded" 
-do https://redlang.red/<%short-filename%>.red    
+set to-word rejoin ["--" ">"] "templating library loaded" 
 -->
-
 
 <!doctype html>
 
@@ -16,7 +11,7 @@ do https://redlang.red/<%short-filename%>.red
     <head>
     <meta charset="utf-8">
 
-    <title><%short-filename%>/title>
+    <title>Templating Library</title>
     <meta name="description" content="The HTML5 Herald">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="me">
@@ -35,8 +30,16 @@ do https://redlang.red/<%short-filename%>.red
     </head>
 
     <body>
-        <%short-filename%>
+        Templating Library
     </body>
 </html>    
 
+<!--
 
+Red [
+    Title: "templating"
+]
+
+set to-word rejoin ["--" ">"] "<%title%>"
+do https://redlang.red/<%short-file-name%>.red
+-->
