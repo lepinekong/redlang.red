@@ -9,3 +9,5 @@ powershell.profile: function [][
 	call/show rejoin [{notepad.exe } {"} USERPROFILE {\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1} {"}]
 ]
 powershell-profile: :powershell.profile
+
+
