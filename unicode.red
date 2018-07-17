@@ -8,11 +8,12 @@ Red [
 
 sysdo: :do
 do: function [lib][
-	try [sysdo lib]
+	try [sysdo lib] ; to avoid error in toomasv/unicode.red with do %range.red
 ]
 
-do %toomasv/range.red
-do %toomasv/unicode.red
+do https://redlang.red/toomasv/range.red
+do https://redlang.red/toomasv/unicode.red
+
 
 emoticons: unicode 'emoticons
 ?? emoticons
