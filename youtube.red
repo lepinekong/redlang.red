@@ -1,7 +1,7 @@
 Red [
     Title: "youtube.red"
     Builds: [
-        0.0.0.1 {Initial version: id, title, description}
+        0.0.0.1.1 {Initial version: id, title, description}
     ]
 ]
 
