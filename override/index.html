@@ -3,10 +3,10 @@ Red []
 ; just to avoid bug with do read
 
 <title>
-	<%short-filename%>: ""
+	override: ""
 </title>
-set to-word rejoin ["--" ">"] "<%short-filename%> loaded" 
-__red-code__: load https://redlang.red/<%short-filename%>.red    
+set to-word rejoin ["--" ">"] "override loaded" 
+__red-code__: load https://redlang.red/override.red    
 -->
 
 <!doctype html>
@@ -15,7 +15,7 @@ __red-code__: load https://redlang.red/<%short-filename%>.red
     <head>
     <meta charset="utf-8">
 
-    <title><%short-filename%></title>
+    <title>override</title>
     <meta name="description" content="The HTML5 Herald">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="me">
@@ -34,14 +34,14 @@ __red-code__: load https://redlang.red/<%short-filename%>.red
     </head>
 
     <body>
-        <%short-filename%>
+        override
     </body>
 </html>    
 
 <!--
     <execute>
         do __red-code__
-        print "<%short-filename%> loaded"
+        print "override loaded"
     </execute>
 -->
 

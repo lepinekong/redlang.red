@@ -1,5 +1,0 @@
-Red [
-    Title: "override.red"
-]
-
-do read http://redlang.red/override.red

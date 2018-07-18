@@ -6,8 +6,9 @@ Red []
 	<%short-filename%>: ""
 </title>
 set to-word rejoin ["--" ">"] "<%short-filename%> loaded" 
-__red-code__: load https://redlang.red/<%short-filename%>.red    
+do https://redlang.red/<%short-filename%>.red    
 -->
+
 
 <!doctype html>
 
@@ -38,10 +39,4 @@ __red-code__: load https://redlang.red/<%short-filename%>.red
     </body>
 </html>    
 
-<!--
-    <execute>
-        do __red-code__
-        print "<%short-filename%> loaded"
-    </execute>
--->
 
