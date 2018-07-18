@@ -1,5 +1,5 @@
 Red [
-    Title: ""
+    Title: "url.red"
 ]
 
 parse-url: function[>url >param-name][
