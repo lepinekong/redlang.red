@@ -6,7 +6,7 @@ parse-url: function[>url >param-name][
     param-name: rejoin [>param-name "="]
     parse to-string >url compose [
         thru (param-name) copy param-value [
-            to "?" | to end
+            to "&" | to end
         ]
     ]
     return param-value
