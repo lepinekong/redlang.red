@@ -1,6 +1,16 @@
 Red [
     Title: "youtube.red"
     Builds: [
+        0.0.0.1.2 {
+            bugs:
+            
+            1/ youtube https://www.youtube.com/watch?v=mKFGj8sK5R8&t=2s
+            id: "mKFGj8sK5R8&t=2s"
+
+            2/ youtube 'clipboard
+            *** Script Error: .title has no value
+
+        }
         0.0.0.1.1 {Initial version: id, title, description}
     ]
 ]
@@ -96,3 +106,9 @@ youtube: function [>id_or_url [word! string! url!] /to-clipboard][
 
 ; test: youtube 'GHvnIm9UEoQ
 ;test: youtube/to-clipboard https://www.youtube.com/watch?y=10&v=GHvnIm9UEoQ
+;test: youtube https://www.youtube.com/watch?v=mKFGj8sK5R8&t=2s
+;?? test
+
+;test: youtube 'clipboard
+
+
