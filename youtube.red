@@ -95,4 +95,4 @@ youtube: function [>id_or_url [word! string! url!] /to-clipboard][
 ]
 
 ; test: youtube 'GHvnIm9UEoQ
-test: youtube/to-clipboard https://www.youtube.com/watch?y=10&v=GHvnIm9UEoQ
+;test: youtube/to-clipboard https://www.youtube.com/watch?y=10&v=GHvnIm9UEoQ
