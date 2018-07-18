@@ -53,6 +53,7 @@ youtube: function [>id_or_url [word! string! url!] /to-clipboard][
         if find >id_or_url "http://" [
             >id_or_url: to-url >id_or_url
         ]
+        to-clipboard: true
     ]
 
     either url? >id_or_url [
