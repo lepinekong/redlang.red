@@ -18,7 +18,9 @@ print "test 2"
     </body>
 </html> 
 <!--
+<execute>
         print "test 4" ; why it doesn't execute ?!
+</execute>
 -->
 
 
