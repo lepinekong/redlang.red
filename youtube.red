@@ -5,20 +5,48 @@ Red [
     ]
 ]
 
-parse-url: function[>url >param-name][
-    param-name: rejoin [>param-name "="]
-    parse to-string >url compose [
-        thru (param-name) copy param-value [
-            to "?" | to end
-        ]
+; parse-url: function[>url >param-name][
+;     param-name: rejoin [>param-name "="]
+;     parse to-string >url compose [
+;         thru (param-name) copy param-value [
+;             to "?" | to end
+;         ]
+;     ]
+;     return param-value
+; ]
+
+do load-thru https://redlang.red/url.red
+
+; id: parse-url https://www.youtube.com/watch?v=GHvnIm9UEoQ 'v
+; ?? id
+
+.parse-youtube-url: function [>youtube-url [url!]][
+
+    .url: >youtube-url
+    .html: read >youtube-url
+
+    parse .html [
+        thru {<meta name="twitter:title" content="} copy .title to {">}
+        thru {<meta name="twitter:description" content="} copy .description to {">}
     ]
-    return param-value
+
+    ; parse to-string url [
+    ;     thru "v=" copy id [
+    ;         to "?" | to end
+    ;     ]
+    ; ]
+
+    .id: parse-url .url 'v
+
+    return repend [] [
+        to-set-word 'id .id 
+        to-set-word 'title .title 
+        to-set-word 'description .description
+    ] 
+
 ]
 
-;id: parse-url https://www.youtube.com/watch?v=GHvnIm9UEoQ 'v
-;?? id
-
-youtube: function [>id_or_url [word! string! url!]][
+youtube: function [>id_or_url [word! string! url!] /to-clipboard][
 
     if >id_or_url = 'clipboard [
         >id_or_url: read-clipboard
@@ -33,28 +61,37 @@ youtube: function [>id_or_url [word! string! url!]][
         id: >id_or_url
         url: rejoin [https://www.youtube.com/watch?v= id]
     ]
-    html: read url
 
+    it: .parse-youtube-url url
 
-    parse html [
-        thru {<meta name="twitter:title" content="} copy title to {">}
-        thru {<meta name="twitter:description" content="} copy description to {">}
-    ]
+    ; html: read url
 
-    parse to-string url [
-        thru "v=" copy id [
-            to "?" | to end
-        ]
-    ]
+    ; parse html [
+    ;     thru {<meta name="twitter:title" content="} copy title to {">}
+    ;     thru {<meta name="twitter:description" content="} copy description to {">}
+    ; ]
 
-    return repend [] [
-        to-set-word 'id id 
-        to-set-word 'title title 
-        to-set-word 'description description
-    ]
+    ; ; parse to-string url [
+    ; ;     thru "v=" copy id [
+    ; ;         to "?" | to end
+    ; ;     ]
+    ; ; ]
+
+    ; id: parse-url url 'v
+
+    ; return repend [] [
+    ;     to-set-word 'id id 
+    ;     to-set-word 'title title 
+    ;     to-set-word 'description description
+    ; ]
     
+    if to-clipboard [
+        write-clipboard mold it
+        print mold it
+        print "copied to clipboard"
+    ]
+    return it
 ]
 
 ; test: youtube 'GHvnIm9UEoQ
-test: youtube https://www.youtube.com/watch?y=10&v=GHvnIm9UEoQ
-?? test
+test: youtube/to-clipboard https://www.youtube.com/watch?y=10&v=GHvnIm9UEoQ
