@@ -23,5 +23,6 @@ chrome: function [>url][
 take-screenshot: function [>url >file][
     chrome-path: get-chrome-path
     command: rejoin [chrome-path { } >url { }  {--screenshot=} >file { } {--headless --hide-scrollbars --window-size=1920,1080 --disable-gpu &}]
+    print command
     call command
 ]
