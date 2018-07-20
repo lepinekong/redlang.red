@@ -1,5 +1,8 @@
 Red [
     Title: "chrome.red"
+    Iterations: [
+        0.0.0.1.1 {Initial version}
+    ]
 ]
 
 get-chrome-path: function [][
