@@ -8,6 +8,7 @@ Red [
     ]
     .links: [
         https://jonathanmh.com/taking-full-page-screenshots-headless-chrome/
+        https://stackoverflow.com/questions/43541925/how-to-set-the-browser-window-size-when-using-google-chrome-headless
     ]
 ]
 
