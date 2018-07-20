@@ -1,6 +1,7 @@
 Red [
     Title: "chrome.red"
     Iterations: [
+        0.0.0.1.2 {Hide scrollbar}
         0.0.0.1.1 {Initial version}
     ]
 ]
@@ -17,6 +18,6 @@ chrome: function [>url][
 
 take-screenshot: function [>url >file][
     chrome-path: get-chrome-path
-    command: rejoin [chrome-path { } >url { }  {--screenshot=} >file { } {--headless --disable-gpu}]
+    command: rejoin [chrome-path { } >url { }  {--screenshot=} >file { } {--headless --hide-scrollbars --disable-gpu}]
     call command
 ]
