@@ -14,6 +14,6 @@ chrome: function [>url][
 
 take-screenshot: function [>url >file][
     chrome-path: get-chrome-path
-    command: rejoin [chrome-path { } url { }  {--screenshot=} >file { } {--headless --disable-gpu}]
+    command: rejoin [chrome-path { } >url { }  {--screenshot=} >file { } {--headless --disable-gpu}]
     call command
 ]
