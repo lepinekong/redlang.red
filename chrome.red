@@ -7,8 +7,15 @@ Red [
         0.0.0.1.1 {Initial version}
     ]
     .links: [
+        ;take screenshot
         https://jonathanmh.com/taking-full-page-screenshots-headless-chrome/
         https://stackoverflow.com/questions/43541925/how-to-set-the-browser-window-size-when-using-google-chrome-headless
+
+        ;to-pdf
+        https://stackoverflow.com/questions/45364102/how-do-i-use-headless-chrome-in-chrome-60-on-windows-10
+
+        ;kill chrome
+        https://superuser.com/questions/1288388/how-can-i-kill-all-headless-chrome-instances-from-the-command-line-on-windows
     ]
 ]
 
@@ -22,9 +29,25 @@ chrome: function [>url][
     call command
 ]
 
+; take-screenshot: function [>url >file][
+;     chrome-path: get-chrome-path
+;     ;command: rejoin [chrome-path { } >url { }  {--screenshot=} >file { } {--headless --hide-scrollbars --window-size=1920,1080 --disable-gpu &}]
+;     command: rejoin [chrome-path { } >url { }  {--screenshot=} >file { } {--headless --hide-scrollbars  --disable-gpu}    
+;     print command
+;     call command
+; ]
+
+; take-screenshot: function [>url >file][
+;     chrome-path: get-chrome-path
+;     command: rejoin [chrome-path { } >url { }  {--screenshot=} >file { } {--headless --hide-scrollbars --window-size=1920,1080 --disable-gpu &}]
+;     print command
+;     call command
+; ]
+
 take-screenshot: function [>url >file][
     chrome-path: get-chrome-path
-    command: rejoin [chrome-path { } >url { }  {--screenshot=} >file { } {--headless --hide-scrollbars --window-size=1920,1080 --disable-gpu &}]
-    print command
-    call command
+    command: rejoin [chrome-path { } >url { }  {--screenshot=} {"} >file {"} { } {--headless --window-size=1920,1080 --hide-scrollbars --disable-gpu}]
+    call/wait command
 ]
+
+take-screenshot https://google.com "c:\test\chrome.5.png"
