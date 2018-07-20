@@ -29,25 +29,8 @@ chrome: function [>url][
     call command
 ]
 
-; take-screenshot: function [>url >file][
-;     chrome-path: get-chrome-path
-;     ;command: rejoin [chrome-path { } >url { }  {--screenshot=} >file { } {--headless --hide-scrollbars --window-size=1920,1080 --disable-gpu &}]
-;     command: rejoin [chrome-path { } >url { }  {--screenshot=} >file { } {--headless --hide-scrollbars  --disable-gpu}    
-;     print command
-;     call command
-; ]
-
-; take-screenshot: function [>url >file][
-;     chrome-path: get-chrome-path
-;     command: rejoin [chrome-path { } >url { }  {--screenshot=} >file { } {--headless --hide-scrollbars --window-size=1920,1080 --disable-gpu &}]
-;     print command
-;     call command
-; ]
-
 take-screenshot: function [>url >file][
     chrome-path: get-chrome-path
     command: rejoin [chrome-path { } >url { }  {--screenshot=} {"} >file {"} { } {--headless --window-size=1920,1080 --hide-scrollbars --disable-gpu}]
     call/wait command
 ]
-
-take-screenshot https://google.com "c:\test\chrome.5.png"
