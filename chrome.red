@@ -1,6 +1,7 @@
 Red [
     Title: "chrome.red"
     Iterations: [
+        0.0.0.1.4 {print command}
         0.0.0.1.3 {Window size}
         0.0.0.1.2 {Hide scrollbar}
         0.0.0.1.1 {Initial version}
