@@ -56,6 +56,6 @@ system/lexer/pre-load: func [src part][
     ]
 ]
 
-do {take screenshot https://google.com c:\test\chrome.6.png}
+;do {take screenshot https://google.com c:\test\chrome.6.png}
 ;do %chrome/take-screenshot.red
 
