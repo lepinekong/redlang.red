@@ -2,9 +2,13 @@ Red [
     Title: "take-screenshot.red"
 ]
 
-take-screenshot: function [>url >file /window-size >window-size [pair! string!]][
-
-    {Usage: take-screenshot https://google.com c:\test\test.png}
+take-screenshot: function [
+    {Take web-screenshot with google chrome
+    Usage: take-screenshot https://google.com c:\test\test.png}
+    >url {example: https://google.com}
+    >file {example: c:\test\test.png}
+    /window-size >window-size [pair! string!] {example: 1920x1080 or "1920,1080"}
+][
 
     .local-file: to-local-file form >file
 
