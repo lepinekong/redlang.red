@@ -1,36 +1,61 @@
 Red [
-    Title: "chrome.red"
+    Title: "chrome.3.red"
     Iterations: [
-        0.0.0.1.4 {print command}
-        0.0.0.1.3 {Window size}
-        0.0.0.1.2 {Hide scrollbar}
-        0.0.0.1.1 {Initial version}
-    ]
-    .links: [
-        ;take screenshot
-        https://jonathanmh.com/taking-full-page-screenshots-headless-chrome/
-        https://stackoverflow.com/questions/43541925/how-to-set-the-browser-window-size-when-using-google-chrome-headless
-
-        ;to-pdf
-        https://stackoverflow.com/questions/45364102/how-do-i-use-headless-chrome-in-chrome-60-on-windows-10
-
-        ;kill chrome
-        https://superuser.com/questions/1288388/how-can-i-kill-all-headless-chrome-instances-from-the-command-line-on-windows
+        0.0.0.3.6 {added | "take screenshot" copy arg1 to space copy arg2 to space to newline } 
+        0.0.0.3.5 {added | "Usage: take-screenshot"}        
+        0.0.0.3.4 {fixed}
+        0.0.0.3.3 {debugging}
+        0.0.0.3.2 {debugging}
+        0.0.0.3.1 {*** Syntax Error: {"lazy-load-chrome take-screenshot    ;}}
     ]
 ]
 
-get-chrome-path: function [][
-    return chrome-path: rejoin [{"} get-env "programfiles(x86)" "\Google\Chrome\Application\chrome.exe" {"}]
+load-take-screenshot: function [][
+
+    unless value? 'take-screenshot [
+        either exists? %chrome/take-screenshot.2.red [
+            do %chrome/take-screenshot.2.red
+        ][
+            do https://redlang.red/chrome/take-screenshot.red
+        ]
+        
+        return true
+    ]
+    return false
+] 
+
+lazy-load-chrome: function ['>function][   
+
+	.function: form >function
+
+	switch .function [		
+		"take-screenshot" [
+			load-take-screenshot
+		]	
+	]
 ]
 
-chrome: function [>url][
-    chrome-path: get-chrome-path
-    command: rejoin [chrome-path { } >url]
-    call command
+system/lexer/pre-load: func [src part][
+    parse src [
+        any [
+            s: [
+                ["take-screenshot:" | "take-screenshot." | "Usage: take-screenshot"] 
+            ] skip
+            |            
+            s: o: [
+                [
+                "take-screenshot" copy arg1 to space copy arg2 to space to newline 
+                | "take-screenshot" copy arg1 to space copy arg2 to end
+                "take screenshot" copy arg1 to space copy arg2 to space to newline 
+                | "take screenshot" copy arg1 to space copy arg2 to end                
+                ] 
+                (new: rejoin ["lazy-load-chrome take-screenshot" newline "take-screenshot" { } arg1 { } arg2] )
+            ] e: (s: change/part s new e) :s 
+            | skip
+        ]
+    ]
 ]
 
-take-screenshot: function [>url >file][
-    chrome-path: get-chrome-path
-    command: rejoin [chrome-path { } >url { }  {--screenshot=} {"} >file {"} { } {--headless --window-size=1920,1080 --hide-scrollbars --disable-gpu}]
-    call/wait command
-]
+do {take screenshot https://google.com c:\test\chrome.6.png}
+;do %chrome/take-screenshot.red
+

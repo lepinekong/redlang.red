@@ -1,15 +1,10 @@
 Red [
-    Title: "take-screenshot.2.red"
-        0.0.0.1.2 {Bug when adding doc:     
-        {Take web-screenshot with google chrome
-    Usage: take-screenshot https://google.com c:\test\test.png}
-    }    
-        0.0.0.1.1 {Initial version}
+    Title: "take-screenshot.red"
 ]
 
-take-screenshot: function [  
+take-screenshot: function [
     {Take web-screenshot with google chrome
-    Usage: take-screenshot https://google.com c:\test\test.png}    
+    Usage: take-screenshot https://google.com c:\test\test.png}
     >url {example: https://google.com}
     >file {example: c:\test\test.png}
     /window-size >window-size [pair! string!] {example: 1920x1080 or "1920,1080"}
@@ -45,10 +40,5 @@ take-screenshot: function [
     ]
 
     call/wait command
-
-    output: to-local-file clean-path to-red-file .local-file
-    print ["screenshot" "in" output]
-
 ]
-
 
