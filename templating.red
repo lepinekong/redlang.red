@@ -17,7 +17,14 @@ do read http://redlang.red/build-markup.red
 
 get-vars: :.get-vars
 
-.render-template: function[>template-path /out >output-path [file!] /no-out][
+.render-template: function[>template /out >output-path [file!] /no-out][
+
+    either string? >template [
+        content: >template
+    ][
+        >template-path: >template
+        content: read >template-path
+    ]
 
     vars: .get-vars content: read >template-path
 
