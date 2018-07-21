@@ -1,3 +1,7 @@
+Red [
+	Title: "powershell-profile.red"
+]
+
 powershell.profile: function [][
 	;USERNAME: get-env "username"
 	;call/show rejoin [{notepad.exe C:\Users\} USERNAME {\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1}]
