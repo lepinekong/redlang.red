@@ -18,7 +18,11 @@ take-screenshot: function [>url >file /window-size >window-size [pair! string!]]
     ]
     ;-------------------------------------------------------
 
+    unless value? 'get-chrome-path [
+        do https://redlang.red/chrome/get-chrome-path.red
+    ]
     chrome-path: get-chrome-path
+
     command: rejoin [
         chrome-path { } >url   
         { } {--screenshot=} {"} >file {"} 
