@@ -1,6 +1,7 @@
 Red [
     Title: "chrome.3.red"
     Iterations: [
+        0.0.0.3.7 {added | "take screenshot of " copy arg1 to space " in " copy arg2 to end }
         0.0.0.3.6 {added | "take screenshot" copy arg1 to space copy arg2 to space to newline } 
         0.0.0.3.5 {added | "Usage: take-screenshot"}        
         0.0.0.3.4 {fixed}
@@ -42,12 +43,14 @@ system/lexer/pre-load: func [src part][
                 ["take-screenshot:" | "take-screenshot." | "Usage: take-screenshot"] 
             ] skip
             |            
-            s: o: [
+            s: [
                 [
                 "take-screenshot" copy arg1 to space copy arg2 to space to newline 
                 | "take-screenshot" copy arg1 to space copy arg2 to end
                 "take screenshot" copy arg1 to space copy arg2 to space to newline 
-                | "take screenshot" copy arg1 to space copy arg2 to end                
+                | "take screenshot" copy arg1 to space copy arg2 to end 
+                "take screenshot of " copy arg1 to space " in " copy arg2 to space to newline 
+                | "take screenshot of " copy arg1 to space " in " copy arg2 to end                                
                 ] 
                 (new: rejoin ["lazy-load-chrome take-screenshot" newline "take-screenshot" { } arg1 { } arg2] )
             ] e: (s: change/part s new e) :s 
