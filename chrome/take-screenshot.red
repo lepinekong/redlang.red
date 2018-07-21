@@ -18,7 +18,8 @@ take-screenshot: function [
     .local-file: to-local-file form >file
 
     ;-------------------------------------------------------
-    DEFAULT_WINDOW-SIZE: "1920,1080"
+    ;DEFAULT_WINDOW-SIZE: "1920,1080"
+    DEFAULT_WINDOW-SIZE: "1368,912"
 
     if window-size [
         if pair? >window-size [
@@ -47,7 +48,8 @@ take-screenshot: function [
     call/wait command
 
     output: to-local-file clean-path to-red-file .local-file
-    print ["screenshot" "in" output]
+    resolution: replace copy >window-size "," "x"
+    print ["screenshot at resolution" resolution "in" output]
 
 ]
 
