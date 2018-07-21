@@ -1,8 +1,15 @@
 Red [
     Title: "templating.red"
-    Build: 1.0.0.2
-    History: [
-        1.0.0.2 {asks only unset vars}
+    Build: 0.0.0.2
+    Iterations: [
+        0.0.0.2.1 {Added to 0.0.0.1 : 
+    either string? >template [
+        content: >template
+    ][
+        >template-path: >template
+        content: read >template-path
+    ]        
+        }
     ]
 ]
 
@@ -26,9 +33,7 @@ get-vars: :.get-vars
         content: read >template-path
     ]
 
-    vars: .get-vars content: read >template-path
-
-    do read http://redlang.red/do-trace
+    vars: .get-vars content
     
     foreach var vars [
         var: to-word var
@@ -36,7 +41,6 @@ get-vars: :.get-vars
             set var ask rejoin [var ": "]
         ][
             command: rejoin ["?? " var]
-            do read http://redlang.red/do-trace     
             do command
         ]
         
