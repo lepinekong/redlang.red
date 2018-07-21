@@ -48,8 +48,7 @@ take-screenshot: function [
     call/wait command
 
     output: to-local-file clean-path to-red-file .local-file
-    resolution: replace copy >window-size "," "x"
-    print ["screenshot at resolution" resolution "in" output]
+    print ["screenshot at resolution" "in" output]
 
 ]
 
