@@ -4,6 +4,10 @@ Red [
 
 take-screenshot: function [>url >file /window-size >window-size [pair! string!]][
 
+    {Usage: take-screenshot https://google.com c:\test\test.png}
+
+    .local-file: to-local-file form >file
+
     ;-------------------------------------------------------
     DEFAULT_WINDOW-SIZE: "1920,1080"
 
@@ -25,7 +29,7 @@ take-screenshot: function [>url >file /window-size >window-size [pair! string!]]
 
     command: rejoin [
         chrome-path { } >url   
-        { } {--screenshot=} {"} >file {"} 
+        { } {--screenshot=} {"} .local-file {"} 
         { } {--headless}  
         { } {--window-size=} >window-size 
         { } {--hide-scrollbars --disable-gpu}
@@ -33,3 +37,4 @@ take-screenshot: function [>url >file /window-size >window-size [pair! string!]]
 
     call/wait command
 ]
+
