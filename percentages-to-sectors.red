@@ -17,6 +17,8 @@ percentages-to-sectors: function [
     }
     
     >percentages /start-angle >start-angle
+    /keep-percentage
+    /format-in-block
 ][
 
     .sectors: copy []
@@ -26,10 +28,20 @@ percentages-to-sectors: function [
 
     start-angle: >start-angle
     foreach percentage >percentages [
-        append .sectors reduce [
-            percentage
+        sector: copy []
+
+        if keep-percentage [
+            append sector percentage
+        ] 
+        append sector reduce [
             as-pair start-angle sweep-angle: (percentage * 360.0 / 100)
         ]
+        either format-in-block [
+            append/only .sectors sector
+        ][
+            append .sectors sector
+        ]
+
         start-angle: start-angle + sweep-angle
     ]
     return .sectors
