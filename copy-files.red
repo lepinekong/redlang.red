@@ -15,10 +15,29 @@ copy-file: function [>source >target /force][
 
             print [>target "already exists."]
 
+            get-next-file: function [/local counter][
+                counter: copy []
+                if empty? counter [
+                    append counter 0
+                ]
+                counter/1: counter/1 + 1
+                i: counter/1
+
+                next-file: rejoin [short-filename + "." + i + extension]                
+            ]
+
             do https://redlang.red/file-path
             short-filename: .get-short-filename >target
-            ?? short-filename
-            ask "pause"
+            extension: .get-file-extension >target
+            i: 1
+            next-file: >target
+            while exists? next-file [
+                next-file: get-next-file
+            ]
+            write next-file read >source
+            print [next-file "created."]
+
+            
         ][
             write >target read >source
         ]

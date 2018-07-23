@@ -40,6 +40,8 @@ split-filename: :.split-filename
 ]
 
 get-file-extension: :.get-file-extension
+.get-extension: :.get-file-extension
+get-extension: :.get-file-extension
 
 .to-file: function [.file [file! string! word! block!]][
 
