@@ -1,11 +1,30 @@
 Red [
     Title: "copy-file.red"
+    Iterations: [
+        0.0.0.1.2 {Protecting existing files}
+        0.0.0.1.1 {Initial build}
+    ]    
 ]
 
-copy-file: function [>source >target][
-    write >target read >source
-]
+copy-file: function [>source >target /force][
 
+    either force [
+        write >target read >source
+    ][
+        either exists? >target [
+
+            print [>target "already exists."]
+
+            do https://redlang.red/file-path
+            short-filename: .get-short-filename >target
+            ?? short-filename
+            ask "pause"
+        ][
+            write >target read >source
+        ]
+    ]
+
+]
 
 copy-files: function[>list][
 
