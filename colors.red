@@ -1,5 +1,8 @@
 Red [
     Title: "colors.red"
+    Builds: [
+        0.0.0.1 {Initial version}
+    ]
 ]
 
 ocean: 61.160.255
