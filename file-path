@@ -1,5 +1,0 @@
-Red [
-    Title: "files.red"
-]
-
-do read http://redlang.red/file-path.red
