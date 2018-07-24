@@ -1,8 +1,10 @@
 Red [
     Title: "copy-file.red"
+    Builds: [
+        0.0.0.1 {Initial build with file versioning or /force}
+    ]
     Iterations: [
-        0.0.0.1.2 {Protecting existing files}
-        0.0.0.1.1 {Initial build}
+        0.0.0.1.8 {list-files: get-list-files target-folder}
     ]    
 ]
 
@@ -16,28 +18,31 @@ copy-file: function [>source >target /force][
             print [>target "already exists."]
 
             get-next-file: function [/local counter][
-                counter: copy []
+                counter: []
                 if empty? counter [
                     append counter 0
                 ]
                 counter/1: counter/1 + 1
                 i: counter/1
-
-                next-file: rejoin [short-filename + "." + i + extension]                
+                next-file: rejoin [short-filename  "."  i  extension]                
             ]
 
             do https://redlang.red/file-path
             short-filename: .get-short-filename >target
             extension: .get-file-extension >target
-            i: 1
+            target-folder: pick (split-path >target) 1
+
             next-file: >target
-            while exists? next-file [
-                next-file: get-next-file
+            while [exists? next-file][
+                next-file: rejoin [target-folder get-next-file] 
             ]
+
+            do https://redlang.red/list-files
+            list-files: get-list-files target-folder
+            ?? list-files
+            
             write next-file read >source
             print [next-file "created."]
-
-            
         ][
             write >target read >source
         ]
