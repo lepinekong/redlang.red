@@ -4,8 +4,24 @@ Red [
         0.0.0.1 {Initial build with file versioning or /force and checksum}
     ]
     Iterations: [
-        0.0.0.1.12 {if previous-file <> >target [}
-        0.0.0.1.10 {Add checksum}     
+        0.0.0.1.10 {Add checksum}
+        0.0.0.1.9 {FIXED BUG}
+        0.0.0.1.8 {list-files: get-list-files target-folder}
+        0.0.0.1.7 {Fixed don't use COPY for static counter !}
+        0.0.0.1.6 {Fixed with target-folder: pick (split-path >target) 1
+        BUG: infinite loop ?}
+        0.0.0.1.5 {Fixed by deleting + in rejoin
+        BUG: forgot target folder
+        }
+        0.0.0.1.4 {Fixed with () to [] for while condition 
+        Bug: 
+*** Script Error: + does not allow file! for its value1 argument
+*** Where: +
+*** Stack: copy-file rejoin empty?
+        }
+        0.0.0.1.3 {get-next-file: function [/local counter][
+        BUG: while does not allow logic! for its cond argument
+        }       
         0.0.0.1.2 {Protecting existing files}
         0.0.0.1.1 {Initial build}
     ]    
@@ -54,20 +70,23 @@ copy-file: function [>source >target /force /no-checksum][
             list-files: get-list-files target-folder
             ?? list-files
 
-            if previous-file <> >target [
-                unless no-checksum [
+            unless no-checksum [
 
-                    either false = compare-checksum >source previous-file [    
-                        write next-file read >source
-                        print [next-file "created."]
-                        return true
-                    ][
-                        print [previous-file "is up to date."]
-                        return false
-                    ]
+                ; source-content: read >source
+                ; checksum-source: checksum source-content 'SHA256
+                ; previous-file-content: read previous-file
+                ; checksum-previous: checksum previous-file-content 'SHA256
+
+                ;either checksum-previous <> checksum-source [
+                either false = compare-checksum >source previous-file [    
+                    write next-file read >source
+                    print [next-file "created."]
+                    return true
+                ][
+                    print [previous-file "is up to date."]
+                    return false
                 ]
             ]
-
             ; no-checksum
             write next-file read >source
             print [next-file "created."]
@@ -90,3 +109,34 @@ copy-files: function[>list][
         copy-file source target   
     ]
 ]
+
+; i: 4
+
+; list: compose/deep [
+
+;     [
+;         %../index.html 
+;         %../../../.github/tests/index.html
+;     ]
+;     [
+;         %../index.html
+;         (rejoin [%../../../.github/tests/index "." i "." "html"])
+;     ]
+
+;     [
+;         %../authoring.html
+;         %../../../.github/tests/authoring.html
+;     ]
+
+;     [
+;         (rejoin [%../lib "." i "." "red"])
+;         (rejoin [%../../../.github/tests/lib "." "red"])
+;     ]
+
+;     [
+;         (rejoin [%../lib "." i "." "red"])
+;         (rejoin [%../../../.github/tests/lib "." i "." "red"])
+;     ]
+; ]
+
+; copy-files list
