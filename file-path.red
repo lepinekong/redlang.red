@@ -17,6 +17,9 @@ Red [
 ]
 
 get-short-filename: :.get-short-filename
+get-short-filename-without-extension: function [.filepath [file! url!]][
+    .get-short-filename/wo-extension .filepath
+]
 
 .split-filename: function[.filename][
 
