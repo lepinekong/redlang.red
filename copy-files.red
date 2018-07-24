@@ -1,11 +1,8 @@
 Red [
     Title: "copy-file.red"
     Builds: [
-        0.0.0.1 {Initial build with file versioning or /force}
+        0.0.0.1.9 {Initial build with file versioning or /force}
     ]
-    Iterations: [
-        0.0.0.1.8 {list-files: get-list-files target-folder}
-    ]    
 ]
 
 copy-file: function [>source >target /force][
@@ -24,11 +21,12 @@ copy-file: function [>source >target /force][
                 ]
                 counter/1: counter/1 + 1
                 i: counter/1
-                next-file: rejoin [short-filename  "."  i  extension]                
+                next-file: rejoin [short-filename-wo-extension "."  i  extension]                
             ]
 
             do https://redlang.red/file-path
             short-filename: .get-short-filename >target
+            short-filename-wo-extension: get-short-filename-without-extension >target
             extension: .get-file-extension >target
             target-folder: pick (split-path >target) 1
 
