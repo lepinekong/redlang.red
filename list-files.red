@@ -2,7 +2,7 @@ Red [
     Title: "list-files.red"
 ]
 
-get-list-files: function [>target-folder][
+.get-list-files: function [>target-folder][
     .files: copy []
     files-and-folders: read >target-folder
     forall files-and-folders [
@@ -12,4 +12,6 @@ get-list-files: function [>target-folder][
     ]
     return .files
 ]
+
+get-list-files: :.get-list-files
 
