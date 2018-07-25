@@ -15,26 +15,19 @@ Red [
 
     do https://redlang.red/datetime.red
 
-    target-directory: <=target-directory
+    command: {set-location '<%folder%>';git archive --format zip --output <%zip-path%> master}
 
-        folder: form >source-folder
-        folder: .cd (folder)
-        short-filename: (last (split folder "/"))
-        string-date: .get-string-date
+    print "starting..."
 
-        command: {set-location '<%folder%>';git archive --format zip --output <%target-directory%><%short-filename%>_<%string-date%>.zip master}
+    do https://redlang.red/string-expand
+    do https://redlang.red/call-powershell
 
-        print "starting..."
-
-        do https://redlang.red/string-expand
-        
-        .call-powershell/out .expand command [
-            target-directory: (to-string target-directory)
-            short-filename: (to-string short-filename)
-            folder: (to-string (to-local-file folder))
-            string-date: (string-date)
-        ]
-            print "finished."
+    change-dir (>source-folder)
+    .call-powershell/out .expand command [
+        folder: (to-string (to-local-file folder))
+        zip-path: (>zip-path)
+    ]
+    print "finished."
 
 ]
 
