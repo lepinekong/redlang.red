@@ -5,6 +5,12 @@ Red [
 	Purpose: "Print a directory tree"
 	File: "%dir-tree.red"
 ]
+
+unless value? '.do-events [
+	do https://redlang.red/do-events
+]
+
+
 context [
 	; Some helpers
 	get-char: func [hex][to-char to-integer hex]
@@ -56,6 +62,7 @@ context [
 				all [
 					any [not dirs dir? value] 							; whether only directories are printed
 					any [levels = 'all levels >= depth]					; is depth limited?
+					.do-events/no-wait
 					print either dir? value [							; print current line of tree
 						append copy prefix either frm [mold value][value] 
 					][
@@ -66,6 +73,7 @@ context [
 						;reduce [lines n]
 						either lins [append file rejoin [" (" n #")"]][file]
 					]
+					.do-events/no-wait
 				]
 				all [
 					dir? value											; if this is directory
