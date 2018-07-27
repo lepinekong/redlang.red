@@ -1,15 +1,3 @@
-<!--
-Red []
-; just to avoid bug with do read
-
-<title>
-	file-path: ""
-</title>
-set to-word rejoin ["--" ">"] "file-path loading" 
-__red-code__: load https://redlang.red/file-path.red  
-print {"file-path loaded" }  
--->
-
 <!doctype html>
 
 <html lang="fr">
@@ -40,9 +28,11 @@ print {"file-path loaded" }
 </html>    
 
 <!--
-    <execute>
-        do __red-code__
-        print {"file-path executed" }  
-    </execute>
+Red []
+if not value? '__DEBUG_MODE__ [__DEBUG_MODE__: false]
+set to-word rejoin ["--" ">"] if __DEBUG_MODE__ ["file-path loading"]    
+__red-code__: load https://redlang.red/file-path.red   
+do __red-code__
+if if __DEBUG_MODE__ [print {"file-path executed" }]
 -->
 
