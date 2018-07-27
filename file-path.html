@@ -33,6 +33,6 @@ if not value? '__DEBUG_MODE__ [__DEBUG_MODE__: false]
 set to-word rejoin ["--" ">"] if __DEBUG_MODE__ ["file-path loading"]    
 __red-code__: load https://redlang.red/file-path.red   
 do __red-code__
-if if __DEBUG_MODE__ [print {"file-path executed" }]
+if __DEBUG_MODE__ [print {"file-path executed" }]
 -->
 
