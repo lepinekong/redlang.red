@@ -106,8 +106,6 @@ youtube: function [>id_or_url [word! string! url! block!] /to-clipboard][
             youtube-parsed: youtube >id_or_url
             ?? youtube-parsed
             append/only result youtube-parsed
-            ?? result
-            ask "pause..."
         ]
 
         if to-clipboard [
