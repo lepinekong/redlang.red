@@ -1,6 +1,20 @@
 Red [
     Title: "youtube.red"
     Builds: [
+        0.0.0.1.7 {supports block of urls}
+        0.0.0.1.6 {Refactoring:
+    ; return repend [] [
+    ;     to-set-word 'id .id 
+    ;     to-set-word 'title .title 
+    ;     to-set-word 'description .description
+    ; ] 
+
+    return append [] compose [
+        id: (.id)
+        title: (.title)
+        description: (.description)
+    ]        
+        }
         0.0.0.1.5 {Bug fixed youtube 'clipboard}
         0.0.0.1.4 {
             KO test: youtube 'clipboard
@@ -35,9 +49,11 @@ Red [
     ]
 ]
 
-
-do load-thru https://redlang.red/url.red
-
+unless not error? try [
+    do load-thru/update https://redlang.red/url.red
+][
+    do %libs/url.red
+]
 
 .parse-youtube-url: function [>youtube-url [url!]][
 
@@ -46,7 +62,6 @@ do load-thru https://redlang.red/url.red
 
     ?? >youtube-url
     write-clipboard .html
-    ask "pause..."
 
     parse .html [
         thru {<meta name="twitter:title" content="} copy .title to {">}
@@ -56,48 +71,62 @@ do load-thru https://redlang.red/url.red
 
     .id: parse-url .url 'v
 
-
-    return repend [] [
-        to-set-word 'id .id 
-        to-set-word 'title .title 
-        to-set-word 'description .description
-    ] 
+    return append [] compose [
+        id: (.id)
+        title: (.title)
+        description: (.description)
+    ]
 
 ]
 
-youtube: function [>id_or_url [word! string! url!] /to-clipboard][
+youtube: function [>id_or_url [word! string! url! block!] /to-clipboard][
 
-
-    if >id_or_url = 'clipboard [
-        >id_or_url: read-clipboard
-        if find >id_or_url "http" [
-            >id_or_url: to-url >id_or_url
+    either block? >id_or_url [
+        result: copy []
+        >id_or_urls: >id_or_url
+        forall >id_or_urls [
+            >id_or_url: >id_or_urls/1
+            append/only result youtube >id_or_url
         ]
-        to-clipboard: true
-    ]
 
+        if to-clipboard [
+            write-clipboard mold result
+            print mold result
+            print "copied to clipboard"
+        ]
 
-
-    either url? >id_or_url [
-        url: >id_or_url
+        return result
     ][
-        id: >id_or_url
-        url: rejoin [https://www.youtube.com/watch?v= id]
-    ]
-    
+        if >id_or_url = 'clipboard [
+            >id_or_url: read-clipboard
+            if find >id_or_url "http" [
+                >id_or_url: to-url >id_or_url
+            ]
+            to-clipboard: true
+        ]
 
-    it: .parse-youtube-url url
+        either url? >id_or_url [
+            url: >id_or_url
+        ][
+            id: >id_or_url
+            url: rejoin [https://www.youtube.com/watch?v= id]
+        ]
+        
 
-    if to-clipboard [
-        write-clipboard mold it
-        print mold it
-        print "copied to clipboard"
+        it: .parse-youtube-url url
+
+        if to-clipboard [
+            write-clipboard mold it
+            print mold it
+            print "copied to clipboard"
+        ]
+        return it
     ]
-    return it
+
 ]
 
 ; test: youtube 'GHvnIm9UEoQ
-;test: youtube/to-clipboard https://www.youtube.com/watch?y=10&v=GHvnIm9UEoQ
+; test: youtube/to-clipboard https://www.youtube.com/watch?y=10&v=GHvnIm9UEoQ
 ;test: youtube https://www.youtube.com/watch?v=mKFGj8sK5R8&t=2s
 ;?? test
 
@@ -105,5 +134,13 @@ youtube: function [>id_or_url [word! string! url!] /to-clipboard][
 ; ?? test
 
 ;test: youtube 'clipboard
+
+; youtube.7.red
+; test: youtube [
+;     https://www.youtube.com/watch?v=B5kkOxHGz8M
+;     https://www.youtube.com/watch?v=Gg84CO4L2Yw
+; ]
+
+; ?? test
 
 

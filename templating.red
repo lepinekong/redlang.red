@@ -13,7 +13,12 @@ Red [
     ]
 ]
 
-do read http://redlang.red/build-markup.red
+unless not error? [
+    do http://redlang.red/build-markup.red
+][
+    do %libs/build-markup.red
+]
+
 
 .get-vars: function[>template][
     vars: copy []
