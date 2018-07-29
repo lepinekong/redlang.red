@@ -1,7 +1,24 @@
 Red [
     Title: "youtube.red"
     Builds: [
-        0.0.0.1.7 {supports block of urls}
+        0.0.0.1.9 {Multiple urls support - cleaning}
+        0.0.0.1.8 {
+    ; BUG 
+    ; return append [] compose [
+    ;     id: (.id)
+    ;     title: (.title)
+    ;     description: (.description)
+    ; ]
+
+    ; FIXED
+    return compose [
+        id: (.id)
+        title: (.title)
+        description: (.description)
+    ]    
+
+        }
+        0.0.0.1.7 {supports block of urls - BUG double result}
         0.0.0.1.6 {Refactoring:
     ; return repend [] [
     ;     to-set-word 'id .id 
@@ -71,11 +88,11 @@ unless not error? try [
 
     .id: parse-url .url 'v
 
-    return append [] compose [
+    return compose [
         id: (.id)
         title: (.title)
         description: (.description)
-    ]
+    ]    
 
 ]
 
@@ -86,7 +103,11 @@ youtube: function [>id_or_url [word! string! url! block!] /to-clipboard][
         >id_or_urls: >id_or_url
         forall >id_or_urls [
             >id_or_url: >id_or_urls/1
-            append/only result youtube >id_or_url
+            youtube-parsed: youtube >id_or_url
+            ?? youtube-parsed
+            append/only result youtube-parsed
+            ?? result
+            ask "pause..."
         ]
 
         if to-clipboard [
@@ -136,6 +157,8 @@ youtube: function [>id_or_url [word! string! url! block!] /to-clipboard][
 ;test: youtube 'clipboard
 
 ; youtube.7.red
+; test: youtube/to-clipboard https://www.youtube.com/watch?v=B5kkOxHGz8M
+; test2: youtube/to-clipboard https://www.youtube.com/watch?v=Gg84CO4L2Yw
 ; test: youtube [
 ;     https://www.youtube.com/watch?v=B5kkOxHGz8M
 ;     https://www.youtube.com/watch?v=Gg84CO4L2Yw
