@@ -77,7 +77,6 @@ unless not error? try [
     .url: >youtube-url
     .html: read >youtube-url
 
-    ?? >youtube-url
     write-clipboard .html
 
     parse .html [
@@ -104,7 +103,6 @@ youtube: function [>id_or_url [word! string! url! block!] /to-clipboard][
         forall >id_or_urls [
             >id_or_url: >id_or_urls/1
             youtube-parsed: youtube >id_or_url
-            ?? youtube-parsed
             append/only result youtube-parsed
         ]
 
