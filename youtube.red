@@ -1,68 +1,7 @@
 Red [
     Title: "youtube.red"
     Builds: [
-        0.0.0.1.9 {Multiple urls support - cleaning}
-        0.0.0.1.8 {
-    ; BUG 
-    ; return append [] compose [
-    ;     id: (.id)
-    ;     title: (.title)
-    ;     description: (.description)
-    ; ]
-
-    ; FIXED
-    return compose [
-        id: (.id)
-        title: (.title)
-        description: (.description)
-    ]    
-
-        }
-        0.0.0.1.7 {supports block of urls - BUG double result}
-        0.0.0.1.6 {Refactoring:
-    ; return repend [] [
-    ;     to-set-word 'id .id 
-    ;     to-set-word 'title .title 
-    ;     to-set-word 'description .description
-    ; ] 
-
-    return append [] compose [
-        id: (.id)
-        title: (.title)
-        description: (.description)
-    ]        
-        }
-        0.0.0.1.5 {Bug fixed youtube 'clipboard}
-        0.0.0.1.4 {
-            KO test: youtube 'clipboard
-            ->
-            >youtube-url: https://www.youtube.com/watch?v=https://www.youtube.com/watch?v=mKFGj8sK5R8&t=2s
-            pause...
-            if find >id_or_url "http://" [
-            should be
-            if find >id_or_url "http" [
-        }
-        0.0.0.1.3 {
-            bugs:
-            
-            1/ youtube https://www.youtube.com/watch?v=mKFGj8sK5R8&t=2s
-            id: "mKFGj8sK5R8&t=2s" => fixed
-
-            2/ youtube 'clipboard
-            *** Script Error: .title has no value => still unfixed
-
-        }        
-        0.0.0.1.2 {
-            bugs:
-            
-            1/ youtube https://www.youtube.com/watch?v=mKFGj8sK5R8&t=2s
-            id: "mKFGj8sK5R8&t=2s"
-
-            2/ youtube 'clipboard
-            *** Script Error: .title has no value
-
-        }
-        0.0.0.1.1 {Initial version: id, title, description}
+        0.0.0.1.10 {Multiple urls support}
     ]
 ]
 
