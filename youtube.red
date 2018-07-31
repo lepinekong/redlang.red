@@ -1,6 +1,7 @@
 Red [
     Title: "youtube.red"
     Builds: [
+        0.0.0.1.14 {/to-json}
         0.0.0.1.13 {Cleaning}
         0.0.0.1.12 {Test OK}
         0.0.0.1.11 {Managing internet connection error}
@@ -50,7 +51,13 @@ if __OFFLINE__ or error? try [
 
 ]
 
-youtube: function [>id_or_url [word! string! url! block!] /to-clipboard][
+.parse-youtube: :.parse-youtube-url
+parse-youtube: :.parse-youtube-url  
+
+youtube: function [>id_or_url [word! string! url! block!] 
+    /to-clipboard
+    /to-json
+][
 
     either block? >id_or_url [
         result: copy []
@@ -61,10 +68,21 @@ youtube: function [>id_or_url [word! string! url! block!] /to-clipboard][
             append/only result youtube-parsed         
         ]
 
-        if to-clipboard [
-            write-clipboard mold result
-            print mold result
-            print "copied to clipboard"
+        either to-json [
+            result: system/words/to-json result
+            if to-clipboard [
+                write-clipboard result
+                print result
+                print "json data copied to clipboard"
+            ]
+            return result 
+
+        ][
+            if to-clipboard [
+                write-clipboard mold result
+                print mold result
+                print "copied to clipboard"
+            ]
         ]
 
         return result
