@@ -6,8 +6,6 @@ Red [
     ]
 
     Builds: [
-        0.0.0.3.7 {cleaning}
-        0.0.0.3.6 {test seems ok}
         0.0.0.3.5 {cleaning - BUG duplicates result}
         0.0.0.3.4 {tracing}
         0.0.0.3.3 {if no-newline [: still bug; looping forever}
@@ -128,7 +126,7 @@ to-json: function[
     ;print 126
     ;print json-data
     ;print 128
-    ;print length? json-data
+    print length? json-data
     return json-data
     
 ]

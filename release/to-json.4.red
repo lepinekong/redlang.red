@@ -6,9 +6,7 @@ Red [
     ]
 
     Builds: [
-        0.0.0.3.7 {cleaning}
-        0.0.0.3.6 {test seems ok}
-        0.0.0.3.5 {cleaning - BUG duplicates result}
+        0.0.0.3.5 {cleaning}
         0.0.0.3.4 {tracing}
         0.0.0.3.3 {if no-newline [: still bug; looping forever}
         0.0.0.3.2 {if no-newline [: bug}
@@ -21,7 +19,7 @@ Altjson-url: https://redlang.red/altjson.red
 Altjson: load-thru Altjson-url
 do Altjson
 
-;do https://redlang.red/do-trace
+do https://redlang.red/do-trace
 
 .to-json: :to-json ; for overriding to-json
 
@@ -34,7 +32,6 @@ to-json: function[
     /fields >fields ; TODO
     /from-csv /from-readable ; TODO
 ][
-
 
     if fields [>fields?: true] ; just to type refinement for clarity
 
@@ -109,7 +106,6 @@ to-json: function[
     either compact [
         json-data: .to-json .block
     ][
-       
         json-data: .to-json/pretty .block
     ]
     ;---------------------------    
@@ -125,10 +121,7 @@ to-json: function[
         to-clipboard json-data
     ]
     ;--------------------------       
-    ;print 126
-    ;print json-data
-    ;print 128
-    ;print length? json-data
+
     return json-data
     
 ]
@@ -151,21 +144,4 @@ to-json: function[
 ;     In short, 'Secret City' isn't just a film for Londoners - especially in these times of crisis, the role of the City concerns everyone everywhere.}
     
 ; ]
-
-; youtube-data: [
-;     [id: {4XNMCTBdQtk} title: {Will the Earths Magnetic Fields Shift?} description: {Is the Earth losing its magnetic field and doomed to a fate similar to Mars? Many scientists believe the answer lies in paleomagnetic data, and that this weakening may be a precursor to a magnetic field reversal.}]
-;     [id: {eHnwtkfX2k4} title: {The City of London, the Corporation that runs it} description: {A secret state within a state, with deleterious effects on democracy, politics and economics in London, the country, and the world, for the City is joint headquarters with Wall Street of global finance capital.}]
-; ]
-
-; json-data: to-json youtube-data
-
-
-; test to-json.5.red
-; youtube-data: [[
-;     id: "Gg84CO4L2Yw" title: "How the Universe Works" description: {Blow your Mind of the Universe Part 11 - Space Discovery Documentary}
-; ] [
-;     id: "Gg84CO4L2Yw" title: "How the Universe Works" description: {Blow your Mind of the Universe Part 11 - Space Discovery Documentary}
-; ]]
-
-; json-data: to-json youtube-data
 

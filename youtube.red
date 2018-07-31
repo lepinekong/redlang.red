@@ -1,30 +1,46 @@
 Red [
     Title: "youtube.red"
     Builds: [
+        0.0.0.1.13 {Cleaning}
+        0.0.0.1.12 {Test OK}
+        0.0.0.1.11 {Managing internet connection error}
         0.0.0.1.10 {Multiple urls support}
     ]
 ]
 
-unless not error? try [
+__OFFLINE__: false
+
+if __OFFLINE__ or error? try [
     do load-thru/update https://redlang.red/url.red
+    do load-thru/update https://redlang.red/to-json.red
 ][
+    print "OFFLINE mode"
     do %libs/url.red
+    do %libs/to-json.6.red
 ]
 
-.parse-youtube-url: function [>youtube-url [url!]][
+.parse-youtube-url: function [>youtube-url [url!] /local _counter_][
+
+    _counter_: copy []
+    if empty? _counter_ [append _counter_ 0]
 
     .url: >youtube-url
-    .html: read >youtube-url
-
-    write-clipboard .html
-
-    parse .html [
-        thru {<meta name="twitter:title" content="} copy .title to {">}
-        thru {<meta name="twitter:description" content="} copy .description to {">}
+    if error? try [
+        .html: read >youtube-url
+        parse .html [
+            thru {<meta name="twitter:title" content="} copy .title to {">}
+            thru {<meta name="twitter:description" content="} copy .description to {">}
+        ]
+        ; write-clipboard .html
+        .id: parse-url .url 'v        
+    ][
+        ans: ask {Do you want simulated data ("Y" for YES)?}
+        if ans = "Y" [
+            .id: "Gg84CO4L2Yw"
+            .title: "How the Universe Works"
+            .description: {Blow your Mind of the Universe Part 11 - Space Discovery Documentary}
+        ]
     ]
-
-
-    .id: parse-url .url 'v
 
     return compose [
         id: (.id)
@@ -42,7 +58,7 @@ youtube: function [>id_or_url [word! string! url! block!] /to-clipboard][
         forall >id_or_urls [
             >id_or_url: >id_or_urls/1
             youtube-parsed: youtube >id_or_url
-            append/only result youtube-parsed
+            append/only result youtube-parsed         
         ]
 
         if to-clipboard [
@@ -81,24 +97,6 @@ youtube: function [>id_or_url [word! string! url! block!] /to-clipboard][
 
 ]
 
-; test: youtube 'GHvnIm9UEoQ
-; test: youtube/to-clipboard https://www.youtube.com/watch?y=10&v=GHvnIm9UEoQ
-;test: youtube https://www.youtube.com/watch?v=mKFGj8sK5R8&t=2s
-;?? test
 
-; test: youtube https://www.youtube.com/watch?v=mKFGj8sK5R8&t=2s
-; ?? test
-
-;test: youtube 'clipboard
-
-; youtube.7.red
-; test: youtube/to-clipboard https://www.youtube.com/watch?v=B5kkOxHGz8M
-; test2: youtube/to-clipboard https://www.youtube.com/watch?v=Gg84CO4L2Yw
-; test: youtube [
-;     https://www.youtube.com/watch?v=B5kkOxHGz8M
-;     https://www.youtube.com/watch?v=Gg84CO4L2Yw
-; ]
-
-; ?? test
 
 
