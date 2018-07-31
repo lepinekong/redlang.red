@@ -87,6 +87,8 @@ youtube: function [>id_or_url [word! string! url! block!]
 
         return result
     ][
+
+
         if >id_or_url = 'clipboard [
             >id_or_url: read-clipboard
             if find >id_or_url "http" [
@@ -105,11 +107,23 @@ youtube: function [>id_or_url [word! string! url! block!]
 
         it: .parse-youtube-url url
 
-        if to-clipboard [
-            write-clipboard mold it
-            print mold it
-            print "copied to clipboard"
+        either to-json [
+            it: system/words/to-json it
+            if to-clipboard [
+                write-clipboard it
+                print it
+                print "json data copied to clipboard"
+            ]
+            return result             
+        ][
+            if to-clipboard [
+                write-clipboard mold it
+                print mold it
+                print "copied to clipboard"
+            ]            
         ]
+
+
         return it
     ]
 
