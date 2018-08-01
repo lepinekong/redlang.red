@@ -1,6 +1,8 @@
 Red [
     Title: "youtube.red"
     Builds: [
+        0.0.0.2.4 {/force-update}
+        0.0.0.2.3 {don't override existing data when saving}
         0.0.0.2.2 {/save}
         0.0.0.2.1 {file! arg}
     ]
@@ -27,6 +29,7 @@ youtube: function [
     /to-clipboard
     /to-json
     /save target-file
+    /force-update
 ][
 
     if file? >id_or_url [
@@ -65,7 +68,6 @@ youtube: function [
         return result
     ][
 
-
         if >id_or_url = 'clipboard [
             >id_or_url: read-clipboard
             if find >id_or_url "http" [
@@ -101,6 +103,33 @@ youtube: function [
         ]
 
         if save [
+            if exists? target-file [
+                unless force-update [
+                    existing-data: load target-file
+                    existing-ids: copy []
+                    forall existing-data [
+                        data: existing-data/1
+                        append existing-ids data/id
+                    ]
+                    new-ids: copy []
+                    forall it [
+                        data: it/1
+                        append new-ids data/id
+                    ]
+                    diff: difference new-ids existing-ids
+                    new-datas: copy []
+                    forall it [
+                        data: it/1
+                        id: data/id
+                        if find diff id [
+                            append/only new-datas data
+                        ]
+                    ]
+                    it: copy new-datas
+                ]
+
+                
+            ]
             system/words/save target-file it
         ]
         return it
