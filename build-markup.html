@@ -1,22 +1,10 @@
-<!--
-Red []
-; just to avoid bug with do read
-
-<title>
-	build-markup: ""
-</title>
-set to-word rejoin ["--" ">"] "build-markup loaded" 
-__red-code__: load https://redlang.red/build-markup.red    
--->
-
-
 <!doctype html>
 
 <html lang="fr">
     <head>
     <meta charset="utf-8">
 
-    <title>Build-Markup</title>
+    <title>build-markup</title>
     <meta name="description" content="The HTML5 Herald">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="me">
@@ -31,18 +19,32 @@ __red-code__: load https://redlang.red/build-markup.red
     <!--[if lt IE 9]>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
     <![endif]-->
-    
+    <style>       
+        body, html {
+        height: 100%;
+        display: grid;
+        background-color: red;
+        color: white;
+        text-align: center;
+        }
+        span {
+            margin: auto;
+        }
+    </style>    
     </head>
 
     <body>
-        Build-Markup
+        <span>
+        Type in Red console:
+        <br>
+        do https://redlang.red/build-markup
+        </span>
     </body>
 </html>    
-<!--
-    <execute>
-        do __red-code__
-        print "build-markup loaded"
-    </execute>
--->
 
+<!--
+Red []    
+set to-word rejoin ["--" ">"] "build-markup loaded"    
+do https://redlang.red/build-markup.red 
+-->
 
