@@ -1,7 +1,6 @@
 Red [
     Title: "youtube.red"
     Builds: [
-        0.0.0.2.2 {/save}
         0.0.0.2.1 {file! arg}
     ]
 ]
@@ -26,7 +25,6 @@ youtube: function [
     ] 
     /to-clipboard
     /to-json
-    /save target-file
 ][
 
     if file? >id_or_url [
@@ -59,9 +57,6 @@ youtube: function [
             ]
         ]
 
-        if save [
-            system/words/save target-file result
-        ]
         return result
     ][
 
@@ -100,9 +95,7 @@ youtube: function [
             ]            
         ]
 
-        if save [
-            system/words/save target-file it
-        ]
+
         return it
     ]
 
