@@ -14,7 +14,14 @@ Red [
     ]
 ]
 
-do http://redlang.red/build-markup
+__OFFLINE__: false
+
+if __OFFLINE__ or error? try [
+    do http://redlang.red/build-markup
+][
+    do %libs/build-markup.red
+]
+
 
 .get-vars: function[>template][
     vars: copy []
