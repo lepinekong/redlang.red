@@ -7,7 +7,7 @@ Red [
         3 {supports values provided in data refinement. if some values}
         3.1 {If some values are not provided in data will ask for these values}
     ]
-    Build: [0.0.0.3 {Support new refinement /data}]
+    Build: [0.0.0.3 {Support new refinement /data }]
 ]
 
 __OFFLINE__: false
