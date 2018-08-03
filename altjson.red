@@ -146,6 +146,7 @@ json-loader: make object! [
 		string space #":" space (
 			emit either is-flat [
 				to tag! current-value
+				;to set-word! current-value
 			][
 				any [
 					to-word current-value
