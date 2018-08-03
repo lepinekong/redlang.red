@@ -34,8 +34,6 @@ html-embed: function [][
     render template %html-embed.html
 ]
 
-html-embed
-
 
 
 
