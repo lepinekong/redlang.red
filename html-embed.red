@@ -31,7 +31,7 @@ html-embed: function [][
             system/words/domain-name: ans
         ]
     ]
-    render template %html-embed.html
+    return render template %html-embed.html
 ]
 
 
