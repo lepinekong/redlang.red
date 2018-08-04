@@ -3,6 +3,7 @@ Red [
 ]
 
 do https://redlang.red/cd
+do https://redlang.red/get-folder
 
 nodejs: function [/folder '>folder /script '>script][
 
