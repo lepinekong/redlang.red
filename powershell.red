@@ -9,6 +9,7 @@ powershell: function [/startup-dir >startup-directory][
 	]
 
 	command: rejoin [{start powershell -NoExit -Command "Set-Location '} replace/all >startup-directory "\" "\\" {'}]
+	print command
 	call command	
 ]
 
