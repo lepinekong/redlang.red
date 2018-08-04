@@ -17,7 +17,7 @@ nodejs: function [/folder '>folder /script '>script][
         ][
             script-folder: request-dir
             if exists? %index.js [
-                script-name: "index.js"
+                >script-name: "index.js"
             ]
         ]
     ]
