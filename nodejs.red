@@ -9,6 +9,7 @@ nodejs: function [/folder '>folder /script '>script-name][
     folder: form >folder
     folder: to-red-file folder
     cd (folder)
+    print what-dir
     script-name: form >script-name
     command: rejoin [{cmd.exe /c node} { } script-name]
     print command
