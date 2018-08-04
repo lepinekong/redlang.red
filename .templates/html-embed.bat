@@ -1,0 +1,1 @@
+C:\ProgramData\Red\console-2017-8-3-49893.exe "c:\rebol\.system.user\.data\.activities\redlang.red\.github\.templates\html-embed.red"
