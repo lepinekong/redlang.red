@@ -11,4 +11,6 @@ nodejs: function [/folder '>folder /script '>script-name][
     cd (folder)
     script-name: form >script-name
     command: rejoin [{cmd.exe /c node} { } script-name]
+    print command
+    call/wait command
 ]
