@@ -2,6 +2,16 @@ Red [
     Title: "powershell.red"
 ]
 
+powershell: function [/startup-dir >startup-directory][
+
+	unless startup-dir [
+		>startup-directory: to-local-file what-dir
+	]
+
+	command: rejoin [{start powershell -NoExit -Command "Set-Location '} replace/all >startup-directory "\" "\\" {'}]
+	call command	
+]
+
 lazy-load: function ['>function][
 
 	.function: form >function

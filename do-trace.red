@@ -12,7 +12,7 @@ Red [
     }
 ]
 
-do read http://redlang.red/lib-files
+do http://redlang.red/lib-files
 
 .do-trace: function [.line-number [integer!] '.block [word! block! unset!] .file [file! url! string!]
 /filter that-contains [string! file! url!]
