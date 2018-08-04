@@ -8,7 +8,7 @@ nodejs: function [/folder '>folder /script '>script][
 
     either folder [
         script-folder: form >folder
-        script-folder: to-red-file folder
+        script-folder: to-red-file script-folder
         unless script [
             >script-name: "index.js"
         ]
