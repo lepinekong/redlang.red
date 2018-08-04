@@ -1,6 +1,7 @@
 Red [
     Title: "blank-template.red"
     Iterations: [
+        0.0.0.1.5 {Deleted call}
         0.0.0.1.4 {Fix ask domain error}
         0.0.0.1.3 {Confirm domain-name - bugged when asking domain: 
 *** Script Error: ask does not allow block! for its question argument        
