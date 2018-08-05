@@ -26,6 +26,10 @@
         background-color: rgba(233, 25, 19);
         color: white;
         text-align: center;
+        font: 400 15px/1.8 "Lato", sans-serif;
+        padding: 18px;
+        font-size: 25px;
+        letter-spacing: 10px;          
         }
         span {
             margin: auto;
@@ -45,19 +49,16 @@
         a:active {
             color: rgb(199, 5, 111);
         }                   
-    </style>   
+    </style>     
     </head>
 
     <body>
-        <span>
-        Type in <a href=https://www.red-lang.org/>&#82;ed</a> Console:
-        <br>
-        do https://redlang.red/do-trace
-        </span>
+        do-trace
     </body>
 </html>    
 
 <!--
+builds: [0.0.0.1.3 {new style}]
 Red []    
 set to-word rejoin ["--" ">"] "do-trace loaded"    
 do https://redlang.red/do-trace.red 
