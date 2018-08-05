@@ -18,7 +18,7 @@ get-parent-folder: function [folder-or-file][
     decomposed-folders: split folder "/"
     ?? decomposed-folders
     remove back tail decomposed-folders
-    parent-folder: to-red-file block-to-string decomposed-folders "/"
+    parent-folder: to-red-file rejoin [(block-to-string decomposed-folders "/") "/"]
     return parent-folder
 ]
 
