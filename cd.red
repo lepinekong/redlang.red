@@ -1,6 +1,12 @@
 Red [
     Title: "cd.red"
+    Builds: [0.0.0.2 {
+        - request-dir if no path
+        - accepts local path
+    }]
 ]
+
+do http://redlang.red/do-trace
 
 if not value? 'syscd [
     syscd: :cd
@@ -9,6 +15,7 @@ if not value? 'syscd [
         [catch] 
         'path [file! word! path! unset! string! paren! url!] "Accepts %file, :variables and just words (as dirs)"
     ][
+
         dir-not-found: function [path searchString][
             print rejoin ["Path" { "} searchString {" } "not found, searching partial name..."]
             files: read path
@@ -49,12 +56,18 @@ if not value? 'syscd [
     
         if paren? get/any 'path [set/any 'path do path] 
         switch/default type?/word get/any 'path [
-            unset! [print what-dir] 
+            unset! [
+                print what-dir
+                path: request-dir
+                cd (path)
+            ] 
 
             string! file! url! [ 
                 ;path: to-string path
-                searchString: (to-string path)
+                ;searchString: (to-string path)
+                searchString: form path
                 path: to-file searchString
+                
                 if error? try [ change-dir to-file path][
                     dir-not-found %. searchString
                 ]
