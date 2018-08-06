@@ -22,5 +22,8 @@ get-parent-folder: function [folder-or-file][
     return parent-folder
 ]
 
-; test: get-parent-folder to-red-file "C:\MyTutorials\Angularjs\fiverr\"
-; ?? test
+get-script-folder: function [][
+    folder: pick split-path system/options/script 1
+    return folder
+]
+
