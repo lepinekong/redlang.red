@@ -11,7 +11,8 @@ Red [
     ]
 ]
 
-;do https://redlang.red/do-events
+try [do https://redlang.red/do-events]
+
 
 search-dir: function [
     /folder {startup folder} '>folder 
@@ -46,7 +47,7 @@ search-dir: function [
     ]
     foreach file folders [
         file: rejoin [.folder file]
-        ;.do-events/no-wait
+        if value? '.do-events [.do-events/no-wait] ; release processing to OS
 
         if dir? file [
             stringFile: (form file)
