@@ -3,12 +3,30 @@ Red [
     Builds: [
         0.0.0.1.3 {Initial version}
     ]   
+    Iterations: [
+        4 {Refactoring of unless value? '.to-powershell
+        commenting:
+        ; unless silent [
+        ;     print powershell-command
+        ; ]        
+        }
+    ]
 ]
 
 .call-powershell: function[.powershell-command /out /silent][
 
     unless value? '.to-powershell [
-        do https://redlang.red/to-powershell.red
+        if error? try [
+            do load-thru/update https://redlang.red/to-powershell.red
+        ][
+            if error? try [
+                do load-thru https://redlang.red/to-powershell.red
+                print "internet connection error, loaded from cache"
+            ][
+                print "internet connection error, cannot load from cache"
+            ]
+
+        ]
     ]
 
     powershell-command: .to-powershell .powershell-command 
@@ -25,9 +43,9 @@ Red [
 
         .do-events/no-wait
 
-        unless silent [
-            print powershell-command
-        ]
+        ; unless silent [
+        ;     print powershell-command
+        ; ]
         
         .do-events/no-wait
         call/output powershell-command output
