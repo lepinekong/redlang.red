@@ -1,26 +1,8 @@
 Red [
     Title: "copy-file.red"
     Builds: [
-        0.0.0.1 {Initial build with file versioning or /force and checksum}
-    ]
-    Iterations: [
-
-        0.0.0.1.14 [
-            purpose: {case file doesn't exist}
-            change: {            
-                if error? try [
-                write >target read >source
-                print [>target "created."]
-                ][
-                    print [{error copy} >source {to} >target]
-                ]
-            }
-        ]
-        0.0.0.1.12 {if previous-file <> >target [}
-        0.0.0.1.10 {Add checksum}     
-        0.0.0.1.2 {Protecting existing files}
-        0.0.0.1.1 {Initial build}
-    ]    
+        0.0.0.1.14 {Initial build with file versioning or /force and checksum}
+    ] 
 ]
 
 compare-checksum: function [>file1 >file2][
