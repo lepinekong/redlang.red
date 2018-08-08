@@ -1,18 +1,17 @@
 Red [
     Title: "search-dir.red"
     Builds: [
-        0.0.0.1 {Initial Build
+        0.0.0.1.14 {Initial Build
             - search partial folder name
             - optional startup folder or default current folder
         }
     ]
-    Iterations: [
-        0.0.0.1.7 {/all option for returning all folders found}
-    ]
+
 ]
 
 try [do https://redlang.red/do-events]
 
+do http://redlang.red/do-trace
 
 search-dir: function [
     /folder {startup folder} '>folder 
@@ -27,7 +26,7 @@ search-dir: function [
     ]
     .searchString: form >searchString
 
-    .folder: to-red-file .folder
+    .folder: to-red-file .folder    
 
     dirs-found: []
     if error? try [
@@ -38,23 +37,40 @@ search-dir: function [
 
     folders: copy []
     forall files [
+        fold: files/1
+
+    
         if dir? fold: files/1 [
+            append folders fold
             stringFile: (form fold)
             if find stringFile .searchString [
-                append folders fold
+                dir-found: rejoin [.folder fold]
+                if not all [
+                    return dir-found 
+                ]
+                append dirs-found dir-found            
             ]   
         ]
     ]
-    foreach file folders [
-        file: rejoin [.folder file]
+
+    foreach fold folders [
+
+        fold: rejoin [.folder fold]
         if value? '.do-events [.do-events/no-wait] ; release processing to OS
 
-        if dir? file [
-            stringFile: (form file)
-            either find stringFile .searchString [
-                append dirs-found file
+        if dir? fold [
+            stringFile: (form fold)
+            either find stringFile .searchString [               
+                if not find dirs-found fold [
+                    append dirs-found fold  
+                ]
+
+                
             ][
-                search-dir/folder (file) (.searchString) ; BUG was here, must switch
+                found?: search-dir/folder (fold) (.searchString) ; BUG was here, must switch
+                if not none? found? [
+                    return found?
+                ]
             ]
         ]
     ]
@@ -65,11 +81,5 @@ search-dir: function [
     ]
 
 ]
-
-; do https://redlang.red/cd
-
-; cd C:\MyTutorials
-; test: search-dir %./ Getting-Started
-; ?? test
 
 
