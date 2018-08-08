@@ -4,17 +4,6 @@ Red [
         0.0.0.1 {Initial build with file versioning or /force and checksum}
     ]
     Iterations: [
-        0.0.0.1.14 [
-            purpose: {case file doesn't exist}
-            change: {            
-                if error? try [
-                write >target read >source
-                print [>target "created."]
-                ][
-                    print [{error copy} >source {to} >target]
-                ]
-            }
-        ]
         0.0.0.1.12 {if previous-file <> >target [}
         0.0.0.1.10 {Add checksum}     
         0.0.0.1.2 {Protecting existing files}
@@ -84,13 +73,8 @@ copy-file: function [>source >target /force /no-checksum][
             print [next-file "created."]
             return true
         ][
-            if error? try [
-                write >target read >source
-                print [>target "created."]
-            ][
-                print [{error copy} >source {to} >target]
-            ]
-
+            write >target read >source
+            print [>target "created."]
         ]
     ]
 
