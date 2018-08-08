@@ -34,10 +34,12 @@ compare-checksum: function [>file1 >file2][
 copy-file: function [>source >target /force /no-checksum][
 
     either force [
-
         if error? try [
+            ask "38"
             write >target read >source
             print [>target "created."]
+            ask "40"
+
         ][
             print [{error line 42 copy-file} >source {to} >target]
         ]        
