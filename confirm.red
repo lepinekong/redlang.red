@@ -3,7 +3,7 @@ Red [
 ]
 
 .confirm: function [>question][
-    ans: ask >question
+    ans: ask rejoin [{Confirm} { } >question { } {("Y" = "YES"): }]
     if (ans = "Y") or (ans = "YES") [
         return true
         exit
