@@ -4,7 +4,10 @@ Red [
         0.0.0.1 {Initial build with file versioning or /force and checksum}
     ]
     Iterations: [
-
+        0.0.0.1.15 [
+            Purpose: {Support for local file}
+            Change: {>source: to-red-file form >source}
+        ]
         0.0.0.1.14 [
             purpose: {case file doesn't exist}
             change: {            
@@ -32,6 +35,8 @@ compare-checksum: function [>file1 >file2][
 ]
 
 copy-file: function [>source >target /force /no-checksum][
+
+    >source: to-red-file form >source
 
     either force [
         if error? try [
