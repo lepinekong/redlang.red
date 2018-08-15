@@ -1,15 +1,7 @@
 Red [
     Title: "do.red"
     Builds: [
-        0.0.0.1 {Initial Build}
-    ]
-    Iterations: [
-        28 {Revert to 25}
-        23 {Individualize do/redlang in block}
-        22 {Revert to 18}
-        19 {Block type}
-        10 {Fixed}
-        9 {Revert to 4}
+        0.0.0.1.39 {Initial Build}
     ]
 ]
 
@@ -58,6 +50,7 @@ if not value? 'sysdo [
                     ]   
                     sysdo command
                 ]
+                exit
                 
             ][
                 url-string: form value
@@ -119,7 +112,7 @@ if not value? 'sysdo [
             append command 'position
         ]
 
-        sysdo command
+        reduce command
     ]  
 ]     
 
