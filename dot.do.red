@@ -9,7 +9,7 @@ if not value? '.do [
 
     .do: function [
 
-        {Evaluates a value, returning the last evaluation result} 
+        {.do/redlang allows you to load multiples redlang libraries with a shortcut syntax.} 
         'value [any-type!] 
         /expand "Expand directives before evaluation" 
         /args {If value is a script, this will set its system/script/args} 
