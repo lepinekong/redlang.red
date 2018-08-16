@@ -3,18 +3,7 @@ Red [
     Builds: [
         0.0.0.1 {Initial Build}
     ]
-    Iterations: [
-        40 {Debug 48 for expand-string}
-        36 {Execute command in block because exit code missing}
-        28 {Revert to 25}
-        23 {Individualize do/redlang in block}
-        22 {Revert to 18}
-        19 {Block type}
-        10 {Fixed}
-        9 {Revert to 4}
-    ]
 ]
-
 
 if not value? '.do [
     .do: function [
