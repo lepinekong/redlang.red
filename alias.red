@@ -40,4 +40,5 @@ alias: function [
 
 ]
 
+aliases: :alias
 

@@ -10,7 +10,6 @@ unless value? '.do-events [
 	do https://redlang.red/do-events
 ]
 
-
 context [
 	; Some helpers
 	get-char: func [hex][to-char to-integer hex]
@@ -109,3 +108,6 @@ context [
 		]
 	]
 ]
+
+do https://redlang.red/alias
+alias dir-tree [treeview tree-view]
