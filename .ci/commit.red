@@ -5,4 +5,4 @@ Red [
 do https://quickrun.red/git-commit
 do https://redlang.red/cd
 cd %../
-commit {expand-string.html}
+commit {treeview.html tree-view.html}

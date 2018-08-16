@@ -2,7 +2,7 @@ Red [
     Title: "expand-string.red"
 ]
 
-do read http://redlang.red/build-markup.red
+do http://redlang.red/build-markup
 
 .string.expand: function[.string-template [string!] .block-vars[block!]][
 
