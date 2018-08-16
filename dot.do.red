@@ -1,5 +1,6 @@
 Red [
     Title: "do.red"
+    SemVer: [1.0.0 {Alpha version}]
     Builds: [
         0.0.0.1.8 {Initial Build / Iteration 8}
     ]
