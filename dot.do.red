@@ -6,7 +6,9 @@ Red [
 ]
 
 if not value? '.do [
+
     .do: function [
+
         {Evaluates a value, returning the last evaluation result} 
         'value [any-type!] 
         /expand "Expand directives before evaluation" 
@@ -14,7 +16,14 @@ if not value? '.do [
         arg "Args passed to a script (normally a string)" 
         /next {Do next expression only, return it, update block word} 
         position [word!] "Word updated with new block position"
-        /redlang
+        /redlang {Examples: 
+            .do/redlang cd
+            .do/redlang [cd copy-files]
+            .do/redlang/silent [cd copy-files]
+        }
+        /silent {Don't print command}
+        /_debug {debug mode for developer only}
+
     ][
         value: :value
 
@@ -23,9 +32,10 @@ if not value? '.do [
             either block? value [
 
                 new-value: copy value
-                forall new-value [
-                    command: copy []
 
+                forall new-value [
+
+                    command: copy []
                     main-command: copy ".do/redlang"
                     if expand [
                         main-command: rejoin [main-command "/expand"]
@@ -36,6 +46,12 @@ if not value? '.do [
                     if next[
                         main-command: rejoin [main-command "/next"]
                     ]
+                    if silent[
+                        main-command: rejoin [main-command "/silent"]
+                    ]
+                    if _debug[
+                        main-command: rejoin [main-command "/_debug"]
+                    ]                                         
                     command: copy reduce [load main-command] ; don't forget reduce otherwise bug !!
 
                     append command compose [(new-value/1)]
@@ -46,9 +62,14 @@ if not value? '.do [
                     if next [
                         append command to-word 'position
                     ]   
+
+                    if _debug [
+                        msg-debug: {.do line 63: }
+                        print rejoin [msg-debug command]
+                    ]
                     do command
                 ]
-                exit ; missing => bug in 0.0.0.1.36 => added in 0.0.0.1.37
+                exit ; if missing => bug
                 
             ][
                 url-string: form value
@@ -64,53 +85,40 @@ if not value? '.do [
                     ]
                 ]
             ]
-
-        ]        
-        
-        either args [
-            either expand [
-                either next [
-                    command: compose [do/args/expand/next]
-                ][
-                    command: compose [do/args/expand]
-                ]
-            ][
-                either next [
-                    command: compose [do/args/next] ; ok
-                ][
-                    command: compose [do/args] ; ok
-                ]
-                
-            ]
-            
-        ][
-            either expand [
-                either next [
-                    command: compose [do/expand/next]
-                ][
-                    command: compose [do/expand]
-                ]
-                
-            ][
-                either next [
-                    command: compose [do/next]
-                ][
-                    command: compose [do]
-                ]
-            ]
         ]
+
+        command: copy []
+
+        main-command: copy "do"
+        
+        if expand [
+            main-command: rejoin [main-command "/expand"]
+        ]
+        if args [
+            main-command: rejoin [main-command "/args"]
+        ]
+        if next[
+            main-command: rejoin [main-command "/next"]
+        ]
+        command: copy reduce [load main-command] ; don't forget reduce otherwise bug !!
 
         append command compose [(value)]
 
         if args [
-            append command 'arg
+            append command to-word 'arg
         ]
-
         if next [
-            append command 'position
+            append command to-word 'position
+        ]   
+
+        unless silent [
+            msg-debug: ""
+            if _debug [msg-debug: {.do line 112: }]
+            print rejoin [msg-debug command]
         ]
 
-        do command
+        do command        
+
         ;reduce command ; TODO: compare performance
     ]  
 ]     
