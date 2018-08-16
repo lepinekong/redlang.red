@@ -51,8 +51,9 @@ if not value? '.do [
                     ]
                     if _debug[
                         main-command: rejoin [main-command "/_debug"]
-                    ]                                         
-                    command: copy reduce [load main-command] ; don't forget reduce otherwise bug !!
+                    ] 
+
+                    command: to block! main-command
 
                     append command compose [(new-value/1)]
 
@@ -100,7 +101,8 @@ if not value? '.do [
         if next[
             main-command: rejoin [main-command "/next"]
         ]
-        command: copy reduce [load main-command] ; don't forget reduce otherwise bug !!
+
+        command: to block! main-command
 
         append command compose [(value)]
 
