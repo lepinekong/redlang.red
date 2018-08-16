@@ -119,7 +119,6 @@ if not value? '.do [
 
         do command        
 
-        ;reduce command ; TODO: compare performance
     ]  
 ]     
 
