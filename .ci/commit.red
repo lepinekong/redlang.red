@@ -5,6 +5,6 @@ Red [
 do https://quickrun.red/git-commit
 do https://redlang.red/cd
 cd %../
-commit {c override.html}
+commit {f do-html-embed.html}
 ask "pause..."
-write-clipboard read https://redlang.red/override.html
+write-clipboard read https://redlang.red/do-html-embed.html
