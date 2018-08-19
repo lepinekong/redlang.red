@@ -2,7 +2,7 @@ Red [
     Title: "ci.red"
 ]
 
-msg: {templating.red}
+msg: {index.html}
 
 do https://quickrun.red/git-commit
 do https://redlang.red/cd
