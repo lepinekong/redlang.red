@@ -4,5 +4,7 @@ Red [
 ]
 
 do https://redlang.red/dot.do
+print {type "help .do"}
+
 
 
