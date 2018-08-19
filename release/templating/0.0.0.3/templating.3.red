@@ -42,28 +42,17 @@ get-vars: :.get-vars
     ]
 
     vars: .get-vars content
-    ?? >data 
-    data-vars: extract >data 2
-    ?? >data-vars
+    ?? data 
+    data-vars: extract data 2
+    ?? data-vars
     
     either data [
         block: copy []
-
         foreach var vars [
             var: to-word var
             value: select >data var
             if none? value [
-                either only [
-                    either find data-vars var [
-                        value: ask rejoin [var ": "]
-                    ][
-                        value: rejoin ["<%" form var "%>"]
-                    ]
-                ][
-                    value: ask rejoin [var ": "]
-                ]
-                
-
+                value: ask rejoin [var ": "]
             ]
             append block reduce [
                 to-set-word var value
