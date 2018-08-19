@@ -1,10 +1,13 @@
 Red [
-    Title: "commit.red"
+    Title: "ci.red"
 ]
+
+msg: {templating.red}
 
 do https://quickrun.red/git-commit
 do https://redlang.red/cd
+
 cd %../
-commit {f templating.6.red}
-;ask "pause..."
-;write-clipboard read https://redlang.red/do-html-embed.html
+commit msg
+print {push to remote github}
+write/append/lines %cd.txt rejoin [now { - } msg]
