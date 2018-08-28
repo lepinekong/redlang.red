@@ -2,7 +2,7 @@ Red [
     Title: "ci.red"
 ]
 
-file: %index.red
+file: %index.html
 msg: rejoin [file { } "fixed."]
 
 do https://quickrun.red/git-commit
