@@ -2,7 +2,7 @@ Red [
     Title: "ci.red"
 ]
 
-file: %call-powershell.html
+file: %index.red
 msg: rejoin [file { } "updated."]
 
 do https://quickrun.red/git-commit
