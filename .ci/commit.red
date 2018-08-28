@@ -3,7 +3,7 @@ Red [
 ]
 
 file: %index.red
-msg: rejoin [file { } "updated."]
+msg: rejoin [file { } "fixed."]
 
 do https://quickrun.red/git-commit
 do https://redlang.red/cd
