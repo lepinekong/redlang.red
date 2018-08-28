@@ -15,4 +15,4 @@ commit (msg)
 
 ask "pause..."
 
-write-clipboard read rejoin [https://readlang.red/ file]
+write-clipboard read rejoin [https://redlang.red/ file]
