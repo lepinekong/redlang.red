@@ -1,12 +1,9 @@
 Red [
-    Title: "cd.red"
-    Builds: [0.0.0.2 {
-        - request-dir if no path
-        - accepts local path
-    }]
+    Title: "cd.7.red"
 ]
 
-do http://redlang.red/do-trace
+do https://redlang.red/do-trace
+do https://redlang.red/search-dir
 
 if not value? 'syscd [
     syscd: :cd
@@ -14,15 +11,24 @@ if not value? 'syscd [
         "Change directory (shell shortcut function)." 
         [catch] 
         'path [file! word! path! unset! string! paren! url!] "Accepts %file, :variables and just words (as dirs)"
+        /search
     ][
+        >path: :path
 
         dir-not-found: function [path searchString][
             print rejoin ["Path" { "} searchString {" } "not found, searching partial name..."]
-            files: read path
+
+            if error? try [
+                files: read path
+            ][
+                files: copy []
+            ]
+            
             dirs-found: copy []
             all-dirs: copy []
             foreach file files [
-                if dir? file [
+                
+                if dir? file [                   
                     if find (to-string file) searchString [
                         print rejoin [searchString " found in " file]
                         append dirs-found file
@@ -32,25 +38,35 @@ if not value? 'syscd [
             ]
 
             either (length? dirs-found) > 0 [
-                probe dirs-found   
-                n: to-integer ask "Which one do you choose? 0 for none, else to exit: "
+                either (length? dirs-found) = 1 [
+                    n: 1
+                ][
+                    n: to-integer ask "Select number, 0 for none, else to exit: "
+                ]
+                
                 either (n > 0) [
                     chosen-dir: dirs-found/:n
                     cd (chosen-dir)
+                    return chosen-dir
+                    exit ; doesn't seem to exit, loop continues ?!!!
                 ][
-                    either (n = 0) [
-                        foreach file all-dirs [
-                            dir-not-found file searchString
-                        ]
-                    ][
-                        exit
+                    foreach file all-dirs [
+                        dir-not-found file searchString
                     ]
                 ]
 
             ][
+                either search [
+                    print [>path {not found. searching...}]
+                    forall all-dirs [
+                        root: all-dirs/1
+                            dir-not-found root searchString
+                    ]
 
+                ][
+                    print [>path {not found. Use /search to search folder}]
+                ]
             ]
-
 
         ]
     
@@ -63,12 +79,13 @@ if not value? 'syscd [
             ] 
 
             string! file! url! [ 
-                ;path: to-string path
-                ;searchString: (to-string path)
                 searchString: form path
                 path: to-file searchString
                 
-                if error? try [ change-dir to-file path][
+                if error? try [
+                    change-dir to-file path
+                    print [{cd} to-file path]
+                ][
                     dir-not-found %. searchString
                 ]
                 
@@ -85,15 +102,21 @@ if not value? 'syscd [
                 ;     change-dir filepath
 
                 ; ][
-                    change-dir path
+
+                    ;change-dir path ; changed in cd.3.red
+                    if error? try [
+                        change-dir to-file path
+                        print [{cd} to-file path]
+                    ][
+                        searchString: form path                      
+                        dir-not-found %. searchString
+                    ]                    
                 ; ]
                 if exists? %autoload.red [
                     do %autoload.red
-                    ;print "autoload.red executed"
                 ]
                 if exists? %.red [
                     do %.red
-                    ;print ".red executed"
                 ]                
             ]
         ] [

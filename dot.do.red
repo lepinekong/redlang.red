@@ -2,10 +2,11 @@ Red [
     Title: "do.red"
     SemVer: [1.0.0 {Alpha version}]
     Builds: [
-        0.0.0.1.9 {Initial Build / Iteration 9}
+        0.0.0.2.1 {Initial Build / Iteration 1 copied from 0.0.0.1.9}
     ]
 
 ]
+
 
 if not value? '.do [
 
@@ -125,4 +126,9 @@ if not value? '.do [
 
     ]  
 ]     
+
+redlang: function ['arg [any-type!] ][
+    .do/redlang (arg)
+]
+print [{type "help redlang"}]
 

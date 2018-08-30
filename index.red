@@ -5,7 +5,3 @@ Red [
 
 do https://redlang.red/dot.do
 
-redlang: function [arg][
-    .do/redlang arg
-]
-print [{type "help redlang"}]
