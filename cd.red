@@ -1,6 +1,6 @@
 Red [
     Title: "cd.red"
-    Version: [1.0.1.9 {support of variable without using ()}]
+    Version: [0.0.1.17 {support of variable without using ()}]
 ]
 
 do https://redlang.red/do-trace
@@ -17,7 +17,7 @@ if not value? 'syscd [
     ][
         search: true
 
-        >version: 1.0.1.17
+        >version: 0.0.1.17
 
         if version [
             print >version
