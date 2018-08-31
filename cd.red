@@ -1,6 +1,6 @@
 Red [
     Title: "cd.red"
-    Version: [1.0.1.9 {support of variable}]
+    Version: [1.0.1.9 {support of variable without using ()}]
 ]
 
 do https://redlang.red/do-trace
