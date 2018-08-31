@@ -15,6 +15,8 @@ if not value? 'syscd [
         /search
         /version 
     ][
+        search: true
+
         >version: 1.0.1.9
 
         if version [
@@ -25,7 +27,7 @@ if not value? 'syscd [
         >path: :path
 
         dir-not-found: function [path searchString][
-            print rejoin ["Path" { "} searchString {" } "not found, searching partial name..."]
+            ;print rejoin ["Path" { "} searchString {" } "not found, searching partial name..."]
 
             if error? try [
                 files: read path
@@ -39,7 +41,8 @@ if not value? 'syscd [
                 
                 if dir? file [                   
                     if find (to-string file) searchString [
-                        print rejoin [searchString " found in " file]
+                        folder-found: rejoin [path file]
+                        print rejoin [searchString " found in " folder-found]
                         append dirs-found file
                     ]
                     append all-dirs file
@@ -54,8 +57,8 @@ if not value? 'syscd [
                 ]
                 
                 either (n > 0) [
-                    chosen-dir: dirs-found/:n
-                    cd (chosen-dir)
+                    chosen-dir: to-red-file rejoin [path dirs-found/:n]
+                    change-dir (chosen-dir)
                     return chosen-dir
                     exit ; doesn't seem to exit, loop continues ?!!!
                 ][
@@ -66,10 +69,10 @@ if not value? 'syscd [
 
             ][
                 either search [
-                    print [>path {not found. searching...}]
+                    ;print [>path {not found. searching...}]
                     forall all-dirs [
                         root: all-dirs/1
-                            dir-not-found root searchString
+                        dir-not-found root searchString
                     ]
 
                 ][
@@ -101,25 +104,20 @@ if not value? 'syscd [
             ] 
             word! path! [
 
-                ; either value? :path [
+                if value? to-word >path [                
+                    cd (get in system/words >path)
+                    what-dir
+                    exit
+                ]
 
-
-                ; ][
-
-                    if value? to-word >path [                
-                        cd (get in system/words >path)
-                        what-dir
-                        exit
-                    ]
-
-                    if error? try [
-                        change-dir to-file path
-                        print [{cd} to-file path]
-                    ][
-                        searchString: form path                      
-                        dir-not-found %. searchString
-                    ]                    
-                ; ]
+                if error? try [
+                    change-dir to-file path
+                    print [{cd} to-file path]
+                ][
+                    searchString: form path                      
+                    dir-not-found %. searchString
+                ]                    
+                
                 if exists? %autoload.red [
                     do %autoload.red
                 ]
