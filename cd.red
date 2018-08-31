@@ -17,7 +17,7 @@ if not value? 'syscd [
     ][
         search: true
 
-        >version: 1.0.1.9
+        >version: 1.0.1.17
 
         if version [
             print >version
