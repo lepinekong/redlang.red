@@ -4,6 +4,10 @@ Red [
         0.0.0.1 {Initial build with file versioning or /force and checksum}
     ]
     Iterations: [
+        0.0.0.1.16 [
+            Purpose: {support windows path for >target}
+            Change: {>target: to-red-file form >target}
+        ]
         0.0.0.1.15 [
             Purpose: {Support for local file}
             Change: {>source: to-red-file form >source}
@@ -37,6 +41,7 @@ compare-checksum: function [>file1 >file2][
 copy-file: function [>source >target /force /no-checksum][
 
     >source: to-red-file form >source
+    >target: to-red-file form >target
 
     either force [
         if error? try [
