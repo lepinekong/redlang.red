@@ -2,7 +2,7 @@ Red [
     Title: "log.red"
 ]
 
-.log: function ['>log-file '>msg][
+.log: function ['>log-file >msg][
 
     .log-file: to-red-file :>log-file
     .msg: form :>msg
