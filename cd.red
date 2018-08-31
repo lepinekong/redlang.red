@@ -1,5 +1,6 @@
 Red [
-    Title: "cd.7.red"
+    Title: "cd.red"
+    Version: [1.0.1 {support of variable}]
 ]
 
 do https://redlang.red/do-trace
@@ -103,7 +104,12 @@ if not value? 'syscd [
 
                 ; ][
 
-                    ;change-dir path ; changed in cd.3.red
+                    if value? to-word >path [                
+                        cd (get in system/words >path)
+                        what-dir
+                        exit
+                    ]
+
                     if error? try [
                         change-dir to-file path
                         print [{cd} to-file path]
