@@ -1,6 +1,6 @@
 Red [
     Title: "cd.red"
-    Version: [1.0.1 {support of variable}]
+    Version: [1.0.1.9 {support of variable}]
 ]
 
 do https://redlang.red/do-trace
@@ -13,7 +13,15 @@ if not value? 'syscd [
         [catch] 
         'path [file! word! path! unset! string! paren! url!] "Accepts %file, :variables and just words (as dirs)"
         /search
+        /version 
     ][
+        >version: 1.0.1.9
+
+        if version [
+            print >version
+            return >version
+        ]
+
         >path: :path
 
         dir-not-found: function [path searchString][
