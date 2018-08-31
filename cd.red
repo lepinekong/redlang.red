@@ -94,13 +94,7 @@ if not value? 'syscd [
             word! path! [
 
                 ; either value? :path [
-                ;     body: body-of get :domain
-                ;     subsystem-path: body/subsystem-path/1
-                ;     system-path: body/system-path/1
-                ;     root-path: body/root-path/1  
-                ;     ;%/C/rebol/system/.activities/myTutorials
-                ;     filepath: to-file (rejoin [root-path system-path subsystem-path]) 
-                ;     change-dir filepath
+
 
                 ; ][
 
