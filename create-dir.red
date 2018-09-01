@@ -8,7 +8,7 @@ Red [
             print {TODO:}
         ]
         word! string! file! url! block! [
-            >folder: form >folder
+            >folder: form :>folder
             print {TODO:}
         ]
     ] [
