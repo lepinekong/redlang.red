@@ -1,10 +1,7 @@
 Red [
     Title: "get-folder.red"
     Builds.Iteration: [
-        0.0.0.1.3 {Debug 
-        dotsystem.red\dev\debug\system.red\0.0.0.1\includes\02.preamble\.versions\01.config.red
-        }
-        0.0.0.1.1 {Initial build}
+        0.0.0.1.4 {support of (variable)}
     ]
 ]
 
