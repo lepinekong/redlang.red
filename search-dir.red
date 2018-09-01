@@ -5,11 +5,6 @@ Red [
         }
     ]
 
-    Iterations: [
-        0.0.0.2.17 {
-            Revert to 15
-        }
-    ]
 ]
 
 try [do https://redlang.red/do-events]
