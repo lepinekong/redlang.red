@@ -1,15 +1,22 @@
 Red [
     Title: "get-folder.red"
     Builds.Iteration: [
+        0.0.0.1.3 {Debug 
+        dotsystem.red\dev\debug\system.red\0.0.0.1\includes\02.preamble\.versions\01.config.red
+        }
         0.0.0.1.1 {Initial build}
     ]
 ]
 
-do https://redlang.red/block-to-string
+do https://redlang.red
+redlang [block-to-string]
 
-.get-folder: function [file-path][
-    folder: pick split-path file-path 1
-    return folder
+.get-folder: function ['>file-path][
+
+    .file-path: to-red-file form :>file-path
+
+    folder>: pick split-path .file-path 1
+    return folder>
 ]
 get-folder: :.get-folder
 
@@ -32,4 +39,3 @@ get-parent-folder: :.get-parent-folder
     return folder
 ]
 get-script-folder: .get-script-folder
-
