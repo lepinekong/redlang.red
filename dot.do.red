@@ -127,8 +127,9 @@ if not value? '.do [
     ]  
 ]     
 
-redlang: function ['arg [any-type!] ][
+.redlang: function ['arg [any-type!] ][
     .do/redlang (arg)
 ]
+redlang: :.redlang
 print [{type "help redlang"}]
 
