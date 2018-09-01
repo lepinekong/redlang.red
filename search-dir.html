@@ -26,6 +26,10 @@
         background-color: rgba(233, 25, 19);
         color: white;
         text-align: center;
+        font: 400 15px/1.8 "Lato", sans-serif;
+        padding: 18px;
+        font-size: 25px;
+        letter-spacing: 10px;          
         }
         span {
             margin: auto;
@@ -45,19 +49,24 @@
         a:active {
             color: rgb(199, 5, 111);
         }                   
-    </style>   
+    </style>     
     </head>
 
     <body>
         <span>
-        Type in <a href=https://www.red-lang.org/>&#82;ed</a> Console:
-        <br>
-        do https://redlang.red/search-dir
-        </span>
+            Type in <a href=https://www.red-lang.org/>&#82;ed</a> Console:
+            <br>
+            do https://redlang.red/search-dir
+            <br>
+            help search-dir
+            <br>
+            <a href=https://github.com/lepinekong/redlang.red/blob/master/search-dir.red>(view source)</a>
+            </span>        
     </body>
 </html>    
 
 <!--
+builds: [0.0.0.1.4 {added span}]
 Red []    
 set to-word rejoin ["--" ">"] "search-dir loaded"    
 do https://redlang.red/search-dir.red 
