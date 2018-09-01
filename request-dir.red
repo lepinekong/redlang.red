@@ -1,5 +1,5 @@
 Red [
-    Title: ""
+    Title: "request-dir.red"
 ]
 
 .request-dir: function [
@@ -13,12 +13,12 @@ Red [
 
     unless dir [
         >dir: %./
-    ]
+    ] 
 
     if not dir? >dir [
         >dir: to-red-file form :>dir
     ]
-    .dir: :>dir
+    .dir: to-local-file clean-path :>dir
 
-    return request-dir/title/dir .title to-local-file clean-path .dir
+    request-dir/title/dir (.title) (.dir)
 ]
