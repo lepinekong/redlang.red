@@ -1,32 +1,40 @@
 Red [
     Title: "search-dir.red"
     Builds: [
-        0.0.0.1.14 {Initial Build
-            - search partial folder name
-            - optional startup folder or default current folder
+        0.0.0.2 {
         }
     ]
 
+    Iterations: [
+        0.0.0.2.17 {
+            Revert to 15
+        }
+    ]
 ]
 
 try [do https://redlang.red/do-events]
 
 do http://redlang.red/do-trace
 
-search-dir: function [
-    /folder {startup folder} '>folder 
+.search-dir: function [
     '>searchString {partial folder name}
+    /folder {startup folder} '>folder     
     /all {return all folders found in a block}
 ][
+
     
     either folder [
-        .folder: form >folder
+        .folder: form :>folder        
     ][
         .folder: what-dir
     ]
+
     .searchString: form >searchString
 
     .folder: to-red-file .folder    
+    if not dir? .folder [
+        .folder: rejoin [.folder %/]
+    ]
 
     dirs-found: []
     if error? try [
@@ -67,7 +75,7 @@ search-dir: function [
 
                 
             ][
-                found?: search-dir/folder (fold) (.searchString) ; BUG was here, must switch
+                found?: .search-dir/folder (.searchString) (fold)  ; BUG was here, must switch
                 if not none? found? [
                     return found?
                 ]
@@ -80,6 +88,20 @@ search-dir: function [
         return pick dirs-found 1
     ]
 
+]
+
+search-dir: function [  
+    '>folder [file! word! path! unset! string! paren! url!]
+    /folder >parent-folder [file! word! path! unset! string! paren! url!]     
+][
+
+    if not folder [
+        >parent-folder: %./
+    ]  
+
+    .folder: :>folder
+
+    .search-dir/folder (.folder) (>parent-folder)
 ]
 
 
