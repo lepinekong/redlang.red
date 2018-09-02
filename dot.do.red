@@ -1,13 +1,11 @@
+
 Red [
     Title: "do.red"
     SemVer: [1.0.0 {Alpha version}]
     Builds: [
-        0.0.0.2.1 {Initial Build / Iteration 1 copied from 0.0.0.1.9}
+        0.0.0.3.1 {Iteration 1: /quickrun}
     ]
-
 ]
-
-
 if not value? '.do [
 
     .do: function [
@@ -30,7 +28,11 @@ if not value? '.do [
     ][
         value: :value
 
+
         if redlang [
+
+            .refinement: "redlang"
+            .domain: rejoin [.refinement ".red"]
 
             either block? value [
 
@@ -39,7 +41,7 @@ if not value? '.do [
                 forall new-value [
 
                     command: copy []
-                    main-command: copy ".do/redlang"
+                    main-command: copy rejoin [".do/" .refinement]
                     if expand [
                         main-command: rejoin [main-command "/expand"]
                     ]
@@ -68,7 +70,7 @@ if not value? '.do [
                     ]   
 
                     if _debug [
-                        msg-debug: {.do line 63: }
+                        msg-debug: {.do 02.main/01.redlang.red line 42: }
                         print rejoin [msg-debug command]
                     ]
                     do command
@@ -78,18 +80,19 @@ if not value? '.do [
             ][
                 url-string: form value
 
-                if not find url-string "redlang" [
+                if not find url-string .refinement [
                     either find url-string "https" [
                         parse url-string [
-                            thru "https://" start: (insert start "redlang.red/")
+                            thru "https://" start: (insert start rejoin [.domain "/"])
                         ]
                         value: to-url url-string
                     ][
-                        value: to-url rejoin [https://redlang.red/ url-string]
+                        value: to-url rejoin ["https://" .domain "/" url-string]
                     ]
                 ]
             ]
         ]
+
 
         command: copy []
 
@@ -125,11 +128,9 @@ if not value? '.do [
         do command        
 
     ]  
-]     
-
+]  
 .redlang: function ['arg [any-type!] ][
     .do/redlang (arg)
 ]
 redlang: :.redlang
 print [{type "help redlang"}]
-
