@@ -3,7 +3,7 @@ Red [
     Title: "do.red"
     SemVer: [1.0.0 {Alpha version}]
     Builds: [
-        0.0.0.3.1 {Iteration 1: /quickrun}
+        0.0.0.3.2 {Iteration 2: refactoring /redlang for generalization}
     ]
 ]
 if not value? '.do [
@@ -22,6 +22,7 @@ if not value? '.do [
             .do/redlang [cd copy-files]
             .do/redlang/silent [cd copy-files]
         }
+        /quickrun
         /silent {Don't print command}
         /_debug {debug mode for developer only}
 
@@ -32,6 +33,71 @@ if not value? '.do [
         if redlang [
 
             .refinement: "redlang"
+            .domain: rejoin [.refinement ".red"]
+
+            either block? value [
+
+                new-value: copy value
+
+                forall new-value [
+
+                    command: copy []
+                    main-command: copy rejoin [".do/" .refinement]
+                    if expand [
+                        main-command: rejoin [main-command "/expand"]
+                    ]
+                    if args [
+                        main-command: rejoin [main-command "/args"]
+                    ]
+                    if next[
+                        main-command: rejoin [main-command "/next"]
+                    ]
+                    if silent[
+                        main-command: rejoin [main-command "/silent"]
+                    ]
+                    if _debug[
+                        main-command: rejoin [main-command "/_debug"]
+                    ] 
+
+                    command: to block! main-command
+
+                    append command compose [(new-value/1)]
+
+                    if args [
+                        append command to-word 'arg
+                    ]
+                    if next [
+                        append command to-word 'position
+                    ]   
+
+                    if _debug [
+                        msg-debug: {.do 02.main/01.redlang.red line 42: }
+                        print rejoin [msg-debug command]
+                    ]
+                    do command
+                ]
+                exit ; if missing => bug
+                
+            ][
+                url-string: form value
+
+                if not find url-string .refinement [
+                    either find url-string "https" [
+                        parse url-string [
+                            thru "https://" start: (insert start rejoin [.domain "/"])
+                        ]
+                        value: to-url url-string
+                    ][
+                        value: to-url rejoin ["https://" .domain "/" url-string]
+                    ]
+                ]
+            ]
+        ]
+
+
+        if quickrun [
+
+            .refinement: "quickrun"
             .domain: rejoin [.refinement ".red"]
 
             either block? value [
