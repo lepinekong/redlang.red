@@ -57,5 +57,6 @@ do https://redlang.red
     return src
 ]
 
+include: :.include
 .assemble: :.include
 assemble: :.assemble
