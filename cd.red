@@ -1,9 +1,9 @@
 Red [
     Title: "cd.red"
-    Version: [0.0.0.2.2 {searching subfolder automatically}]
+    Version: [0.0.1 {searching subfolder automatically}]
+
 ]
 
-;do https://redlang.red/do-trace
 do https://redlang.red/search-dir
 
 if not value? 'syscd [
@@ -13,22 +13,24 @@ if not value? 'syscd [
         [catch] 
         'path [file! word! path! unset! string! paren! url!] "Accepts %file, :variables and just words (as dirs)"
         /search
-        /version 
+        /build 
+        /no-autoexec {don't autoexecute %.red and %autoload.red}
     ][
+
         search: true
 
-        >version: 0.0.0.2.2
+        >build: 0.0.0.2.6
 
-        if version [
-            print >version
-            return >version
+        if build [
+            print >build
+            return >build
         ]
 
         >path: :path
 
         dir-not-found: function [path searchString][
             
-            if not none? found: search-dir/folder (searchString) (path) [
+            if found: search-dir/folder (searchString) (path) [
                 cd (found)
             ]
         ]
@@ -55,11 +57,22 @@ if not value? 'syscd [
             ] 
             word! path! [
 
-                if value? to-word >path [                
-                    cd (get in system/words >path)
+                if error? try [
+                    if value? to-word >path [ 
+                        the-path: (get in system/words >path)
+                        if not logic? the-path [
+                            cd (the-path)
+                            what-dir
+                            exit
+                        ]
+                    ]
+                ][
+                    the-path: to-red-file form >path
+                    cd (the-path)
                     what-dir
                     exit
                 ]
+
 
                 if error? try [
                     change-dir to-file path
@@ -69,12 +82,14 @@ if not value? 'syscd [
                     dir-not-found %. searchString
                 ]                    
                 
-                if exists? %autoload.red [
-                    do %autoload.red
+                unless no-autoexec [
+                    if exists? %autoload.red [
+                        do %autoload.red
+                    ]
+                    if exists? %.red [
+                        do %.red
+                    ] 
                 ]
-                if exists? %.red [
-                    do %.red
-                ]                
             ]
         ] [
             throw error 'script 'expect-arg reduce ['cd 'path type? get/any 'path]
