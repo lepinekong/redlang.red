@@ -3,7 +3,7 @@ Red [
     Title: "do.red"
     SemVer: [1.0.0 {Alpha version}]
     Builds: [
-        0.0.0.3.2 {Iteration 2: refactoring /redlang for generalization}
+        0.0.0.3.3 {/quickrun}
     ]
 ]
 if not value? '.do [
@@ -200,3 +200,9 @@ if not value? '.do [
 ]
 redlang: :.redlang
 print [{type "help redlang"}]
+
+.quickrun: function ['arg [any-type!] ][
+    .do/quickrun (arg)
+]
+quickrun: :.quickrun
+print [{type "help quickrun"}]
