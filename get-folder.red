@@ -1,12 +1,30 @@
 Red [
     Title: "get-folder.red"
     Builds.Iteration: [
-        0.0.0.1.4 {support of (variable)}
+        0.0.0.1.5 [
+            Plan: {Diagnostic case test.4.b.ko.red:
+            config-directory: get-folder system/options/boot}
+            Do: {
+                test.5.b.ko.red
+            }
+            Check: {
+                >file-path: system/options/boot
+            }
+            Action: {
+                Fix by detecting global variable exists and get its value
+            }
+        ]
+        0.0.0.1.3 {Debug 
+        dotsystem.red\dev\debug\system.red\0.0.0.1\includes\02.preamble\.versions\01.config.red
+        }
+        0.0.0.1.1 {Initial build}
     ]
 ]
 
-do https://redlang.red
-redlang [block-to-string]
+if not value? '.redlang [
+    do https://redlang.red
+]
+.redlang [block-to-string]
 
 .get-folder: function ['>file-path][
 
@@ -36,3 +54,4 @@ get-parent-folder: :.get-parent-folder
     return folder
 ]
 get-script-folder: .get-script-folder
+
