@@ -1,39 +1,29 @@
 Red [
     Title: "get-folder.red"
-    Builds.Iteration: [
-        0.0.0.1.5 [
-            Plan: {Diagnostic case test.4.b.ko.red:
-            config-directory: get-folder system/options/boot}
-            Do: {
-                test.5.b.ko.red
-            }
-            Check: {
-                >file-path: system/options/boot
-            }
-            Action: {
-                Fix by detecting global variable exists and get its value
-            }
-        ]
-        0.0.0.1.3 {Debug 
-        dotsystem.red\dev\debug\system.red\0.0.0.1\includes\02.preamble\.versions\01.config.red
-        }
-        0.0.0.1.1 {Initial build}
-    ]
 ]
 
 if not value? '.redlang [
     do https://redlang.red
 ]
-.redlang [block-to-string]
+.redlang [block-to-string alias]
 
-.get-folder: function ['>file-path][
+.get-folder: function [
+    '>file-path
+    /build
+][
+    if build [
+        >build: 0.0.0.1.8
+        print >build
+        exit
+    ]
 
     .file-path: to-red-file form :>file-path
 
     folder>: pick split-path .file-path 1
     return folder>
 ]
-get-folder: :.get-folder
+
+alias .get-folder [get-folder]
 
 .get-parent-folder: function [folder-or-file][
     folder: folder-or-file
@@ -47,11 +37,12 @@ get-folder: :.get-folder
     parent-folder: to-red-file rejoin [(block-to-string decomposed-folders "/") "/"]
     return parent-folder
 ]
-get-parent-folder: :.get-parent-folder
+alias .get-parent-folder [get-parent-folder]
 
 .get-script-folder: function [][
     folder: pick split-path system/options/script 1
     return folder
 ]
-get-script-folder: .get-script-folder
+
+alias .get-script-folder [get-script-folder]
 
