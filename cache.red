@@ -3,25 +3,32 @@ Red [
     File: "cache.red"
 ]
 
-__CACHING__: true
-
 do https://redlang.red
 .redlang [files]
 
 .cache: function [
     path 
     /folder >lib-folder
+    /force
 ][
+
     unless folder [
         >lib-folder: %libs/
     ]
     .lib-folder: :>lib-folder
-
     short-filename: get-short-filename path
-    make-dir/deep .lib-folder
     out-file: rejoin [.lib-folder short-filename]
-    write out-file read path
+
+    create-out-file: does [
+        make-dir/deep .lib-folder
+        write out-file read path        
+    ]
+
+    either exists? out-file [
+        if force   [
+            create-out-file
+        ]
+    ][
+        create-out-file
+    ]
 ]
-
-.cache https://redlang.red/assemble.red
-
