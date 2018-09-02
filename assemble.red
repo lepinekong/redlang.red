@@ -4,12 +4,19 @@ Red [
     Version: [
         0.0.1 {Initial version}
     ]
+    Build: [
+        0.0.0.1.17 {Cleaning}
+        0.0.0.1.16 {Fix get-folder bug}
+    ]
+
 ]
 
-do https://redlang.red/files
-do https://redlang.red/get-folder
+do https://redlang.red
+.redlang [files get-folder]
 
-include: function [directory][
+.include: function [
+    directory
+][
     src: copy ""
     
     files: read directory
@@ -20,7 +27,7 @@ include: function [directory][
             short-filename: rejoin [get-short-filename/wo-extension file]
             extension: get-file-extension file
 
-            folder: get-folder file
+            folder: get-folder (file)
             sub-folder: rejoin [folder short-filename %/] ; fixed bug: missing %/
 
         unless (dir? file) or (extension <> %.red) [
@@ -29,7 +36,13 @@ include: function [directory][
             ]
             src: rejoin [src read file]
 
-            doc-file: clean-path rejoin [folder short-filename %.txt]
+            doc-file: clean-path rejoin [folder short-filename %.log]
+            txt-file: clean-path rejoin [folder short-filename %.txt]
+
+            if exists? txt-file [
+                write doc-file read txt-file
+                delete txt-file
+            ]
             
             unless exists? doc-file [
                 write doc-file ""
@@ -44,3 +57,5 @@ include: function [directory][
     return src
 ]
 
+.assemble: :.include
+assemble: :.assemble
