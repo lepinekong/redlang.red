@@ -12,7 +12,7 @@ Red [
 ]
 
 do https://redlang.red
-.redlang [files get-folder]
+.redlang [files get-folder alias]
 
 .include: function [
     directory
@@ -30,19 +30,19 @@ do https://redlang.red
             folder: get-folder (file)
             sub-folder: rejoin [folder short-filename %/] ; fixed bug: missing %/
 
-        unless (dir? file) or (extension <> %.red) [
+        unless (dir? file) or (extension <> %.red and extension <> %.html and extension <> %.htm) [
             unless (index? files) = 1 [
                 src: rejoin [src newline]
             ]
             src: rejoin [src read file]
 
             doc-file: clean-path rejoin [folder short-filename %.log]
-            txt-file: clean-path rejoin [folder short-filename %.txt]
+            ; txt-file: clean-path rejoin [folder short-filename %.txt]
 
-            if exists? txt-file [
-                write doc-file read txt-file
-                delete txt-file
-            ]
+            ; if exists? txt-file [
+            ;     write doc-file read txt-file
+            ;     delete txt-file
+            ; ]
             
             unless exists? doc-file [
                 write doc-file ""
@@ -57,6 +57,5 @@ do https://redlang.red
     return src
 ]
 
-include: :.include
-.assemble: :.include
-assemble: :.assemble
+.alias .include [include assemble .assemble ]
+
