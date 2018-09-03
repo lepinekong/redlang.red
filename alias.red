@@ -2,7 +2,7 @@ Red [
     Title: "alias.red"
 ]
 
-alias: function [
+.alias: function [
     {define one or several alias(es) for a function name}
     '>original-function {original name - example: print}
     '>alias-functions {alias name or block of names - example: show or [show out]}
@@ -40,5 +40,6 @@ alias: function [
 
 ]
 
-aliases: :alias
+.alias .alias [alias aliases]
+
 
