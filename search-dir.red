@@ -1,7 +1,8 @@
 Red [
     Title: "search-dir.red"
     Builds: [
-        0.0.0.2 {
+        0.0.0.2.18 {
+            Search up if not found
         }
     ]
 
@@ -87,7 +88,8 @@ do http://redlang.red/do-trace
 
 search-dir: function [  
     '>folder [file! word! path! unset! string! paren! url!]
-    /folder >parent-folder [file! word! path! unset! string! paren! url!]     
+    /folder >parent-folder [file! word! path! unset! string! paren! url!]  
+    /up   
 ][
 
     if not folder [
@@ -96,7 +98,16 @@ search-dir: function [
 
     .folder: :>folder
 
-    .search-dir/folder (.folder) (>parent-folder)
+    unless up [
+
+        folder>: .search-dir/folder (.folder) (>parent-folder)
+        return folder>
+    ]
+
+    sub-parent-folders: split (form clean-path to-red-file (>parent-folder)) "/"
+    sub-folders: reverse sub-parent-folders
+    found: find sub-folders (form .folder)
+    result: reverse found
+    output: to-red-file block-to-string result "/"    
+    return output
 ]
-
-
