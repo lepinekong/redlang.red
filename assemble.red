@@ -30,7 +30,9 @@ do https://redlang.red
             folder: get-folder (file)
             sub-folder: rejoin [folder short-filename %/] ; fixed bug: missing %/
 
-        unless (dir? file) or (extension <> %.red and extension <> %.html and extension <> %.htm) [
+        unless (dir? file) or (
+            (extension <> %.red) and (extension <> %.html) and (extension <> %.htm)
+            ) [
             unless (index? files) = 1 [
                 src: rejoin [src newline]
             ]
