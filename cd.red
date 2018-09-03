@@ -1,14 +1,16 @@
 Red [
     Title: "cd.red"
     Version: [0.0.1 {searching subfolder automatically}]
-
+    Builds: [
+        0.0.0.2.8 {searching up if not found TBC}
+    ]
 ]
 
 do https://redlang.red/search-dir
 
 if not value? 'syscd [
     syscd: :cd
-    cd: func [
+    .cd: func [
         "Change directory (shell shortcut function)." 
         [catch] 
         'path [file! word! path! unset! string! paren! url!] "Accepts %file, :variables and just words (as dirs)"
@@ -30,8 +32,10 @@ if not value? 'syscd [
 
         dir-not-found: function [path searchString][
             
-            if found: search-dir/folder (searchString) (path) [
+            either found: search-dir/folder (searchString) (path) [
                 cd (found)
+            ][
+
             ]
         ]
     
@@ -67,6 +71,7 @@ if not value? 'syscd [
                         ]
                     ]
                 ][
+
                     the-path: to-red-file form >path
                     cd (the-path)
                     what-dir
@@ -95,5 +100,7 @@ if not value? 'syscd [
             throw error 'script 'expect-arg reduce ['cd 'path type? get/any 'path]
         ]
         what-dir  
-    ]    
+    ]   
+    system/words/cd: :.cd 
 ]
+

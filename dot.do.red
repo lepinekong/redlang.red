@@ -6,6 +6,7 @@ Red [
         0.0.0.3.3 {/quickrun}
     ]
 ]
+
 if not value? '.do [
 
     .do: function [
@@ -206,3 +207,6 @@ print [{type "help redlang"}]
 ]
 quickrun: :.quickrun
 print [{type "help quickrun"}]
+
+.redlang [alias]
+.alias .do [.load-libraries load-libraries .execute execute .import import .use use]

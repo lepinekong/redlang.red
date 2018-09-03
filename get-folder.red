@@ -1,5 +1,8 @@
 Red [
     Title: "get-folder.red"
+    Iterations: [
+        0.0.0.3.11 {Refactoring 10}
+    ]
 ]
 
 if not value? '.redlang [
@@ -8,17 +11,31 @@ if not value? '.redlang [
 .redlang [block-to-string alias]
 
 .get-folder: function [
+    {Examples:
+        get-folder %/C/ProgramData/Red/gui-console-2018-6-18-47628.exe
+        get-folder system/options/boot/
+    }
     '>file-path
     /build
 ][
     if build [
-        >build: 0.0.0.1.8
+        >build: 0.0.0.1.10
         print >build
         exit
     ]
 
-    .file-path: to-red-file form :>file-path
+    either (path? >file-path) and (value? .file-path) [
+        ; either value? .file-path [    
+        ;     .file-path: get .file-path
+        ; ][
+        ;     .file-path: :>file-path
+        ; ]
+    ][
+        .file-path: :>file-path
+    ]
 
+    .file-path: to-red-file .file-path
+    
     folder>: pick split-path .file-path 1
     return folder>
 ]
