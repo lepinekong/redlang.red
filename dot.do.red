@@ -6,7 +6,6 @@ Red [
         0.0.0.3.3 {/quickrun}
     ]
 ]
-
 if not value? '.do [
 
     .do: function [
@@ -202,11 +201,18 @@ if not value? '.do [
 redlang: :.redlang
 print [{type "help redlang"}]
 
-.quickrun: function ['arg [any-type!] ][
+.quickrun: function [
+    'arg [any-type! unset!] 
+][
+
+    switch type?/word get/any 'arg [
+        unset! [
+            do https://quickrun.red
+            exit
+        ]
+    ]    
     .do/quickrun (arg)
 ]
 quickrun: :.quickrun
 print [{type "help quickrun"}]
 
-.redlang [alias]
-.alias .do [.load-libraries load-libraries .execute execute .import import .use use]
