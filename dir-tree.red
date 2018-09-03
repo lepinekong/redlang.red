@@ -6,11 +6,9 @@ Red [
 	File: "%dir-tree.red"
 ]
 
-unless value? '.do-events [
-	do https://redlang.red/do-events
-]
+do https://redlang.red
+.redlang [do-events alias]
 
 do https://redlang.red/toomasv/dir-tree.red
 
-do https://redlang.red/alias
 alias dir-tree [treeview tree-view]
