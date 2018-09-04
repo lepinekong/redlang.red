@@ -28,7 +28,7 @@ do https://redlang.red/toomasv/dir-tree2.red
 	/build {return the build number for developer}
 	][
 
-        >build: 0.0.0.1.21
+        >build: 0.0.0.1.22.1
 
         if build [
             unless silent [
@@ -48,7 +48,7 @@ do https://redlang.red/toomasv/dir-tree2.red
 	lines: split the-tree newline	
 	remove lines ; remove first line	
 
-	either extension [
+	if extension [
 
 		>extension: remove form >extension ; 0.0.0.1.20 bug here !!! ".red" instead of "red"
 		filtered-tree: copy ""
