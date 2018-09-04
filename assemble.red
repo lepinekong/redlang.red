@@ -1,24 +1,41 @@
+
 Red [
     Title: "assemble.red"
     Description: {Assemble a red file from parts}
     Version: [
         0.0.1 {Initial version}
     ]
-    Build: [
-        0.0.0.1.17 {Cleaning}
-        0.0.0.1.16 {Fix get-folder bug}
-    ]
-
 ]
 
 do https://redlang.red
-.redlang [files get-folder alias]
+.redlang [files get-folder alias to-dir]
 
 .include: function [
-    directory
+    'directory [any-type! unset!]
+    /build
+    /silent
 ][
+
+    >build: 0.0.0.4.4
+
+    if build [
+        unless silent [
+            print >build
+        ]
+        return >build
+    ]    
     src: copy ""
-    
+    >directory: directory ; new in 0.0.0.4
+
+    directory: .to-dir to-red-file form :directory
+
+    ; new in 0.0.0.4
+    if not exists? directory [
+        if value? to-word >directory [
+            directory: get :>directory
+        ]
+    ]
+
     files: read directory
 
     forall files [
@@ -51,13 +68,13 @@ do https://redlang.red
             ]            
 
             if exists? sub-folder [
-                src-include: include sub-folder
+                ;src-include: .include sub-folder ; super bug missing () in assemble.1.red
+                src-include: .include (sub-folder) ; super bug fixed () in assemble.2.red
+
                 replace src {<%parts%>} src-include
             ]
         ]
     ]
     return src
 ]
-
 .alias .include [include assemble .assemble ]
-
