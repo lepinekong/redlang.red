@@ -20,7 +20,7 @@ do https://redlang.red/toomasv/dir-tree2.red
 	/build
 	][
 
-        >build: 0.0.0.1.5.1
+        >build: 0.0.0.1.11.1
 
         if build [
             unless silent [
@@ -35,8 +35,10 @@ do https://redlang.red/toomasv/dir-tree2.red
 		]
 	]	
 	.folder: :>folder
+	the-tree: dir-tree (.folder)
+
 	unless silent [
-		print the-tree: dir-tree (.folder)
+		print the-tree
 	]
 	
 	return the-tree
