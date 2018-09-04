@@ -9,7 +9,7 @@ Red [
 unless value? '.redlang [
 	do https://redlang.red
 ]
-.redlang [do-events alias]
+.redlang [do-events alias files]
 
 do https://redlang.red/toomasv/dir-tree2.red
 
@@ -20,7 +20,7 @@ do https://redlang.red/toomasv/dir-tree2.red
 	/build
 	][
 
-	>build: 0.0.0.1.7.1
+	>build: 0.0.0.1.7.2
 
 	if build [
 		unless silent [
@@ -42,11 +42,16 @@ do https://redlang.red/toomasv/dir-tree2.red
 		the-tree: copy ""
 		forall lines [
 			line: lines/1 
-			file: trim/all line
-			if (index? lines) > 1 [
-				append the-tree newline
+			filename: trim/all line
+			ext: form get-file-extension file
+			ext: last (split filename ".") 
+			?? ext
+			if ext = form >extension [
+				if (index? lines) > 1 [
+					append the-tree newline
+				]
+				append the-tree line	
 			]
-			append the-tree line			
 		]
 
 	]
