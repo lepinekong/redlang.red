@@ -28,7 +28,6 @@ do http://redlang.red/do-trace
         return >build
     ]
 
-    
     either folder [
         .folder: form :>folder        
     ][
