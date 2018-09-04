@@ -6,13 +6,18 @@ Red [
 	File: "%dir-tree.red"
 ]
 
-unless value? '.do-events [
-	do https://redlang.red/do-events
+unless value? '.redlang [
+	do https://redlang.red
 ]
+.redlang [do-events alias]
+
+; unless value? '.do-events [
+; 	do https://redlang.red/do-events
+; ]
 
 do https://redlang.red/toomasv/dir-tree2.red
 
-do https://redlang.red/alias
+; do https://redlang.red/alias
 
 
 .treeview: function [
@@ -22,7 +27,7 @@ do https://redlang.red/alias
 	/build
 	][
 
-        >build: 0.0.0.1.4.2
+        >build: 0.0.0.1.5.1
 
         if build [
             unless silent [
