@@ -38,6 +38,7 @@ do https://redlang.red/toomasv/dir-tree2.red
 
 	the-tree: dir-tree (.folder)
 	if extension [
+		>extension: form >extension
 		lines: split the-tree newline
 		the-tree: copy ""
 		forall lines [
@@ -45,7 +46,7 @@ do https://redlang.red/toomasv/dir-tree2.red
 			filename: trim/all line
 			ext: last (split filename ".") 
 			?? ext
-			if ext = (form >extension) [
+			if ext = >extension [
 				if (index? lines) > 1 [
 					append the-tree newline
 				]
