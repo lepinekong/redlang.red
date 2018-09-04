@@ -37,10 +37,24 @@ do https://redlang.red/toomasv/dir-tree2.red
 	.folder: :>folder
 	the-tree: dir-tree (.folder)
 
-	unless silent [
-		print the-tree
+	either extension [
+		>extension: form >extension
+		lines: split the-tree newline	
+		forall lines [
+			line: lines/1
+			print line
+		]	
+
+		unless silent [
+			print the-tree
+		]	
+			
+	][
+		unless silent [
+			print the-tree
+		]
 	]
-	
+
 	return the-tree
 
 ]
