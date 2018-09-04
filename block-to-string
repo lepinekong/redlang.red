@@ -1,5 +1,0 @@
-Red [
-    Title: "block-to-string"
-]
-
-do read http://redlang.red/block-to-string.red
