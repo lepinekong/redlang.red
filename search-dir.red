@@ -99,7 +99,11 @@ search-dir: function [
     '>folder [file! word! path! unset! string! paren! url!]
     /folder >parent-folder [file! word! path! unset! string! paren! url!]  
     /up   
+    /build
 ][
+    if build [
+        return .search-dir/build
+    ]
 
     if not folder [
         >parent-folder: %./
