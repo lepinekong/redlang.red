@@ -23,7 +23,17 @@ unless value? 'dir-tree [
 	'>folder [any-type! unset!]
 	/extension >extension
 	/silent
+	/build
 	][
+
+        >build: 0.0.0.1.3
+
+        if build [
+            unless silent [
+                print >build
+            ]
+            return >build
+        ]		
 
 	switch type?/word get/any '>folder [
 		unset! [
