@@ -39,28 +39,28 @@ do https://redlang.red/toomasv/dir-tree2.red
 
 	if extension [
 		>extension: form >extension
-		lines: split the-tree newline	
-		the-tree: copy ""
-		forall lines [
-			line: lines/1
-			index: index? lines
-			print index
-			print line
-			; if lines <> "" [
-			; 	if (index? lines > 2) [
-			; 		append the-tree newline
-			; 	]
-			; 	append the-tree line
-			; ]
+		; lines: split the-tree newline	
+		; the-tree: copy ""
+		; forall lines [
+		; 	line: lines/1
+		; 	index: index? lines
+		; 	print index
+		; 	print line
+		; 	; if lines <> "" [
+		; 	; 	if (index? lines > 2) [
+		; 	; 		append the-tree newline
+		; 	; 	]
+		; 	; 	append the-tree line
+		; 	; ]
 
-		]		
+		; ]		
 	]
 
 	; unless silent [
 	; 	print the-tree
 	; ]
 	
-	; return the-tree
+	return the-tree
 
 ]
 
