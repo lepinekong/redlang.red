@@ -20,7 +20,7 @@ do https://redlang.red/toomasv/dir-tree2.red
 	/build
 	][
 
-        >build: 0.0.0.1.18.1
+        >build: 0.0.0.1.19.1
 
         if build [
             unless silent [
@@ -45,32 +45,24 @@ do https://redlang.red/toomasv/dir-tree2.red
 		forall lines [
 			line: lines/1
 			index: index? lines
-			if ((index? lines) > 1) [ ; super bug because forgot () around index? lines
-				append filtered-tree newline
+
+			filename: trim/all line
+			ext: last (split filename ".") 
+			if (ext = >extension) [
+				if (filtered-tree <> "") [ ; super bug because forgot () around index? lines
+					append filtered-tree newline
+				]
+				append filtered-tree line
 			]
-			append filtered-tree line
+
 		]
 		the-tree: copy filtered-tree
-
-		; the-tree: copy ""
-		; forall lines [
-		; 	line: lines/1
-		; 	index: index? lines
-		; 	print index
-		; 	print line
-		; 	; if line <> "" [
-		; 	; 	if (index? lines > 2) [
-		; 	; 		append the-tree newline
-		; 	; 	]
-		; 	; 	append the-tree line
-		; 	; ]
-
-		; ]		
+	
 	]
 
-	; unless silent [
-	; 	print the-tree
-	; ]
+	unless silent [
+		print the-tree
+	]
 	
 	return the-tree
 
