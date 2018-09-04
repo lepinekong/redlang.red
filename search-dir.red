@@ -1,11 +1,5 @@
 Red [
     Title: "search-dir.red"
-    Builds: [
-        0.0.0.2.18 {
-            Search up if not found
-        }
-    ]
-
 ]
 
 try [do https://redlang.red/do-events]
@@ -13,15 +7,15 @@ try [do https://redlang.red/do-events]
 do http://redlang.red/do-trace
 
 .search-dir: function [
-    '>searchString {partial folder name}
+    '>searchString [any-type!] {partial folder name} 
     /folder {startup folder} '>folder     
     /all {return all folders found in a block}
     /build
-    /sildent
+    /silent
 ][
 
     if build [
-        >build: 0.0.0.2.19
+        >build: 0.0.0.2.21
         unless silent [
             print >build
         ] 
@@ -96,7 +90,7 @@ do http://redlang.red/do-trace
 ]
 
 search-dir: function [  
-    '>folder [file! word! path! unset! string! paren! url!]
+    '>folder [file! word! path! unset! string! paren! url!] 
     /folder >parent-folder [file! word! path! unset! string! paren! url!]  
     /up   
     /build
