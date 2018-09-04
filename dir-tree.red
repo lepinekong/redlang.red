@@ -43,10 +43,9 @@ do https://redlang.red/toomasv/dir-tree2.red
 		forall lines [
 			line: lines/1 
 			filename: trim/all line
-			ext: form get-file-extension file
 			ext: last (split filename ".") 
 			?? ext
-			if ext = form >extension [
+			if ext = (form >extension) [
 				if (index? lines) > 1 [
 					append the-tree newline
 				]
