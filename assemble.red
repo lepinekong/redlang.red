@@ -16,7 +16,7 @@ do https://redlang.red
     /silent
 ][
 
-    >build: 0.0.0.4.4
+    >build: 0.0.0.4.5
 
     if build [
         unless silent [
@@ -45,7 +45,7 @@ do https://redlang.red
             extension: get-file-extension file
 
             folder: get-folder (file)
-            sub-folder: rejoin [folder short-filename %/] ; fixed bug: missing %/
+            sub-folder: rejoin [folder short-filename %/]
 
         unless (dir? file) or (
             (extension <> %.red) and (extension <> %.html) and (extension <> %.htm)
@@ -56,20 +56,13 @@ do https://redlang.red
             src: rejoin [src read file]
 
             doc-file: clean-path rejoin [folder short-filename %.log]
-            ; txt-file: clean-path rejoin [folder short-filename %.txt]
 
-            ; if exists? txt-file [
-            ;     write doc-file read txt-file
-            ;     delete txt-file
-            ; ]
-            
             unless exists? doc-file [
                 write doc-file ""
             ]            
 
             if exists? sub-folder [
-                ;src-include: .include sub-folder ; super bug missing () in assemble.1.red
-                src-include: .include (sub-folder) ; super bug fixed () in assemble.2.red
+                src-include: .include (sub-folder) 
 
                 replace src {<%parts%>} src-include
             ]
