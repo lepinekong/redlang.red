@@ -43,11 +43,12 @@ do https://redlang.red/toomasv/dir-tree2.red
 		the-tree: copy ""
 		forall lines [
 			line: lines/1
-			;print line
+
 			if (index? lines > 1) [
 				append the-tree newline
 			]
 			append the-tree line
+			
 		]		
 	]
 
