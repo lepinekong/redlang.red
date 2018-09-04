@@ -1,6 +1,6 @@
 Red [
 	Authors: [
-		"Toomas Vooglaid" {original code}
+		"Toomas Vooglaid" {original code: https://gist.github.com/toomasv/ed9e15d0173f9f80b8bc50c734727b11}
 		"Lépine Kong" {evolutions:
 			- optional directory
 			- filter by extension (/extension)
@@ -10,7 +10,7 @@ Red [
 	Date: "2017-05-07"
 	Changed: "2018-07-09"
 	Purpose: "Print a directory tree"
-	File: "%dir-tree2.red"
+	File: "%treeview.red"
 ]
 
 unless value? '.redlang [
