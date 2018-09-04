@@ -45,5 +45,5 @@ do https://redlang.red/alias
 
 ]
 
-.alias .treeview [tree .tree treeview tree-view]
+.alias .treeview [tree .tree treeview tree-view .tree-view .dir-tree]
 
