@@ -20,7 +20,7 @@ do https://redlang.red/toomasv/dir-tree2.red
 	/build
 	][
 
-        >build: 0.0.0.1.14.1
+        >build: 0.0.0.1.18.1
 
         if build [
             unless silent [
@@ -42,7 +42,8 @@ do https://redlang.red/toomasv/dir-tree2.red
 		lines: split the-tree newline	
 		remove lines ; remove first line
 		forall lines [
-			
+			line: lines/1
+			index: index? lines
 		]
 		; the-tree: copy ""
 		; forall lines [
