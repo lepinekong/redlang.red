@@ -6,9 +6,36 @@ Red [
 	File: "%dir-tree.red"
 ]
 
-do https://redlang.red
-.redlang [do-events alias]
+unless value? '.redlang [
+	do https://redlang.red
+]
+.redlang [alias]
 
-do https://redlang.red/toomasv/dir-tree.red
+unless value? '.do-events [
+	do https://redlang.red/do-events
+]
 
-alias dir-tree [treeview tree-view]
+unless value? 'dir-tree [
+	do https://redlang.red/toomasv/dir-tree2.red
+]
+
+.treeview: function [
+	'>folder [any-type! unset!]
+	/extension >extension
+	/silent
+	][
+
+	switch type?/word get/any '>folder [
+		unset! [
+			>folder: %./
+		]
+	]	
+	.folder: :>folder
+	unless silent [
+		print tree: dir-tree (.folder)
+	]
+	
+	return tree
+
+]
+
