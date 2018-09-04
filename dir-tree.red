@@ -11,14 +11,7 @@ unless value? '.redlang [
 ]
 .redlang [do-events alias]
 
-; unless value? '.do-events [
-; 	do https://redlang.red/do-events
-; ]
-
 do https://redlang.red/toomasv/dir-tree2.red
-
-; do https://redlang.red/alias
-
 
 .treeview: function [
 	'>folder [any-type! unset!]
