@@ -9,9 +9,16 @@ Red [
 unless value? '.redlang [
 	do https://redlang.red
 ]
-.redlang [do-events alias files]
+.redlang [do-events alias]
+
+; unless value? '.do-events [
+; 	do https://redlang.red/do-events
+; ]
 
 do https://redlang.red/toomasv/dir-tree2.red
+
+; do https://redlang.red/alias
+
 
 .treeview: function [
 	'>folder [any-type! unset!]
@@ -20,15 +27,14 @@ do https://redlang.red/toomasv/dir-tree2.red
 	/build
 	][
 
-	>build: 0.0.0.1.8.1
-	>build-comment: {revert to 6}
+        >build: 0.0.0.1.5.1
 
-	if build [
-		unless silent [
-			print >build
-		]
-		return >build
-	]		
+        if build [
+            unless silent [
+                print >build
+            ]
+            return >build
+        ]		
 
 	switch type?/word get/any '>folder [
 		unset! [
@@ -36,29 +42,8 @@ do https://redlang.red/toomasv/dir-tree2.red
 		]
 	]	
 	.folder: :>folder
-
-	the-tree: dir-tree (.folder)
-	if extension [
-		>extension: form >extension
-		lines: split the-tree newline
-		the-tree: copy ""
-		forall lines [
-			line: lines/1 
-			filename: trim/all line
-			ext: last (split filename ".") 
-			?? ext
-			if ext = >extension [
-				if (index? lines) > 1 [
-					append the-tree newline
-				]
-				append the-tree line	
-			]
-		]
-
-	]
-
 	unless silent [
-		print the-tree
+		print the-tree: dir-tree (.folder)
 	]
 	
 	return the-tree
