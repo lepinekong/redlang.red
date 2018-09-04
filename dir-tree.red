@@ -22,7 +22,7 @@ do https://redlang.red/alias
 	/build
 	][
 
-        >build: 0.0.0.1.3.2
+        >build: 0.0.0.1.4.2
 
         if build [
             unless silent [
@@ -45,5 +45,5 @@ do https://redlang.red/alias
 
 ]
 
-.alias .dir-tree [.tree .treeview treeview tree-view]
+.alias .treeview [.tree treeview tree-view]
 
