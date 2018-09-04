@@ -9,15 +9,7 @@ Red [
 unless value? '.redlang [
 	do https://redlang.red
 ]
-.redlang [alias]
-
-unless value? '.do-events [
-	do https://redlang.red/do-events
-]
-
-unless value? 'dir-tree [
-	do https://redlang.red/toomasv/dir-tree2.red
-]
+.redlang [alias do-events treeview]
 
 .treeview: function [
 	'>folder [any-type! unset!]
@@ -26,7 +18,7 @@ unless value? 'dir-tree [
 	/build
 	][
 
-        >build: 0.0.0.1.3
+        >build: 0.0.0.1.3.2
 
         if build [
             unless silent [
@@ -48,4 +40,6 @@ unless value? 'dir-tree [
 	return tree
 
 ]
+
+.alias .dir-tree [.tree .treeview treeview tree-view]
 
