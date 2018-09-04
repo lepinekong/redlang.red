@@ -18,9 +18,9 @@ do http://redlang.red/do-trace
     /build
     /silent
 ][
-
+    >build: 0.0.0.2.22.1
     if build [
-        >build: 0.0.0.2.21
+
         unless silent [
             print >build
         ] 
