@@ -21,11 +21,11 @@ unless value? '.redlang [
 do https://redlang.red/toomasv/dir-tree2.red
 
 .treeview: function [
-	'>folder [any-type! unset!]
-	/extension >extension
-	/return-block
-	/silent
-	/build
+	'>folder [any-type! unset!] {optional directory}
+	/extension >extension {filter by extension}
+	/return-block {return a block instead of string}
+	/silent {silent mode}
+	/build {return the build number for developer}
 	][
 
         >build: 0.0.0.1.21
