@@ -22,7 +22,7 @@ if not value? 'syscd [
 
         search: true
 
-        >build: 0.0.0.2.11
+        >build: 0.0.0.2.13
 
         if build [
             print >build
@@ -34,11 +34,10 @@ if not value? 'syscd [
         if up [
 
             thepath: form >path
-            ?? thepath
-            ask "pause..."
-            if found: search-dir/up thepath [
-                print (found)
-                ask "pause..."
+
+            if found: search-dir/up (thepath) [
+                cd (found)
+                return what-dir
             ]
             exit
         ]
