@@ -20,7 +20,8 @@ do https://redlang.red/toomasv/dir-tree2.red
 	/build
 	][
 
-	>build: 0.0.0.1.7.2
+	>build: 0.0.0.1.8.1
+	>build-comment: {revert to 6}
 
 	if build [
 		unless silent [
