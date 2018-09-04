@@ -8,7 +8,7 @@ Red [
 		}
 	]
 	Date: "2017-05-07"
-	Changed: "2018-07-09"
+	Changed: "2018-09-04"
 	Purpose: "Print a directory tree"
 	File: "%treeview.red"
 ]
