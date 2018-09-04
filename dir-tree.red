@@ -39,7 +39,11 @@ do https://redlang.red/toomasv/dir-tree2.red
 
 	if extension [
 		>extension: form >extension
-		; lines: split the-tree newline	
+		lines: split the-tree newline	
+		remove lines ; remove first line
+		forall lines [
+			
+		]
 		; the-tree: copy ""
 		; forall lines [
 		; 	line: lines/1
