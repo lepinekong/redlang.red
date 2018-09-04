@@ -38,12 +38,12 @@ do https://redlang.red/alias
 	]	
 	.folder: :>folder
 	unless silent [
-		print tree: dir-tree (.folder)
+		print the-tree: dir-tree (.folder)
 	]
 	
-	return tree
+	return the-tree
 
 ]
 
-.alias .treeview [.tree treeview tree-view]
+.alias .treeview [tree .tree treeview tree-view]
 
