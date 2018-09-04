@@ -2,6 +2,11 @@ Red [
     Title: "search-dir.red"
 ]
 
+if not value? '.redlang [
+    do http://redlang.red
+]
+.redlang [block-to-string]
+
 try [do https://redlang.red/do-events]
 
 do http://redlang.red/do-trace
@@ -45,8 +50,6 @@ do http://redlang.red/do-trace
     folders: copy []
     forall files [
         fold: files/1
-
-    
         if dir? fold: files/1 [
             append folders fold
             stringFile: (form fold)
@@ -71,8 +74,6 @@ do http://redlang.red/do-trace
                 if not find dirs-found fold [
                     append dirs-found fold  
                 ]
-
-                
             ][
                 found?: .search-dir/folder (.searchString) (fold)  ; BUG was here, must switch
                 if not none? found? [
