@@ -18,6 +18,7 @@ if not value? 'syscd [
         /up
         /build 
         /no-autoexec {don't autoexecute %.red and %autoload.red}
+        /silent
     ][
 
         search: true
@@ -25,7 +26,9 @@ if not value? 'syscd [
         >build: 0.0.0.2.13
 
         if build [
-            print >build
+            unless silent [
+                print >build
+            ]
             return >build
         ]
 
