@@ -16,7 +16,17 @@ do http://redlang.red/do-trace
     '>searchString {partial folder name}
     /folder {startup folder} '>folder     
     /all {return all folders found in a block}
+    /build
+    /sildent
 ][
+
+    if build [
+        >build: 0.0.0.2.19
+        unless silent [
+            print >build
+        ] 
+        return >build
+    ]
 
     
     either folder [
