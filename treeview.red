@@ -28,7 +28,7 @@ do https://redlang.red/toomasv/dir-tree2.red
 	/build {return the build number for developer}
 	][
 
-        >build: 0.0.0.1.22.1
+        >build: 0.0.0.1.1
 
         if build [
             unless silent [
@@ -83,5 +83,5 @@ do https://redlang.red/toomasv/dir-tree2.red
 
 ]
 
-.alias .treeview [tree .tree treeview tree-view .tree-view .dir-tree]
+.alias .treeview [treeview tree .tree tree-view .tree-view .dir-tree]
 
