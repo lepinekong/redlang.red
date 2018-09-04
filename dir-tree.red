@@ -64,7 +64,7 @@ do https://redlang.red/toomasv/dir-tree2.red
 		print the-tree
 	]
 	
-	return the-tree
+	return lines
 
 ]
 
