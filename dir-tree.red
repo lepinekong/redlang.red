@@ -20,7 +20,7 @@ do https://redlang.red/toomasv/dir-tree2.red
 	/build
 	][
 
-        >build: 0.0.0.1.13.1
+        >build: 0.0.0.1.14.1
 
         if build [
             unless silent [
@@ -37,7 +37,7 @@ do https://redlang.red/toomasv/dir-tree2.red
 	.folder: :>folder
 	the-tree: dir-tree (.folder)
 
-	either extension [
+	if extension [
 		>extension: form >extension
 		lines: split the-tree newline	
 		the-tree: copy ""
@@ -48,18 +48,13 @@ do https://redlang.red/toomasv/dir-tree2.red
 				append the-tree newline
 			]
 			append the-tree line
-		]	
-
-		unless silent [
-			print the-tree
-		]	
-			
-	][
-		unless silent [
-			print the-tree
-		]
+		]		
 	]
 
+	unless silent [
+		print the-tree
+	]
+	
 	return the-tree
 
 ]
