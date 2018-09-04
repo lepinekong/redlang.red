@@ -41,17 +41,24 @@ do https://redlang.red/toomasv/dir-tree2.red
 		>extension: form >extension
 		lines: split the-tree newline	
 		remove lines ; remove first line
+		filtered-tree: copy ""
 		forall lines [
 			line: lines/1
 			index: index? lines
+			if ((index? lines) > 1) [ ; super bug because forgot () around index? lines
+				append filtered-tree newline
+			]
+			append filtered-tree line
 		]
+		the-tree: copy filtered-tree
+
 		; the-tree: copy ""
 		; forall lines [
 		; 	line: lines/1
 		; 	index: index? lines
 		; 	print index
 		; 	print line
-		; 	; if lines <> "" [
+		; 	; if line <> "" [
 		; 	; 	if (index? lines > 2) [
 		; 	; 		append the-tree newline
 		; 	; 	]
