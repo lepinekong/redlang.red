@@ -20,7 +20,7 @@ do https://redlang.red/toomasv/dir-tree2.red
 	/build
 	][
 
-	>build: 0.0.0.1.6.1
+	>build: 0.0.0.1.7.1
 
 	if build [
 		unless silent [
@@ -43,11 +43,12 @@ do https://redlang.red/toomasv/dir-tree2.red
 		forall lines [
 			line: lines/1 
 			file: trim/all line
+			if (index? lines) > 1 [
+				append the-tree newline
+			]
+			append the-tree line			
 		]
-		if (index? lines) > 1 [
-			append the-tree newline
-		]
-		append the-tree line
+
 	]
 
 	unless silent [
