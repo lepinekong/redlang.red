@@ -15,13 +15,14 @@ if not value? 'syscd [
         [catch] 
         'path [file! word! path! unset! string! paren! url!] "Accepts %file, :variables and just words (as dirs)"
         /search
+        /up
         /build 
         /no-autoexec {don't autoexecute %.red and %autoload.red}
     ][
 
         search: true
 
-        >build: 0.0.0.2.6
+        >build: 0.0.0.2.11
 
         if build [
             print >build
@@ -29,6 +30,18 @@ if not value? 'syscd [
         ]
 
         >path: :path
+
+        if up [
+
+            thepath: form >path
+            ?? thepath
+            ask "pause..."
+            if found: search-dir/up thepath [
+                print (found)
+                ask "pause..."
+            ]
+            exit
+        ]
 
         dir-not-found: function [path searchString][
             
@@ -87,14 +100,14 @@ if not value? 'syscd [
                     dir-not-found %. searchString
                 ]                    
                 
-                unless no-autoexec [
-                    if exists? %autoload.red [
-                        do %autoload.red
-                    ]
-                    if exists? %.red [
-                        do %.red
-                    ] 
-                ]
+                ; unless no-autoexec [
+                ;     if exists? %autoload.red [
+                ;         do %autoload.red
+                ;     ]
+                ;     if exists? %.red [
+                ;         do %.red
+                ;     ] 
+                ; ]
             ]
         ] [
             throw error 'script 'expect-arg reduce ['cd 'path type? get/any 'path]
