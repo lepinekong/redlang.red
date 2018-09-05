@@ -30,7 +30,7 @@ unless value? '.redlang [
 	/build {return the build number for developer}
 	][
 
-	>build: 0.0.0.1.4
+	>build: 0.0.0.1.6
 
 	if build [
 		unless silent [
@@ -39,7 +39,8 @@ unless value? '.redlang [
 		return >build
 	]		
 
-	>extension: to-red-file form :>extension
+	>extension: form :>extension
+	filter_rule: compose [thru (>extension)]
 
 	switch type?/word get/any '>folder [
 		unset! [
@@ -47,55 +48,25 @@ unless value? '.redlang [
 		]
 	]	
 	.folder: :>folder
-	filter_file: function [filename][
-		ext: last (split filename ".") 
-		if (ext = %.red) [
-			return filename
-		]	
-		return none	
-	]
-
-	the-tree>: dir-tree/expand/filter (.folder) 'all filter_file
-
-	; lines: split the-tree newline	
-	; remove lines ; remove first line	
-
-	; if extension [
-
-	; 	>extension: remove form >extension ; 0.0.0.1.20 bug here !!! ".red" instead of "red"
-	; 	filtered-tree: copy ""
-	; 	forall lines [
-	; 		line: lines/1
-	; 		index: index? lines
-
-	; 		filename: trim/all line
-	; 		ext: last (split filename ".") 
-	; 		if (ext = >extension) [
-	; 			if (filtered-tree <> "") [ ; super bug because forgot () around index? lines
-	; 				append filtered-tree newline
-	; 			]
-	; 			append filtered-tree line
-	; 		]
-
-	; 	]
-	; 	the-tree: copy filtered-tree
 	
-	; ]
+	the-tree>: dir-tree/expand/filter (.folder) 'all filter_rule
 
-	unless silent [
-		print the-tree>
-	]
-	
 	either return-block [
 		lines: split the-tree newline	
-		remove lines ; remove first line		
+		remove lines ; remove first line	
+		unless silent [
+			print the-tree>
+		]			
 		return lines
 	][
-		return the-tree>
+		either not silent [
+			print the-tree>
+		][
+			return the-tree>
+		]
 	]
 	
 
 ]
 
 .alias .treeview [treeview tree .tree tree-view .tree-view .dir-tree]
-
