@@ -35,7 +35,7 @@ unless value? '.redlang [
 	/build {return the build number for developer}
 	][
 
-	>build: 0.0.0.1.15
+	>build: [0.0.0.1.15 {- fix filter rule for filename containing extension}]
 
 	if build [
 		unless silent [
