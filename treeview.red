@@ -27,6 +27,14 @@ unless value? '.redlang [
 .redlang [do-events alias]
 
 .treeview: function [
+	{Examples:
+		.treeview
+		.treeview %./
+		.treeview %/c/projects/test
+		.treeview c:\projects\test
+		.treeview %./ %.html
+		>default-extension: %.html
+	}
 	'>folder [any-type! unset!] {optional directory}
 	/extension '>extension [any-type!]  {filter by extension}
 	/dir {directories only}
@@ -62,11 +70,11 @@ unless value? '.redlang [
 	]
 	>extension: form :>extension
 
-	;filter_rule: compose [thru (>extension)]
+
 	filter_rule: compose/only/deep [thru [(>extension) end]] 
 
-
-	.folder: :>folder
+	;.folder: :>folder
+	.folder: to-red-file form :>folder ; 0.0.0.1.16
 	
 	the-tree>: dir-tree/filter/expand (.folder) filter_rule 'all
 
