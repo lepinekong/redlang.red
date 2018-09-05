@@ -1,6 +1,0 @@
-Red [
-    Title: "guid.red"
-    Needs: 'View
-]
-
-do read http://redlang.red/gui.red
