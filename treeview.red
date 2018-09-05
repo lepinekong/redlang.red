@@ -5,12 +5,17 @@ Red [
 			- optional directory
 			- filter by extension (/extension)
 			- optionally return a block (/return-block)
+			- >default-extension: %.txt
 		}
 	]
 	Date: "2018-09-04"
 	Changed: ["2018-09-04" "2018-09-05"] 
 	Purpose: "Print a directory tree or current directory with filter"
 	File: "%treeview.red"
+]
+
+if not value? '>default-extension [
+	>default-extension: %.txt
 ]
 
 lib: https://redlang.red/toomasv/dir-tree3.red
@@ -23,21 +28,27 @@ unless value? '.redlang [
 
 .treeview: function [
 	'>folder [any-type! unset!] {optional directory}
-	/extension '>extension {filter by extension}
+	/extension '>extension [any-type!]  {filter by extension}
 	/dir {directories only}
 	/return-block {return a block instead of string}
 	/silent {silent mode}
 	/build {return the build number for developer}
 	][
 
-	>build: 0.0.0.1.6
+	>build: 0.0.0.1.14
 
 	if build [
 		unless silent [
 			print >build
 		]
 		return >build
-	]	
+	]
+
+	switch type?/word get/any '>folder [
+		unset! [
+			>folder: %./
+		]
+	]		
 
 	if suffix: suffix? to-red-file rejoin ["%" form :>folder]  [
 		extension: true
@@ -47,22 +58,15 @@ unless value? '.redlang [
 	]		
 
 	if not extension [
-		>extension: %.txt
+		>extension: >default-extension
 	]
 	>extension: form :>extension
 
 	filter_rule: compose [thru (>extension)]
 
-	switch type?/word get/any '>folder [
-		unset! [
-			>folder: %./
-		]
-	]	
 	.folder: :>folder
-
-
 	
-	the-tree>: dir-tree/expand/filter (.folder) 'all filter_rule
+	the-tree>: dir-tree/filter/expand (.folder) filter_rule 'all
 
 	either return-block [
 		lines: split the-tree newline	
