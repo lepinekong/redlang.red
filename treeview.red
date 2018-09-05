@@ -40,12 +40,13 @@ unless value? '.redlang [
 	/dir {directories only}
 	/return-block {return a block instead of string}
 	/silent {silent mode}
-	/build {return the build number for developer}
+	/_build {return the build number for developer}
+	/_debug {show debug messages for developer}
 	][
-6
-	>build: [0.0.0.1.16 {- now support windows path}]
 
-	if build [
+	>build: [0.0.0.1.18 {- now support windows path}]
+
+	if _build [
 		unless silent [
 			print >build
 		]
@@ -73,10 +74,26 @@ unless value? '.redlang [
 
 	filter_rule: compose/only/deep [thru [(>extension) end]] 
 
-	;.folder: :>folder
 	.folder: to-red-file form :>folder ; 0.0.0.1.16
 	
-	the-tree>: dir-tree/filter/expand (.folder) filter_rule 'all
+	either extension [
+		either _debug [
+			command: compose/only/deep [dir-tree/filter/expand (.folder) (filter_rule) 'all]
+			?? command
+			the-tree>: do command
+		][
+			the-tree>: dir-tree/filter/expand (.folder) filter_rule 'all
+		]
+	][
+		either _debug [
+			command: compose/only/deep [dir-tree/expand (.folder) 'all]
+			?? command
+			the-tree>: do command
+		][
+			the-tree>: dir-tree/expand (.folder) 'all
+		]
+	]
+
 
 	either return-block [
 		lines: split the-tree newline	
@@ -95,3 +112,4 @@ unless value? '.redlang [
 ]
 
 .alias .treeview [treeview tree .tree tree-view .tree-view .dir-tree]
+
