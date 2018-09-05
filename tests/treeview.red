@@ -7,28 +7,30 @@ Red [
 			- optionally return a block (/return-block)
 		}
 	]
-	Date: "2017-05-07"
-	Changed: "2018-09-04"
-	Purpose: "Print a directory tree"
+	Date: "2018-09-04"
+	Changed: ["2018-09-04" "2018-09-05"] 
+	Purpose: "Print a directory tree or current directory with filter"
 	File: "%treeview.red"
 ]
+
+lib: https://redlang.red/toomasv/dir-tree3.red
+do lib
 
 unless value? '.redlang [
 	do https://redlang.red
 ]
 .redlang [do-events alias]
 
-do https://redlang.red/toomasv/dir-tree2.red
-
 .treeview: function [
 	'>folder [any-type! unset!] {optional directory}
 	/extension '>extension {filter by extension}
+	/dir {directories only}
 	/return-block {return a block instead of string}
 	/silent {silent mode}
 	/build {return the build number for developer}
 	][
 
-	>build: 0.0.0.1.2
+	>build: 0.0.0.1.4
 
 	if build [
 		unless silent [
@@ -45,41 +47,51 @@ do https://redlang.red/toomasv/dir-tree2.red
 		]
 	]	
 	.folder: :>folder
-	the-tree: dir-tree (.folder)
-
-	lines: split the-tree newline	
-	remove lines ; remove first line	
-
-	if extension [
-
-		>extension: remove form >extension ; 0.0.0.1.20 bug here !!! ".red" instead of "red"
-		filtered-tree: copy ""
-		forall lines [
-			line: lines/1
-			index: index? lines
-
-			filename: trim/all line
-			ext: last (split filename ".") 
-			if (ext = >extension) [
-				if (filtered-tree <> "") [ ; super bug because forgot () around index? lines
-					append filtered-tree newline
-				]
-				append filtered-tree line
-			]
-
-		]
-		the-tree: copy filtered-tree
-	
+	filter_file: function [filename][
+		ext: last (split filename ".") 
+		if (ext = %.red) [
+			return filename
+		]	
+		return none	
 	]
 
+	the-tree>: dir-tree/expand/filter (.folder) 'all filter_file
+
+	; lines: split the-tree newline	
+	; remove lines ; remove first line	
+
+	; if extension [
+
+	; 	>extension: remove form >extension ; 0.0.0.1.20 bug here !!! ".red" instead of "red"
+	; 	filtered-tree: copy ""
+	; 	forall lines [
+	; 		line: lines/1
+	; 		index: index? lines
+
+	; 		filename: trim/all line
+	; 		ext: last (split filename ".") 
+	; 		if (ext = >extension) [
+	; 			if (filtered-tree <> "") [ ; super bug because forgot () around index? lines
+	; 				append filtered-tree newline
+	; 			]
+	; 			append filtered-tree line
+	; 		]
+
+	; 	]
+	; 	the-tree: copy filtered-tree
+	
+	; ]
+
 	unless silent [
-		print the-tree
+		print the-tree>
 	]
 	
 	either return-block [
+		lines: split the-tree newline	
+		remove lines ; remove first line		
 		return lines
 	][
-		return the-tree
+		return the-tree>
 	]
 	
 
