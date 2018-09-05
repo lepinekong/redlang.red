@@ -35,7 +35,7 @@ unless value? '.redlang [
 	/build {return the build number for developer}
 	][
 
-	>build: 0.0.0.1.14
+	>build: 0.0.0.1.15
 
 	if build [
 		unless silent [
@@ -62,7 +62,9 @@ unless value? '.redlang [
 	]
 	>extension: form :>extension
 
-	filter_rule: compose [thru (>extension)]
+	;filter_rule: compose [thru (>extension)]
+	filter_rule: compose/only/deep [thru [(>extension) end]] 
+
 
 	.folder: :>folder
 	
