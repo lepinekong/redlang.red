@@ -11,7 +11,7 @@ if not value? '.do [
     .do: function [
 
         {.do/redlang allows you to load multiples redlang libraries with a shortcut syntax.} 
-        'value [any-type!] 
+        'value [any-type! unset!] 
         /expand "Expand directives before evaluation" 
         /args {If value is a script, this will set its system/script/args} 
         arg "Args passed to a script (normally a string)" 
@@ -23,19 +23,34 @@ if not value? '.do [
             .do/redlang/silent [cd copy-files]
         }
         /quickrun
-        /silent {Don't print command}
+        /silent { [DEPRECATED] Don't print command}
         /_debug {debug mode for developer only}
+        /_build
 
     ][
-        value: :value
+        >build: [0.0.0.4.3 {
+            - /silent deprecated
+            - /_build added
+        }]
 
+        if _build [
+            print >build
+            return >build
+            exit
+        ]
+
+        silent: true
+
+
+        value: :value
 
         if redlang [
 
             .refinement: "redlang"
             .domain: rejoin [.refinement ".red"]
 
-            either block? value [
+            either block? value 
+[
 
                 new-value: copy value
 
@@ -78,7 +93,8 @@ if not value? '.do [
                 ]
                 exit ; if missing => bug
                 
-            ][
+            ]
+[
                 url-string: form value
 
                 if not find url-string .refinement [
@@ -100,7 +116,8 @@ if not value? '.do [
             .refinement: "quickrun"
             .domain: rejoin [.refinement ".red"]
 
-            either block? value [
+            either block? value 
+[
 
                 new-value: copy value
 
@@ -143,7 +160,8 @@ if not value? '.do [
                 ]
                 exit ; if missing => bug
                 
-            ][
+            ]
+[
                 url-string: form value
 
                 if not find url-string .refinement [
@@ -191,9 +209,9 @@ if not value? '.do [
             print rejoin [msg-debug command]
         ]
 
-        do command        
-
-    ]  
+        do command   
+    
+    ] 
 ]  
 .redlang: function ['arg [any-type!] ][
     .do/redlang (arg)
