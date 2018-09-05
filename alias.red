@@ -6,6 +6,7 @@ Red [
     {define one or several alias(es) for a function name}
     '>original-function {original name - example: print}
     '>alias-functions {alias name or block of names - example: show or [show out]}
+    /_debug {debug mode for developer}
 ][
 
     original-function: to-word form >original-function
@@ -14,7 +15,9 @@ Red [
         exclude-list: copy []
         foreach alias-function >alias-functions [
             if value? alias-function [
-                print [{function} rejoin [{'} alias-function] {already exists}]
+                if _debug [
+                    print [{function} rejoin [{'} alias-function] {already exists}] ; 0.0.0.1.8
+                ]
                 append exclude-list alias-function
             ]
         ]
@@ -41,5 +44,3 @@ Red [
 ]
 
 .alias .alias [alias aliases]
-
-
