@@ -42,8 +42,8 @@ unless value? '.redlang [
 	/silent {silent mode}
 	/build {return the build number for developer}
 	][
-
-	>build: [0.0.0.1.15 {- fix filter rule for filename containing extension}]
+6
+	>build: [0.0.0.1.16 {- now support windows path}]
 
 	if build [
 		unless silent [
