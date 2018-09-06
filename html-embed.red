@@ -12,7 +12,12 @@ Red [
 ]
 
 do https://codegen.red/blank-template.red
-do https://redlang.red/templating
+
+if not value? '.redlang [
+    do https://redlang.red
+]
+.redlang [templating]
+;do https://redlang.red/templating
 
 html-embed: function [][    
     store-template: copy []
@@ -34,6 +39,7 @@ html-embed: function [][
     ]
     return render template %html-embed.html
 ]
+
 
 
 
