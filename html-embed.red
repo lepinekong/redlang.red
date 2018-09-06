@@ -40,8 +40,6 @@ html-embed: function [][
     return render template %html-embed.html
 ]
 
-.redlang [script-path]
-print get-script-path
 
 
 
