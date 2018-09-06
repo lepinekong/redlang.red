@@ -2,7 +2,7 @@ Red [
     Title: ""
 ]
 
-remove-last: function [
+.remove-last: function [
     {Example: 
         block: [1 2 3 4]
         test: remove-last block
@@ -13,6 +13,4 @@ remove-last: function [
     head remove (back tail >block)
 ]
 
-
-
-
+remove-last: :.remove-last
