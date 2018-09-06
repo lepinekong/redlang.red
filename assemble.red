@@ -1,4 +1,3 @@
-
 Red [
     Title: "assemble.red"
     Description: {Assemble a red file from parts}
@@ -6,18 +5,15 @@ Red [
         0.0.1 {Initial version}
     ]
 ]
-
 do https://redlang.red
 .redlang [files get-folder alias to-dir]
-
 .include: function [
     'directory [any-type! unset!]
     /build
     /silent
     /separator ; 0.0.0.6.6
 ][
-
-    >build: 0.0.0.4.6
+    >build: 0.0.0.4.7
 
     if build [
         unless silent [
@@ -25,8 +21,7 @@ do https://redlang.red
         ]
         return >build
     ]    
-    
-    src: copy ""
+        src: copy ""
     >directory: directory ; new in 0.0.0.4
 
     directory: .to-dir to-red-file form :directory
@@ -39,17 +34,14 @@ do https://redlang.red
     ]
 
     files: read directory
-
     forall files [
-
         file: rejoin [directory files/1]
 
         short-filename: rejoin [get-short-filename/wo-extension file]
         extension: get-file-extension file
 
         folder: get-folder (file)
-        sub-folder: rejoin [folder short-filename %/] 
-        unless (dir? file) or (
+        sub-folder: rejoin [folder short-filename %/]         unless (dir? file) or (
             (extension <> %.red) and (extension <> %.html) and (extension <> %.htm)
             ) [
             if separator [ ; 0.0.0.4.6
@@ -59,7 +51,10 @@ do https://redlang.red
                 either separator [ ; 0.0.0.4.6
                     ;src: rejoin [src newline]
                 ][
-                    src: rejoin [src ""] ; 0.0.0.4.5
+                    unless no-newline [
+                        src: rejoin [src newline] ;  0.0.0.4.7
+                    ]
+                    ;src: rejoin [src ""] ; 0.0.0.4.5 removed in 0.0.0.4.7
                 ] 
             ]
             src: rejoin [src read file]
@@ -78,7 +73,5 @@ do https://redlang.red
                 replace src {<%parts%>} src-include
             ]
         ]        
-    ]
-    return src
-]
-.alias .include [include assemble .assemble ]
+    ]    return src
+].alias .include [include assemble .assemble ]
