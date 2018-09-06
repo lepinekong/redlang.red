@@ -14,6 +14,7 @@ do https://redlang.red
     'directory [any-type! unset!]
     /build
     /silent
+    /separator ; 0.0.0.6.6
 ][
 
     >build: 0.0.0.4.5
@@ -50,11 +51,20 @@ do https://redlang.red
         unless (dir? file) or (
             (extension <> %.red) and (extension <> %.html) and (extension <> %.htm)
             ) [
+            if separator [ ; 0.0.0.4.6
+                src: rejoin [{;---} newline src]
+            ]
             unless (index? files) = 1 [
-                ;src: rejoin [src newline]
-                src: rejoin [src ""] ; 0.0.0.4.5
+                either separator [ ; 0.0.0.4.6
+                    ;src: rejoin [src newline]
+                ][
+                    src: rejoin [src ""] ; 0.0.0.4.5
+                ] 
             ]
             src: rejoin [src read file]
+            if separator [ ; 0.0.0.4.6
+                src: rejoin [src newline {;---} ]
+            ]            
 
             doc-file: clean-path rejoin [folder short-filename %.log]
             
