@@ -43,7 +43,7 @@ html-embed: function [][
     return render template %html-embed.html
 ]
 
-.redlang [script-path get-short-filename]
+.redlang [script-path get-short-filename confirm]
 file: get-script-file
 >short-filename: get-short-filename file
 block: reverse split form file "."
@@ -51,8 +51,11 @@ block: reverse split form file "."
 ?? file
 if (block/1 = "red") and (block/2 = "html") [
     src: html-embed
-    ?? src
+    if confirm (rejoin [{Write to } file { ?}]) [
+        write file src
+    ]
 ]
+
 
 
 
