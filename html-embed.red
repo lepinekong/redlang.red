@@ -41,7 +41,9 @@ html-embed: function [][
 ]
 
 .redlang [script-path]
-print get-script-file
+print file: get-script-file
+block: split form file "."
+?? block
 
 
 
