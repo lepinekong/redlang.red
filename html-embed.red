@@ -41,9 +41,10 @@ html-embed: function [][
 ]
 
 .redlang [script-path]
-print file: get-script-file
-block: split form file "."
-?? block
+block: reverse split form file "."
+if (block/1 = "red") and (block/2 = "html") [
+    html-embed
+]
 
 
 
