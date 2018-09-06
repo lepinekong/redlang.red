@@ -47,6 +47,7 @@ html-embed: function [][
 file: get-script-file
 >short-filename: get-short-filename file
 block: reverse split form file "."
+?? block
 if (block/1 = "red") and (block/2 = "html") [
     html-embed
 ]
