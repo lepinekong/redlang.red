@@ -17,12 +17,13 @@ if not value? '.redlang [
     do https://redlang.red
 ]
 .redlang [templating]
-;do https://redlang.red/templating
+
 
 html-embed: function [][    
     store-template: copy []
     if empty? store-template [
-        append store-template get-blank-template/source https://codegen.red/redlang/res/html-embed.template.html
+        append store-template get-blank-template/source/no-clipboard-output 
+        https://codegen.red/redlang/res/html-embed.template.html ; 0.0.0.1.2: /no-clipboard-output
     ]
     
     template: store-template/1
@@ -56,13 +57,5 @@ if file [
         ]
     ]
 ]
-
-
-
-
-
-
-
-
 
 
