@@ -41,7 +41,9 @@ html-embed: function [][
 ]
 
 .redlang [script-path]
-print script-path
+print get-script-path
+
+
 
 
 

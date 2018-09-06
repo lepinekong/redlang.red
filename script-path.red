@@ -9,6 +9,9 @@ if not value? '.redlang [
 .redlang [get-folder]
 get-script-path: function [][
     ;return get-short-filename system/options/script
-    return get-folder system/options/script
+    if system/options/script [
+        return get-folder system/options/script
+    ]
+    return none
 ]
 
