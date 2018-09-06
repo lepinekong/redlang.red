@@ -2,7 +2,7 @@ Red [
     Title: "to-dir.red"
 ]
 
-.to-dir:  function[.dir [word! string! file! url! block! unset!] /local ][
+.to-dir:  function[.dir [word! string! file! url! block! unset!] ][
 
 	{
 
