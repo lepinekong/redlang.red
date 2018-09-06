@@ -7,11 +7,14 @@ do https://redlang.red
 
 .get-file-version: function ['>file][
     .file: to-red-file form :>file
-    splitted-file: split .file
-    remove-last splitted-file
-    either error? try [
-        version: to-integer last splitted-file
-    ][
+    splitted-file: split .file "."
+    splitted-file: head remove-last splitted-file
+    version: last splitted-file
+    version: to-integer form version
+    error: (error? try [
+        version: to-integer version
+    ])
+    either error [
         return none
     ][
         return version
@@ -19,3 +22,5 @@ do https://redlang.red
 ]
 
 get-file-version: :.get-file-version
+
+
