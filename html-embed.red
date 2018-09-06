@@ -48,8 +48,10 @@ file: get-script-file
 >short-filename: get-short-filename file
 block: reverse split form file "."
 ?? block
+?? file
 if (block/1 = "red") and (block/2 = "html") [
-    html-embed
+    src: html-embed
+    ?? src
 ]
 
 
