@@ -17,7 +17,7 @@ do https://redlang.red
     /separator ; 0.0.0.6.6
 ][
 
-    >build: 0.0.0.4.5
+    >build: 0.0.0.4.6
 
     if build [
         unless silent [
@@ -25,6 +25,7 @@ do https://redlang.red
         ]
         return >build
     ]    
+    
     src: copy ""
     >directory: directory ; new in 0.0.0.4
 
