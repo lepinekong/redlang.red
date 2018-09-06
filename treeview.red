@@ -1,3 +1,4 @@
+
 Red [
 	Authors: [
 		"Toomas Vooglaid" {original code: https://gist.github.com/toomasv/ed9e15d0173f9f80b8bc50c734727b11}
@@ -17,8 +18,7 @@ Red [
 if not value? '>default-extension [
 	>default-extension: %.txt
 ]
-
-lib: https://redlang.red/toomasv/dir-tree3.red
+lib: https://redlang.red/toomasv/dir-tree4.red
 do lib
 
 unless value? '.redlang [
@@ -26,31 +26,46 @@ unless value? '.redlang [
 ]
 .redlang [do-events alias]
 
-.treeview: function [
+.treeview: function 
+[
 	{Examples:
 		.treeview
 		.treeview %./
 		.treeview %/c/projects/test
 		.treeview c:\projects\test
-		.treeview %./ %.html
+		.treeview/extension %/c/projects/test %.html
 		>default-extension: %.html
 	}
 	'>folder [any-type! unset!] {optional directory}
+	/help {print help}
 	/extension '>extension [any-type!]  {filter by extension}
 	/dir {directories only}
 	/return-block {return a block instead of string}
 	/silent {silent mode}
 	/_build {return the build number for developer}
 	/_debug {show debug messages for developer}
-	][
+	]
+[
 
-	>build: [0.0.0.1.18 {- now support windows path}]
+	>build: [0.0.0.2.4 {- refactoring}]
 
 	if _build [
 		unless silent [
 			print >build
 		]
 		return >build
+	]
+
+	if help [
+		print {Examples:
+			.treeview
+			.treeview %./
+			.treeview %/c/projects/test
+			.treeview c:\projects\test
+			.treeview/extension %/c/projects/test %.html
+			>default-extension: %.html
+		}
+		exit		
 	]
 
 	switch type?/word get/any '>folder [
@@ -74,26 +89,37 @@ unless value? '.redlang [
 
 	filter_rule: compose/only/deep [thru [(>extension) end]] 
 
-	.folder: to-red-file form :>folder ; 0.0.0.1.16
-	
-	either extension [
-		either _debug [
-			command: compose/only/deep [dir-tree/filter/expand (.folder) (filter_rule) 'all]
-			?? command
-			the-tree>: do command
-		][
-			the-tree>: dir-tree/filter/expand (.folder) filter_rule 'all
-		]
-	][
-		either _debug [
-			command: compose/only/deep [dir-tree/expand (.folder) 'all]
-			?? command
-			the-tree>: do command
-		][
-			the-tree>: dir-tree/expand (.folder) 'all
-		]
+	.folder: to-red-file form :>folder ; 0.0.0.1.
+
+	; start 0.0.0.2.1
+	command: copy []
+	main-command: copy rejoin ["dir-tree/non-empty/expand"] ; 0.0.0.2.5
+
+	if dir [
+		main-command: rejoin [main-command "/dir"]
+	]
+	if extension [
+		main-command: rejoin [main-command "/filter"]
 	]
 
+	command: to block! main-command
+
+	append command (.folder)
+
+	append command to-lit-word 'all
+
+	if extension [
+		;append command filter_rule
+		append/only command filter_rule ;0.0.0.2.7
+	]
+	; finish 0.0.0.2.1	
+	
+
+	if _debug [
+		;command: compose/only/deep [dir-tree/filter/expand (.folder) (filter_rule) 'all]
+		?? command
+	]
+	the-tree>: do command
 
 	either return-block [
 		lines: split the-tree newline	
@@ -112,4 +138,3 @@ unless value? '.redlang [
 ]
 
 .alias .treeview [treeview tree .tree tree-view .tree-view .dir-tree]
-
