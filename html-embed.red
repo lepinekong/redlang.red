@@ -37,6 +37,9 @@ html-embed: function [][
             system/words/domain-name: ans
         ]
     ]
+    if value? '>short-filename [
+        short-filename: >short-filename
+    ]
     return render template %html-embed.html
 ]
 
