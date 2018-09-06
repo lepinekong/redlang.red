@@ -6,7 +6,9 @@ if not value? '.redlang [
     do https://redlang.red
 ]
 
-.redlang [files]
-script-path: function [][
-    return get-short-filename system/options/script
+.redlang [get-folder]
+get-script-path: function [][
+    ;return get-short-filename system/options/script
+    return get-folder system/options/script
 ]
+
