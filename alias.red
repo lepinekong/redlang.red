@@ -6,6 +6,7 @@ Red [
     {define one or several alias(es) for a function name}
     '>original-function {original name - example: print}
     '>alias-functions {alias name or block of names - example: show or [show out]}
+    /verbose {verbose mode}
     /_debug {debug mode for developer}
 ][
 
@@ -27,12 +28,15 @@ Red [
             foreach name exclude-list [
                 remove find alias-functions-list-new name
             ]
-
-            print [{list of aliases for} rejoin [{'} original-function {:}] alias-functions-list-new]
+            if verbose [ ; 0.0.0.1.9
+                print [{list of aliases for} rejoin [{'} original-function {:}] alias-functions-list-new]
+            ]
             set alias-functions-list-new get original-function
             exit
         ]
-        print [{list of aliases for} original-function {:}  >alias-functions]
+        if verbose [ ; 0.0.0.1.9
+            print [{list of aliases for} original-function {:}  >alias-functions]
+        ]
         set >alias-functions get original-function
     ][
         >alias-function: >alias-functions

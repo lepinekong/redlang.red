@@ -1,5 +1,6 @@
 Red [
     Title: "explorer.red"
+    Note: {Moved to quickrun.red/shell}
 ]
 
 ; explorer: function [>folder][
