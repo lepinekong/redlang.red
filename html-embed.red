@@ -43,8 +43,6 @@ html-embed: function [][
     return render template %html-embed.html
 ]
 
-ask "46"
-
 .redlang [script-path get-short-filename]
 file: get-script-file
 >short-filename: get-short-filename file
