@@ -61,7 +61,8 @@ do https://redlang.red
                     ;src: rejoin [src newline]
                 ][
                     unless no-newline [
-                        src: rejoin [src newline] ;  0.0.0.4.7
+                        ;src: rejoin [src newline] ;  0.0.0.4.7
+                        src: rejoin [newline src newline] ;  0.0.0.4.8
                     ]
                     ;src: rejoin [src ""] ; 0.0.0.4.5 removed in 0.0.0.4.7
                 ] 
