@@ -18,7 +18,8 @@ Red [
 if not value? '>default-extension [
 	>default-extension: %.txt
 ]
-lib: https://redlang.red/toomasv/dir-tree4.red
+;lib: https://redlang.red/toomasv/dir-tree4.red
+lib: https://redlang.red/toomasv/dir-tree5.red ; in 0.0.0.2.8
 do lib
 
 unless value? '.redlang [
