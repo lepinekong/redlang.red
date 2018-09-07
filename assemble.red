@@ -1,4 +1,8 @@
 
+
+
+
+
 Red [
     Title: "assemble.red"
     Description: {Assemble a red file from parts}
@@ -18,7 +22,11 @@ do https://redlang.red
     /separator ; 0.0.0.6.6
 ][
 
-    >build: 0.0.0.4.7
+
+
+
+
+    >build: [0.0.0.4.9 {Revert to 0.0.0.4.7 by removing newline}] 
 
     if build [
         unless silent [
@@ -43,6 +51,8 @@ do https://redlang.red
 
     forall files [
 
+
+
         file: rejoin [directory files/1]
 
         short-filename: rejoin [get-short-filename/wo-extension file]
@@ -62,7 +72,8 @@ do https://redlang.red
                 ][
                     unless no-newline [
                         ;src: rejoin [src newline] ;  0.0.0.4.7
-                        src: rejoin [newline src newline] ;  0.0.0.4.8
+                        ;src: rejoin [newline src newline] ;  0.0.0.4.8
+                        src: rejoin [src newline] ;  0.0.0.4.9
                     ]
                     ;src: rejoin [src ""] ; 0.0.0.4.5 removed in 0.0.0.4.7
                 ] 
