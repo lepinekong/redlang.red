@@ -12,9 +12,11 @@ Red [
 	Changed: ["2018-09-04" "2018-09-05"] 
 	Purpose: "Print a directory tree or current directory with filter"
 	File: "%treeview.red"
-]if not value? '>default-extension [
+]
+if not value? '>default-extension [
 	>default-extension: %.txt
-]lib: https://redlang.red/toomasv/dir-tree6.red ; in 0.0.0.2.13
+]
+lib: https://redlang.red/toomasv/dir-tree6.red ; in 0.0.0.2.13
 do lib
 
 unless value? '.redlang [
@@ -150,4 +152,5 @@ unless value? '.redlang [
 	]
     
 	system/words/read: :tempSysRead
-].alias .treeview [treeview tree .tree tree-view .tree-view .dir-tree]
+]
+.alias .treeview [treeview tree .tree tree-view .tree-view .dir-tree]
