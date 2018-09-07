@@ -2,6 +2,11 @@ Red [
     Title: "override.red"
 ]
 
+if not value? '.redlang [
+    do https://redlang.red
+]
+.redlang [build-markup]
+
 .Red.Func.override: function['.func-name][
 
     Context [
