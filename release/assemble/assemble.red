@@ -1,4 +1,8 @@
 
+
+
+
+
 Red [
     Title: "assemble.red"
     Description: {Assemble a red file from parts}
@@ -18,16 +22,17 @@ do https://redlang.red
     /separator ; 0.0.0.6.6
 ][
 
-    builds>: [
-        0.0.0.5.1 {separator with filename}
-        0.0.0.4.9 {Revert to 0.0.0.4.7 by removing newline}
-    ] 
+
+
+
+
+    >build: [0.0.0.4.9 {Revert to 0.0.0.4.7 by removing newline}] 
 
     if build [
         unless silent [
-            ?? builds>
+            print >build
         ]
-        return builds>
+        return >build
     ]    
     
     src: copy ""
@@ -46,6 +51,8 @@ do https://redlang.red
 
     forall files [
 
+
+
         file: rejoin [directory files/1]
 
         short-filename: rejoin [get-short-filename/wo-extension file]
@@ -53,38 +60,28 @@ do https://redlang.red
 
         folder: get-folder (file)
         sub-folder: rejoin [folder short-filename %/] 
-        head-of-file: (index? files) = 1
-        
-        short-filename: get-short-filename file
-
-        start-separator: func [ /local the-separator][
-            the-separator: copy ""
-            unless no-newline [
-                if separator [
-                    ;the-separator: rejoin [{;--- start } short-filename { ;---}] ; 0.0.0.5.6
-                    the-separator: rejoin [newline {;--- start } short-filename { ;---}] ; 0.0.0.5.7
-                    the-separator: rejoin [the-separator newline] 
-                ]
-            ]
-
-            return the-separator       
-        ]
-
-        finish-separator: func [ /local the-separator][
-            the-separator: copy ""
-            unless no-newline [
-                if separator [            
-                    the-separator: rejoin [newline {;--- finish } short-filename { ;---} newline ]
-                ]
-            ]
-            return the-separator
-        ]
-
         unless (dir? file) or (
             (extension <> %.red) and (extension <> %.html) and (extension <> %.htm)
             ) [
-
-            src: rejoin [src (start-separator) read file (finish-separator)]
+            if separator [ ; 0.0.0.4.6
+                src: rejoin [{;---} newline src]
+            ]
+            unless (index? files) = 1 [
+                either separator [ ; 0.0.0.4.6
+                    ;src: rejoin [src newline]
+                ][
+                    unless no-newline [
+                        ;src: rejoin [src newline] ;  0.0.0.4.7
+                        ;src: rejoin [newline src newline] ;  0.0.0.4.8
+                        src: rejoin [src newline] ;  0.0.0.4.9
+                    ]
+                    ;src: rejoin [src ""] ; 0.0.0.4.5 removed in 0.0.0.4.7
+                ] 
+            ]
+            src: rejoin [src read file]
+            if separator [ ; 0.0.0.4.6
+                src: rejoin [src newline {;---} ]
+            ]            
 
             doc-file: clean-path rejoin [folder short-filename %.log]
             
