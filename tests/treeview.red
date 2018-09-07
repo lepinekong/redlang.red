@@ -1,4 +1,3 @@
-
 Red [
 	Authors: [
 		"Toomas Vooglaid" {original code: https://gist.github.com/toomasv/ed9e15d0173f9f80b8bc50c734727b11}
@@ -13,21 +12,16 @@ Red [
 	Changed: ["2018-09-04" "2018-09-05"] 
 	Purpose: "Print a directory tree or current directory with filter"
 	File: "%treeview.red"
-]
-if not value? '>default-extension [
+]if not value? '>default-extension [
 	>default-extension: %.txt
-]
-;lib: https://redlang.red/toomasv/dir-tree5.red ; in 0.0.0.2.8
-lib: https://redlang.red/toomasv/dir-tree6.red ; in 0.0.0.2.13
+]lib: https://redlang.red/toomasv/dir-tree6.red ; in 0.0.0.2.13
 do lib
 
 unless value? '.redlang [
 	do https://redlang.red
 ]
 .redlang [do-events alias]
-
-.treeview: function 
-[
+.treeview: function [
 	{Examples:
 		.treeview
 		.treeview %./
@@ -47,34 +41,21 @@ unless value? '.redlang [
 	/silent {silent mode}
 	/_build {return the build number for developer}
 	/_debug {show debug messages for developer}
-	]
-[
+	][
 	if not value? 'tempSysRead [
-		tempSysRead: :Read
+		;tempSysRead: :Read
+		tempSysRead: get in system/words 'read ; 0.0.0.3.4
 
-		read: function [
+		system/words/read: function [
 			"Reads from a file, URL, or other port" 
 			source [file! url!] 
-			/part {Partial read a given number of units (source relative)} 
-			length [number!] 
-			/seek "Read from a specific position (source relative)" 
-			index [number!] 
-			/binary "Preserves contents exactly" 
-			/lines "Convert to block of strings" 
-			/info 
-			/as {Read with the specified encoding, default is 'UTF-8} 
-			encoding [word!]
 		][
 			block: reverse (tempSysRead source)
-			?? block
-			return block
 		] 	
 		
 	]    
-
-	>build: [0.0.0.2.13 {
-		- Requirement aliases /ext /out-block
-		- By default exclude empty directories unless /empty-dir
+	>build: [0.0.0.3.4 {
+		- Override read for sortinv
 		}]
 
 	if _build [
@@ -83,7 +64,6 @@ unless value? '.redlang [
 		]
 		return >build
 	]
-
 	if help [
 		print {Examples:
 			.treeview
@@ -95,8 +75,7 @@ unless value? '.redlang [
 		}
 		exit		
 	]
-    
-	; start requirements alias 0.0.0.2.12
+    	; start requirements alias 0.0.0.2.12
 	if out-block [
 		return-block: true
 	]
@@ -106,32 +85,25 @@ unless value? '.redlang [
 		>extension: >ext
 	]
 	; finish requirements alias
-    
-    >default-folder: %./
+        >default-folder: %./
 
 	switch type?/word get/any '>folder [
 		unset! [
 			>folder: >default-folder
 		]
 	]		
-
 	if suffix: suffix? to-red-file rejoin ["%" form :>folder]  [
 		extension: true
 		>extension: suffix
 		>folder: >default-folder
 	]
 
-
 	;if not extension [
 	if (not extension) and (not ext) [	
 		>extension: >default-extension
 	]
-    
-	>extension: form :>extension
-    
-	filter_rule: compose/only/deep [thru [(>extension) end]] 
-	.folder: to-red-file form :>folder ; 0.0.0.1
-
+    	>extension: form :>extension
+    	filter_rule: compose/only/deep [thru [(>extension) end]] 	.folder: to-red-file form :>folder ; 0.0.0.1
 	; start 0.0.0.2.1
 	command: copy []
 
@@ -158,15 +130,11 @@ unless value? '.redlang [
 		append/only command filter_rule ; 0.0.0.2.7
 	]
 	; finish 0.0.0.2.1
-
 	if _debug [
 		?? command
 	]
-
 	the-tree>: do command
-
 	either return-block [
-		;lines: split the-tree newline ; bug 0.0.0.2.10 bad variable name
 		lines: split the-tree> newline ; fix bug 0.0.0.2.10 bad variable name in 0.0.0.2.11
 		remove lines ; remove first line	
 		unless silent [
@@ -181,6 +149,5 @@ unless value? '.redlang [
 		]
 	]
     
-	Read: :tempSysRead
-]
-.alias .treeview [treeview tree .tree tree-view .tree-view .dir-tree]
+	system/words/read: :tempSysRead
+].alias .treeview [treeview tree .tree tree-view .tree-view .dir-tree]
