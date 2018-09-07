@@ -48,7 +48,7 @@ unless value? '.redlang [
 	]
 [
 
-	>build: [0.0.0.2.10 {release attempt - fix empty dirs}]
+	>build: [0.0.0.2.12 {Requirement aliases /ext /out-block}]
 
 	if _build [
 		unless silent [
