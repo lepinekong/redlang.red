@@ -14,11 +14,9 @@ Red [
 	Purpose: "Print a directory tree or current directory with filter"
 	File: "%treeview.red"
 ]
-
 if not value? '>default-extension [
 	>default-extension: %.txt
 ]
-;lib: https://redlang.red/toomasv/dir-tree4.red
 lib: https://redlang.red/toomasv/dir-tree5.red ; in 0.0.0.2.8
 do lib
 
@@ -26,7 +24,6 @@ unless value? '.redlang [
 	do https://redlang.red
 ]
 .redlang [do-events alias]
-
 .treeview: function 
 [
 	{Examples:
@@ -40,15 +37,18 @@ unless value? '.redlang [
 	'>folder [any-type! unset!] {optional directory}
 	/help {print help}
 	/extension '>extension [any-type!]  {filter by extension}
+	/ext '>ext [any-type!]  {same as /extension} ; 0.0.0.2.12
 	/dir {directories only}
+	/empty-dir {don't exclude empty dir} ; 0.0.0.2.9	
 	/return-block {return a block instead of string}
+	/out-block {same as /return-block} ; 0.0.0.2.12	
 	/silent {silent mode}
 	/_build {return the build number for developer}
 	/_debug {show debug messages for developer}
 	]
 [
 
-	>build: [0.0.0.2.4 {- refactoring}]
+	>build: [0.0.0.2.10 {release attempt - fix empty dirs}]
 
 	if _build [
 		unless silent [
@@ -69,6 +69,17 @@ unless value? '.redlang [
 		exit		
 	]
 
+	; start requirements alias 0.0.0.2.12
+	if out-block [
+		return-block: true
+	]
+
+	if ext [
+		extension: true
+		>extension: >ext
+	]
+	; finish requirements alias
+
 	switch type?/word get/any '>folder [
 		unset! [
 			>folder: %./
@@ -82,19 +93,26 @@ unless value? '.redlang [
 
 	]		
 
-	if not extension [
+	;if not extension [
+	if (not extension) and (not ext) [	
 		>extension: >default-extension
 	]
+
 	>extension: form :>extension
 
 
 	filter_rule: compose/only/deep [thru [(>extension) end]] 
 
-	.folder: to-red-file form :>folder ; 0.0.0.1.
+	.folder: to-red-file form :>folder ; 0.0.0.1
 
 	; start 0.0.0.2.1
 	command: copy []
-	main-command: copy rejoin ["dir-tree/non-empty/expand"] ; 0.0.0.2.5
+
+	main-command: copy rejoin ["dir-tree"] ; 0.0.0.2.9
+	unless empty-dir [ ; 0.0.0.2.9
+		main-command: rejoin [main-command "/non-empty"] ; 0.0.0.2.10 fix 0.0.0.2.9 bug 
+	]
+	main-command: rejoin [main-command "/expand"] ; 0.0.0.2.9
 
 	if dir [
 		main-command: rejoin [main-command "/dir"]
@@ -110,20 +128,19 @@ unless value? '.redlang [
 	append command to-lit-word 'all
 
 	if extension [
-		;append command filter_rule
-		append/only command filter_rule ;0.0.0.2.7
+		append/only command filter_rule ; 0.0.0.2.7
 	]
 	; finish 0.0.0.2.1	
 	
 
 	if _debug [
-		;command: compose/only/deep [dir-tree/filter/expand (.folder) (filter_rule) 'all]
 		?? command
 	]
 	the-tree>: do command
 
 	either return-block [
-		lines: split the-tree newline	
+		;lines: split the-tree newline ; bug 0.0.0.2.10 bad variable name
+		lines: split the-tree> newline ; fix bug 0.0.0.2.10 bad variable name in 0.0.0.2.11
 		remove lines ; remove first line	
 		unless silent [
 			print the-tree>
@@ -137,5 +154,4 @@ unless value? '.redlang [
 		]
 	]
 ]
-
 .alias .treeview [treeview tree .tree tree-view .tree-view .dir-tree]
