@@ -17,7 +17,8 @@ Red [
 if not value? '>default-extension [
 	>default-extension: %.txt
 ]
-lib: https://redlang.red/toomasv/dir-tree5.red ; in 0.0.0.2.8
+;lib: https://redlang.red/toomasv/dir-tree5.red ; in 0.0.0.2.8
+lib: https://redlang.red/toomasv/dir-tree6.red ; in 0.0.0.2.13
 do lib
 
 unless value? '.redlang [
@@ -47,8 +48,10 @@ unless value? '.redlang [
 	/_debug {show debug messages for developer}
 	]
 [
-
-	>build: [0.0.0.2.12 {Requirement aliases /ext /out-block}]
+	>build: [0.0.0.2.13 {
+		- Requirement aliases /ext /out-block
+		- By default exclude empty directories unless /empty-dir
+		}]
 
 	if _build [
 		unless silent [
@@ -68,7 +71,7 @@ unless value? '.redlang [
 		}
 		exit		
 	]
-
+    
 	; start requirements alias 0.0.0.2.12
 	if out-block [
 		return-block: true
@@ -79,30 +82,30 @@ unless value? '.redlang [
 		>extension: >ext
 	]
 	; finish requirements alias
+    
+    >default-folder: %./
 
 	switch type?/word get/any '>folder [
 		unset! [
-			>folder: %./
+			>folder: >default-folder
 		]
 	]		
 
 	if suffix: suffix? to-red-file rejoin ["%" form :>folder]  [
 		extension: true
 		>extension: suffix
-		>folder: %./
+		>folder: >default-folder
+	]
 
-	]		
 
 	;if not extension [
 	if (not extension) and (not ext) [	
 		>extension: >default-extension
 	]
-
+    
 	>extension: form :>extension
-
-
+    
 	filter_rule: compose/only/deep [thru [(>extension) end]] 
-
 	.folder: to-red-file form :>folder ; 0.0.0.1
 
 	; start 0.0.0.2.1
@@ -130,12 +133,12 @@ unless value? '.redlang [
 	if extension [
 		append/only command filter_rule ; 0.0.0.2.7
 	]
-	; finish 0.0.0.2.1	
-	
+	; finish 0.0.0.2.1
 
 	if _debug [
 		?? command
 	]
+
 	the-tree>: do command
 
 	either return-block [
@@ -153,5 +156,6 @@ unless value? '.redlang [
 			return the-tree>
 		]
 	]
+    
 ]
 .alias .treeview [treeview tree .tree tree-view .tree-view .dir-tree]
