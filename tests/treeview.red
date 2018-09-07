@@ -1,3 +1,4 @@
+
 Red [
 	Authors: [
 		"Toomas Vooglaid" {original code: https://gist.github.com/toomasv/ed9e15d0173f9f80b8bc50c734727b11}
@@ -5,6 +6,7 @@ Red [
 			- optional directory
 			- filter by extension (/extension)
 			- optionally return a block (/return-block)
+			- >default-extension: %.txt
 		}
 	]
 	Date: "2018-09-04"
@@ -12,8 +14,11 @@ Red [
 	Purpose: "Print a directory tree or current directory with filter"
 	File: "%treeview.red"
 ]
-
-lib: https://redlang.red/toomasv/dir-tree3.red
+if not value? '>default-extension [
+	>default-extension: %.txt
+]
+;lib: https://redlang.red/toomasv/dir-tree5.red ; in 0.0.0.2.8
+lib: https://redlang.red/toomasv/dir-tree6.red ; in 0.0.0.2.13
 do lib
 
 unless value? '.redlang [
@@ -21,81 +26,161 @@ unless value? '.redlang [
 ]
 .redlang [do-events alias]
 
-.treeview: function [
+.treeview: function 
+[
+	{Examples:
+		.treeview
+		.treeview %./
+		.treeview %/c/projects/test
+		.treeview c:\projects\test
+		.treeview/extension %/c/projects/test %.html
+		>default-extension: %.html
+	}
 	'>folder [any-type! unset!] {optional directory}
-	/extension '>extension {filter by extension}
+	/help {print help}
+	/extension '>extension [any-type!]  {filter by extension}
+	/ext '>ext [any-type!]  {same as /extension} ; 0.0.0.2.12
 	/dir {directories only}
+	/empty-dir {don't exclude empty dir} ; 0.0.0.2.9	
 	/return-block {return a block instead of string}
+	/out-block {same as /return-block} ; 0.0.0.2.12	
 	/silent {silent mode}
-	/build {return the build number for developer}
-	][
+	/_build {return the build number for developer}
+	/_debug {show debug messages for developer}
+	]
+[
+	if not value? 'tempSysRead [
+		tempSysRead: :Read
 
-	>build: 0.0.0.1.4
+		read: function [
+			"Reads from a file, URL, or other port" 
+			source [file! url!] 
+			/part {Partial read a given number of units (source relative)} 
+			length [number!] 
+			/seek "Read from a specific position (source relative)" 
+			index [number!] 
+			/binary "Preserves contents exactly" 
+			/lines "Convert to block of strings" 
+			/info 
+			/as {Read with the specified encoding, default is 'UTF-8} 
+			encoding [word!]
+		][
+			block: reverse (tempSysRead source)
+			?? block
+			return block
+		] 	
+		
+	]    
 
-	if build [
+	>build: [0.0.0.2.13 {
+		- Requirement aliases /ext /out-block
+		- By default exclude empty directories unless /empty-dir
+		}]
+
+	if _build [
 		unless silent [
 			print >build
 		]
 		return >build
-	]		
+	]
 
-	>extension: to-red-file form :>extension
+	if help [
+		print {Examples:
+			.treeview
+			.treeview %./
+			.treeview %/c/projects/test
+			.treeview c:\projects\test
+			.treeview/extension %/c/projects/test %.html
+			>default-extension: %.html
+		}
+		exit		
+	]
+    
+	; start requirements alias 0.0.0.2.12
+	if out-block [
+		return-block: true
+	]
+
+	if ext [
+		extension: true
+		>extension: >ext
+	]
+	; finish requirements alias
+    
+    >default-folder: %./
 
 	switch type?/word get/any '>folder [
 		unset! [
-			>folder: %./
+			>folder: >default-folder
 		]
-	]	
-	.folder: :>folder
-	filter_file: function [filename][
-		ext: last (split filename ".") 
-		if (ext = %.red) [
-			return filename
-		]	
-		return none	
+	]		
+
+	if suffix: suffix? to-red-file rejoin ["%" form :>folder]  [
+		extension: true
+		>extension: suffix
+		>folder: >default-folder
 	]
 
-	the-tree>: dir-tree/expand/filter (.folder) 'all filter_file
 
-	; lines: split the-tree newline	
-	; remove lines ; remove first line	
-
-	; if extension [
-
-	; 	>extension: remove form >extension ; 0.0.0.1.20 bug here !!! ".red" instead of "red"
-	; 	filtered-tree: copy ""
-	; 	forall lines [
-	; 		line: lines/1
-	; 		index: index? lines
-
-	; 		filename: trim/all line
-	; 		ext: last (split filename ".") 
-	; 		if (ext = >extension) [
-	; 			if (filtered-tree <> "") [ ; super bug because forgot () around index? lines
-	; 				append filtered-tree newline
-	; 			]
-	; 			append filtered-tree line
-	; 		]
-
-	; 	]
-	; 	the-tree: copy filtered-tree
-	
-	; ]
-
-	unless silent [
-		print the-tree>
+	;if not extension [
+	if (not extension) and (not ext) [	
+		>extension: >default-extension
 	]
-	
+    
+	>extension: form :>extension
+    
+	filter_rule: compose/only/deep [thru [(>extension) end]] 
+	.folder: to-red-file form :>folder ; 0.0.0.1
+
+	; start 0.0.0.2.1
+	command: copy []
+
+	main-command: copy rejoin ["dir-tree"] ; 0.0.0.2.9
+	unless empty-dir [ ; 0.0.0.2.9
+		main-command: rejoin [main-command "/non-empty"] ; 0.0.0.2.10 fix 0.0.0.2.9 bug 
+	]
+	main-command: rejoin [main-command "/expand"] ; 0.0.0.2.9
+
+	if dir [
+		main-command: rejoin [main-command "/dir"]
+	]
+	if extension [
+		main-command: rejoin [main-command "/filter"]
+	]
+
+	command: to block! main-command
+
+	append command (.folder)
+
+	append command to-lit-word 'all
+
+	if extension [
+		append/only command filter_rule ; 0.0.0.2.7
+	]
+	; finish 0.0.0.2.1
+
+	if _debug [
+		?? command
+	]
+
+	the-tree>: do command
+
 	either return-block [
-		lines: split the-tree newline	
-		remove lines ; remove first line		
+		;lines: split the-tree newline ; bug 0.0.0.2.10 bad variable name
+		lines: split the-tree> newline ; fix bug 0.0.0.2.10 bad variable name in 0.0.0.2.11
+		remove lines ; remove first line	
+		unless silent [
+			print the-tree>
+		]			
 		return lines
 	][
-		return the-tree>
+		either not silent [
+			print the-tree>
+		][
+			return the-tree>
+		]
 	]
-	
-
+    
+	Read: :tempSysRead
 ]
-
 .alias .treeview [treeview tree .tree tree-view .tree-view .dir-tree]
-
