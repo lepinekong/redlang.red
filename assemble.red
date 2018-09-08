@@ -5,8 +5,10 @@ Red [
         0.0.1 {Initial version}
     ]
 ]
+
 do https://redlang.red
 .redlang [files get-folder alias to-dir]
+
 .include: function [
     'directory [any-type! unset!]
     /build
@@ -15,6 +17,8 @@ do https://redlang.red
     /separator ; 0.0.0.6.6
 ][
     builds>: [
+        0.0.0.5.9 {fix bug .log.red instead of .log only}
+        0.0.0.5.8 {automatic newline unless /no-newline}
         0.0.0.5.1 {separator with filename}
         0.0.0.4.9 {Revert to 0.0.0.4.7 by removing newline}
     ] 
@@ -25,7 +29,8 @@ do https://redlang.red
         ]
         return builds>
     ]    
-        src: copy ""
+    
+    src: copy ""
     >directory: directory ; new in 0.0.0.4
 
     directory: .to-dir to-red-file form :directory
@@ -38,6 +43,7 @@ do https://redlang.red
     ]
 
     files: read directory
+
     forall files [
         file: rejoin [directory files/1]
 
@@ -45,11 +51,13 @@ do https://redlang.red
         extension: get-file-extension file
 
         folder: get-folder (file)
-        sub-folder: rejoin [folder short-filename %/]         head-of-file: (index? files) = 1
+        sub-folder: rejoin [folder short-filename %/] 
+        head-of-file: (index? files) = 1
         
-        short-filename: get-short-filename file
+        ;short-filename: get-short-filename file ; 0.0.0.5.9 bug (.log.red)
+        short-filename: get-short-filename-wo-extension file ; 0.0.0.5.10: fix 0.0.0.5.9 bug (.log.red)
 
-        start-separator: func [ /local the-separator][
+                start-separator: func [ /local the-separator][
             the-separator: copy ""
             unless no-newline [
                 if separator [
@@ -76,6 +84,7 @@ do https://redlang.red
             return the-separator
         ]
 
+
         unless (dir? file) or (
             (extension <> %.red) and (extension <> %.html) and (extension <> %.htm)
             ) [
@@ -92,6 +101,11 @@ do https://redlang.red
                 src-include: .include (sub-folder) 
                 replace src {<%parts%>} src-include
             ]
-        ]        
-    ]    return src
-].alias .include [include assemble .assemble ]
+        ]
+
+        
+    ]
+    return src
+
+]
+.alias .include [include assemble .assemble ]
