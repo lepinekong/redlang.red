@@ -6,7 +6,7 @@ Red [
     ]
 ]
 
-if not value '.redlang [
+if not value? '.redlang [
     do https://redlang.red
 ]
 .redlang [files get-folder alias to-dir]
