@@ -3,7 +3,10 @@ Red [
     File: "cache.red"
 ]
 
-do https://redlang.red
+if not value? '.redlang [
+    do https://redlang.red
+]
+
 .redlang [files]
 
 .cache: function [
