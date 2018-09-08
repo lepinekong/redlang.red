@@ -54,8 +54,6 @@ do https://redlang.red
         sub-folder: rejoin [folder short-filename %/] 
         head-of-file: (index? files) = 1
         
-        ; ;short-filename: get-short-filename file ; 0.0.0.5.9 bug (.log.red)
-        ; short-filename: get-short-filename/wo-extension file ; 0.0.0.5.10: fix 0.0.0.5.9 bug (.log.red)
 
                 start-separator: func [ /local the-separator][
             the-separator: copy ""
