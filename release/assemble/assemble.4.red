@@ -6,9 +6,7 @@ Red [
     ]
 ]
 
-if not value '.redlang [
-    do https://redlang.red
-]
+do https://redlang.red
 .redlang [files get-folder alias to-dir]
 
 .include: function [
