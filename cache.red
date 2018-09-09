@@ -35,3 +35,4 @@ if not value? '.redlang [
         create-out-file
     ]
 ]
+cache: :.cache
