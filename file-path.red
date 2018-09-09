@@ -58,7 +58,7 @@ get-extension: :.get-file-extension
 
 to-file: :.to-file
 
-.to-dir:  function[.dir [word! string! file! url! block! unset!] /local ][
+.to-dir:  function[.dir [word! string! file! url! block! unset!] ][
 
 	{
 
