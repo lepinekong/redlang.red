@@ -1,5 +1,5 @@
 Red [
-	Title: ""
+	Title: "1"
 ]
 
 Favorites: [
