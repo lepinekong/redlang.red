@@ -1,16 +1,40 @@
-Red [
-    Title: ""
-    Needs: 'View
-]
-
 Favorites: [
-    Title: "My Favorites" 
-	
-	main: [
-		.title: {main}
-		.links: []
-	]
-	
+    Main: [
+        .title: "Main" 
+        .links: [
+			github github
+            mygithub https://github.com/lepinekong?tab=repositories 
+
+        ]
+    ] 
+    Daily: [
+        .title: "Daily" 
+        .links: [
+			Medium medium
+            pragmatists https://blog.pragmatists.com 
+            Dzone dzone
+            Devto dev.to
+            Redlang https://gitter.im/red/help 
+            dormoshe https://dormoshe.io/daily-news 
+            futurism https://futurism.com/
+        ]
+    ] 
+    Weekly: [
+        .title: "Weekly" 
+        .links: [
+            JSWeekly javascriptweekly
+            MyBridge https://medium.mybridge.co/@Mybridge
+        ]
+    ] 
+    Monthly: [
+        .title: "Monthly" 
+        .links: [
+            Codemag http://www.codemag.com/Magazine/AllIssues 
+            VSMag https://visualstudiomagazine.com/Home.aspx 
+            MSDN https://msdn.microsoft.com/en-us/magazine/msdn-magazine-issues.aspx
+        ]
+    ]
+
 	Jeux-de-cartes-personnalisées: [
 	.title: {Jeux de cartes personnalisées}
 	
@@ -44,6 +68,7 @@ Favorites: [
 			https://www.makeplayingcards.com/design/personalized-tcg-cards.html
 			https://www.liceografico.com/fr/jeux-de-cartes/3203-jeux-de-cartes-de-dessin-libre.html 
 		]
-	]
+	]    
+    
 ]
-]
+    
