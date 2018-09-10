@@ -1,3 +1,7 @@
+Red [
+	Title: ""
+]
+
 Favorites: [
     Main: [
         .title: "Main" 
