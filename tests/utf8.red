@@ -25,6 +25,7 @@ Favorites: [
         ]
     ] 
     Weekly: [
+		[
         .title: "Weekly" 
         .links: [
             JSWeekly javascriptweekly
