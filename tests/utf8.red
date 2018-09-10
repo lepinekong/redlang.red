@@ -4,6 +4,7 @@ Favorites: [
         .links: [
 			github github
             mygithub https://github.com/lepinekong?tab=repositories 
+			amazon amazon.fr
 
         ]
     ] 
