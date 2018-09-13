@@ -6,10 +6,19 @@ Red [
     
 	{Launch the event loop, blocks until all windows are closed} 
 	/no-wait "Process an event in the queue and returns at once" 
-	return: "Returned value from last event" [logic! word!]
+	return: [logic! word!]
 	/local result 
 	win
+    /_build
+    /silent
 ][
+    >builds: [0.0.0.1.5 {fix september compatibility}]
+    if _build [
+        unless silent [
+            ?? _builds
+        ]
+        return >builds
+    ]
     try [
         either no-wait [
             do-events/no-wait
