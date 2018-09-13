@@ -12,7 +12,7 @@ try [do https://redlang.red/do-events]
 do http://redlang.red/do-trace
 
 .search-dir: function [
-    '>searchString {partial folder name} [any-type!]  
+    '>searchString [any-type!] {partial folder name} 
     /folder {startup folder} '>folder     
     /all {return all folders found in a block}
     /build
@@ -20,6 +20,7 @@ do http://redlang.red/do-trace
 ][
     >build: 0.0.0.2.22.1
     if build [
+
         unless silent [
             print >build
         ] 
