@@ -84,7 +84,7 @@ do-trace: :.do-trace
     
 	{Launch the event loop, blocks until all windows are closed} 
 	/no-wait "Process an event in the queue and returns at once" 
-	return: [logic! word!] "Returned value from last event" 
+	return: [logic! word!] 
 	/local result 
 	win
 ][
