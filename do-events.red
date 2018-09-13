@@ -10,15 +10,11 @@ Red [
 	/local result 
 	win
 ][
-    either error? try [
+    try [
         either no-wait [
             do-events/no-wait
         ][
             do-events
         ]
-    ][
-        return false
-    ][
-        return true
     ]
 ]
