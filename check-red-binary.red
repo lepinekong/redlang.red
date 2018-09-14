@@ -8,7 +8,12 @@ check-red-binary: function[
 
     reference: #{72FCAC481770B93A9B96232BF503D519317DF63E79D636AB28A06BCC06E9B87A}
 
-    do https://redlang.red/sha256
+    if error? try [
+        do https://redlang.red/sha256
+    ][
+        do https://raw.githubusercontent.com/lepinekong/redlang.red/master/sha256.red
+    ]
+
     exe: system/options/boot
     res: sha256 exe
 
