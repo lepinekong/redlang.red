@@ -54,14 +54,15 @@
 
     <body>
         <span>
-            Type in <a href=https://www.red-lang.org/>&#82;ed</a> Console:
+            <br>Easiest way to install & run <a href=https://www.red-lang.org/>&#82;ed</a>
+            <br>paste in Powershell Console:
             <br>
-            do https://redlang.red
+            New-Item -ItemType Directory -Force -Path C:\red;(New-Object System.Net.WebClient).DownloadFile('https://static.red-lang.org/dl/win/red-063.exe','c:\red\red.exe');Start-Process -Filepath 'c:\red\red.exe'
             <br>
-            help redlang
-            <br>
-            <a href=https://github.com/lepinekong/redlang.red/blob/master/index.red>(view source)</a>
-            </span>        
+            <a href=https://github.com/lepinekong/redlang.red/blob/master/index.red>
+                <img src="https://i.imgur.com/YWafKCT.png">
+            </a>
+        </span>        
     </body>
 </html>    
 
