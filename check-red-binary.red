@@ -22,6 +22,7 @@ check-red-binary: function[
             print "red binary is ok"
         ][
             print "red binary is suspicious"
+            ?? reference
         ]
     ][
         ;TBD
