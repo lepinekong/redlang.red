@@ -2,7 +2,9 @@ Red [
     Title: ""
 ]
 
-check-red-binary: does [
+check-red-binary: function[
+    /silent
+][
 
     reference: #{72FCAC481770B93A9B96232BF503D519317DF63E79D636AB28A06BCC06E9B87A}
 
@@ -20,10 +22,15 @@ check-red-binary: does [
         ;TBD
     ]
 
-    print exe
-    print res
+    unless silent [
+        print exe
+        print res
+    ]
+
     return res ; todo: return both exe and res
 ]
+
+check-red-binary
 
 
 
