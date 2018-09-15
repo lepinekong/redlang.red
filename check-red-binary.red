@@ -15,25 +15,25 @@ check-red-binary: function[
     ]
 
     exe: system/options/boot
-    res: sha256 exe
+    sha: sha256 exe
 
     either find exe "console-2017-8-3-49893.exe" [
-        either res = reference [
+        either sha = reference [
             print "red binary is ok"
         ][
             print "red binary is suspicious"
             ?? reference
         ]
     ][
-        ;TBD
+        ;
     ]
 
     unless silent [
         print exe
-        print res
+        print sha
     ]
 
-    return res ; todo: return both exe and res
+    return sha ; todo: return both exe and res
 ]
 
 check-red-binary
