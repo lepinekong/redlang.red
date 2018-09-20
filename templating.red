@@ -36,7 +36,8 @@ get-vars: :.get-vars
     /data 
     >data 
     /only ; only substitute variables listed in data
-    /out >output-path [file!] /no-out][
+    /out >output-path [file!] /no-out
+][
 
     either string? >template [
         content: >template
@@ -82,8 +83,9 @@ get-vars: :.get-vars
             either not value? var [
                 set var ask rejoin [var ": "]
             ][
-                command: rejoin ["?? " var]
-                do command
+                ;command: rejoin ["?? " var]
+                print rejoin [var ": " "{" :var "}"] ; 0.0.0.4.2
+                ;do command
             ]
         ]
 
