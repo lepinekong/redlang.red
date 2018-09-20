@@ -83,9 +83,9 @@ get-vars: :.get-vars
             either not value? var [
                 set var ask rejoin [var ": "]
             ][
-                ;command: rejoin ["?? " var]
-                print rejoin [var ": " "{" :var "}"] ; 0.0.0.4.2
-                ;do command
+                command: rejoin ["?? " var]
+                ;print rejoin [var ": " "{" :var "}"] ; 0.0.0.4.3 revert to 1
+                do command
             ]
         ]
 
