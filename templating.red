@@ -22,6 +22,18 @@ if __OFFLINE__ or error? try [
     do %libs/build-markup.red
 ]
 
+.ask-field: function ['>fieldName /area][
+    fieldName: form >fieldName
+    win: compose/deep [
+        text (rejoin [fieldName ":"]) fName: (either area ['area]['field]) ""
+        return
+        button "OK" [val: fName/text unview] button "cancel" [val: none unview]
+    ]
+    view win
+    return val
+]
+ask-field: :.ask-field
+
 .get-vars: function[>template][
     vars: copy []
     rules: [any [thru "<%" copy var to "%>" (append vars var)]]
@@ -50,45 +62,80 @@ get-vars: :.get-vars
     if not none? >data [
         data-vars: extract >data 2
     ]
-    
+
     either data [
         block: copy []
+        ask-vars: function [vars /gui][
 
-        foreach var vars [
-            var: to-word var
-            value: select >data var
-            if none? value [
-                either only and not none? >data [
-                    either find data-vars var [
-                        value: ask rejoin [var ": "]
-                    ][
-                        value: rejoin ["<%" form var "%>"]
-                    ]
-                ][
-                    value: ask rejoin [var ": "]
+            commands: copy []
+
+            foreach var vars [
+                field-type: "field"
+                if find var "/area" [
+                    splitted-var: split var "/"
+                    var: splitted-var/1
+                    field-type: splitted-var/2
                 ]
-                
+                var: to-word var
+                value: select >data var
 
-            ]
-            append block reduce [
-                to-set-word var value
-            ]
+                if none? value [
+                    either only and not none? >data [
+                        either find data-vars var [
+                            ;value: ask rejoin [var ": "]
+                            either field-type = "field" [
+                                value: .ask-field (var)
+                            ][
+                                value: .ask-field/area (var)
+                            ]
+                            
+                        ][
+                            value: rejoin ["<%" form var "%>"]
+                        ]
+                    ][
+                        ;value: ask rejoin [var ": "]
+                        either field-type = "field" [
+                            value: .ask-field (var)
+                        ][
+                            value: .ask-field/area (var)
+                        ]
+                    ]
+                ]
+
+                append block reduce [
+                    to-set-word var value
+                ]
+            ]            
         ]
+        ask-vars/gui vars
+
+        ;?? block
+        ; block: [title: "test render/data" email: "the email" author: "the author" version: "1.0"]
 
         out>: .build-markup/bind content context block  
         
     ][
-        foreach var vars [
-            var: to-word var
-            either not value? var [
-                set var ask rejoin [var ": "]
-            ][
-                command: rejoin ["?? " var]
-                ;print rejoin [var ": " "{" :var "}"] ; 0.0.0.4.3 revert to 1
-                do command
-            ]
-        ]
 
+        ask-vars: function [vars /gui][
+            commands: copy []
+            foreach var vars [
+                var: to-word var
+                either not value? var [
+                    either gui [
+                        append commands [set var .ask-field]
+                    ][
+                        append commands [set var ask rejoin [var ": "]]
+                    ]
+                ][
+                    command: rejoin ["?? " var]
+                    append commands command
+                    ;do command
+                ]
+            ]       
+            do commands     
+        ]    
+
+        ask-vars/gui vars
         out>: .build-markup content
 
     ]
