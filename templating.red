@@ -49,7 +49,18 @@ get-vars: :.get-vars
     >data 
     /only ; only substitute variables listed in data
     /out >output-path [file!] /no-out
+    /_build
+    /silent
 ][
+    builds: [
+        0.0.0.4.14 {area field support}
+    ]
+    if _build [
+        unless silent [
+            ?? builds
+        ]
+        return builds
+    ]
 
     either string? >template [
         content: >template
@@ -119,10 +130,23 @@ get-vars: :.get-vars
         ask-vars: function [vars /gui][
             commands: copy []
             foreach var vars [
+                field-type: "field"
+                if find var "/area" [
+                    splitted-var: split var "/"
+                    var: splitted-var/1
+                    field-type: splitted-var/2
+                ]                
                 var: to-word var
                 either not value? var [
                     either gui [
-                        append commands [set var .ask-field]
+                        either field-type = "field" [
+                            ;value: .ask-field (var)
+                            append commands [set var .ask-field]
+                        ][
+                            ;value: .ask-field/area (var)
+                            append commands [set var .ask-field/area]
+                        ]                        
+                        ;append commands [set var .ask-field]
                     ][
                         append commands [set var ask rejoin [var ": "]]
                     ]
