@@ -66,7 +66,7 @@ get-vars: :.get-vars
     /silent
 ][
     builds: [
-        0.0.0.5.1 {area field support}
+        0.0.0.5.1 {area field support.}
     ]
     if _build [
         unless silent [
