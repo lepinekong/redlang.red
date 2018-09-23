@@ -22,15 +22,28 @@ if __OFFLINE__ or error? try [
     do %libs/build-markup.red
 ]
 
-.ask-field: function ['>fieldName /area][
+.ask-field: function ['>fieldName /area /silent][
+
     fieldName: form >fieldName
     win: compose/deep [
-        text (rejoin [fieldName ":"]) fName: (either area ['area]['field]) ""
+        text (rejoin [fieldName ":"]) fName: (either area ['area]['field]) (copy "")
         return
-        button "OK" [val: fName/text unview] button "cancel" [val: none unview]
+        button "OK" [
+            val: fName/text unview
+            unless silent [
+                print [fieldName ": " val]
+            ]
+        ] 
+        button "cancel" [
+            val: none unview
+            unless silent [
+                print [fieldName ":"]
+            ]
+        ]
     ]
     view win
     return val
+
 ]
 ask-field: :.ask-field
 
@@ -53,7 +66,7 @@ get-vars: :.get-vars
     /silent
 ][
     builds: [
-        0.0.0.4.14 {area field support}
+        0.0.0.5.1 {area field support}
     ]
     if _build [
         unless silent [
@@ -93,18 +106,15 @@ get-vars: :.get-vars
                 if none? value [
                     either only and not none? >data [
                         either find data-vars var [
-                            ;value: ask rejoin [var ": "]
                             either field-type = "field" [
                                 value: .ask-field (var)
                             ][
                                 value: .ask-field/area (var)
                             ]
-                            
                         ][
                             value: rejoin ["<%" form var "%>"]
                         ]
                     ][
-                        ;value: ask rejoin [var ": "]
                         either field-type = "field" [
                             value: .ask-field (var)
                         ][
@@ -118,17 +128,18 @@ get-vars: :.get-vars
                 ]
             ]            
         ]
-        ask-vars/gui vars
+        ;ask-vars/gui vars
+        ask-vars vars
 
         ;?? block
         ; block: [title: "test render/data" email: "the email" author: "the author" version: "1.0"]
-
         out>: .build-markup/bind content context block  
         
     ][
 
         ask-vars: function [vars /gui][
             commands: copy []
+            input: copy []
             foreach var vars [
                 field-type: "field"
                 if find var "/area" [
@@ -140,15 +151,19 @@ get-vars: :.get-vars
                 either not value? var [
                     either gui [
                         either field-type = "field" [
-                            ;value: .ask-field (var)
-                            append commands [set var .ask-field]
+                            command: compose/deep [set (to-lit-word var) .ask-field (form var)]
+                            append commands command
                         ][
-                            ;value: .ask-field/area (var)
-                            append commands [set var .ask-field/area]
+                            command: compose/deep [set (to-lit-word var) .ask-field/area (form var)]
+                            append commands command
                         ]                        
                         ;append commands [set var .ask-field]
                     ][
-                        append commands [set var ask rejoin [var ": "]]
+                        append commands compose/deep [
+                            set (to-lit-word var) ask rejoin [(form var) ": "]
+                            append input rejoin [(form var) ": " "{" (var) "}"]
+                        ]
+                        
                     ]
                 ][
                     command: rejoin ["?? " var]
@@ -156,10 +171,17 @@ get-vars: :.get-vars
                     ;do command
                 ]
             ]       
+
             do commands     
+            print "input:"
+            forall input [
+                print input/1
+            ]
         ]    
 
-        ask-vars/gui vars
+        ;ask-vars/gui vars
+        ask-vars vars
+        write-clipboard content
         out>: .build-markup content
 
     ]
