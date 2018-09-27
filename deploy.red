@@ -30,7 +30,7 @@ if not value? '.redlang [
     either exists? %commit.red [
         do %commit.red
     ][
-        print [{Create a %commit.red script inside} (.repo) {to run for commit / push to remote repository}]
+        print [{Create a %commit.red script inside} (.commit-script-folder) {to run for commit / push to remote repository}]
     ]
     
 ]
