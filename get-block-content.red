@@ -9,6 +9,7 @@ if not value? '.redlang [
 .redlang [read remove-last]
 
 .get-block-content: function [>block][
+    out: copy ""
     lines: .read/lines mold >block
     lines: skip lines 1
 
