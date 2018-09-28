@@ -2,6 +2,11 @@ Red [
     Title: "list-files.red"
 ]
 
+if not value? '.redlang [
+    do https://redlang.red
+]
+.redlang [alias]
+
 .get-list-files: function [>target-folder][
     .files: copy []
     files-and-folders: read >target-folder
@@ -13,5 +18,12 @@ Red [
     return .files
 ]
 
-get-list-files: :.get-list-files
+.alias .get-list-files [
+    get-list-files
+    list-files
+    listfiles
+]
+
+
+
 
