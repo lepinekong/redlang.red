@@ -22,6 +22,7 @@ if not value? '.do [
             .do/redlang/silent [cd copy-files]
         }
         /quickrun
+        /quickinstall
         /silent { [DEPRECATED] Don't print command}
         /_debug {debug mode for developer only}
         /_build
