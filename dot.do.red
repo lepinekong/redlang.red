@@ -247,38 +247,6 @@ if not value? '.do [
         ]
 
 
-        command: copy []
-
-        main-command: copy "do"
-        
-        if expand [
-            main-command: rejoin [main-command "/expand"]
-        ]
-        if args [
-            main-command: rejoin [main-command "/args"]
-        ]
-        if next[
-            main-command: rejoin [main-command "/next"]
-        ]
-
-        command: to block! main-command
-
-        append command compose [(value)]
-
-        if args [
-            append command to-word 'arg
-        ]
-        if next [
-            append command to-word 'position
-        ]   
-
-        unless silent [
-            msg-debug: ""
-            if _debug [msg-debug: {.do line 112: }]
-            print rejoin [msg-debug command]
-        ]
-
-        do command   
         if codeops [
 
             .refinement: "codeops"
@@ -346,6 +314,38 @@ if not value? '.do [
         ]
 
 
+        command: copy []
+
+        main-command: copy "do"
+        
+        if expand [
+            main-command: rejoin [main-command "/expand"]
+        ]
+        if args [
+            main-command: rejoin [main-command "/args"]
+        ]
+        if next[
+            main-command: rejoin [main-command "/next"]
+        ]
+
+        command: to block! main-command
+
+        append command compose [(value)]
+
+        if args [
+            append command to-word 'arg
+        ]
+        if next [
+            append command to-word 'position
+        ]   
+
+        unless silent [
+            msg-debug: ""
+            if _debug [msg-debug: {.do line 112: }]
+            print rejoin [msg-debug command]
+        ]
+
+        do command   
 
     
     ] 
