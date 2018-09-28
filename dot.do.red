@@ -208,7 +208,7 @@ if not value? '.do [
         ]
 
         do command   
-        if quickrun [
+        if quickinstall [
 
             .refinement: "quickinstall"
             .domain: rejoin [.refinement ".red"]
