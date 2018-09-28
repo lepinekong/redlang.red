@@ -2,6 +2,8 @@ Red [
     Title: "do.red"
     SemVer: [1.0.0 {Alpha version}]
     Builds: [
+        0.0.0.5.2 {/codeops}
+        0.0.0.5.1 {/quickinstall}
         0.0.0.3.3 {/quickrun}
     ]
 ]
@@ -23,6 +25,7 @@ if not value? '.do [
         }
         /quickrun
         /quickinstall
+        /codeops
         /silent { [DEPRECATED] Don't print command}
         /_debug {debug mode for developer only}
         /_build
@@ -177,6 +180,73 @@ if not value? '.do [
         ]
 
 
+        if quickinstall [
+
+            .refinement: "quickinstall"
+            .domain: rejoin [.refinement ".red"]
+
+            either block? value [
+
+                new-value: copy value
+
+                forall new-value [
+
+                    command: copy []
+                    main-command: copy rejoin [".do/" .refinement]
+                    if expand [
+                        main-command: rejoin [main-command "/expand"]
+                    ]
+                    if args [
+                        main-command: rejoin [main-command "/args"]
+                    ]
+                    if next[
+                        main-command: rejoin [main-command "/next"]
+                    ]
+                    if silent[
+                        main-command: rejoin [main-command "/silent"]
+                    ]
+                    if _debug[
+                        main-command: rejoin [main-command "/_debug"]
+                    ] 
+
+                    command: to block! main-command
+
+                    append command compose [(new-value/1)]
+
+                    if args [
+                        append command to-word 'arg
+                    ]
+                    if next [
+                        append command to-word 'position
+                    ]   
+
+                    if _debug [
+                        msg-debug: {.do 02.main/01.redlang.red line 42: }
+                        print rejoin [msg-debug command]
+                    ]
+                    do command
+                ]
+                exit ; if missing => bug
+                
+            ]
+[
+                url-string: form value
+
+                if not find url-string .refinement [
+                    either find url-string "https" [
+                        parse url-string [
+                            thru "https://" start: (insert start rejoin [.domain "/"])
+                        ]
+                        value: to-url url-string
+                    ][
+                        value: to-url rejoin ["https://" .domain "/" url-string]
+                    ]
+                ]
+            ]
+
+        ]
+
+
         command: copy []
 
         main-command: copy "do"
@@ -209,9 +279,9 @@ if not value? '.do [
         ]
 
         do command   
-        if quickinstall [
+        if codeops [
 
-            .refinement: "quickinstall"
+            .refinement: "codeops"
             .domain: rejoin [.refinement ".red"]
 
             either block? value [
@@ -307,5 +377,39 @@ print [{type "help redlang"}]
 ]
 quickrun: :.quickrun
 print [{type "help quickrun"}]
+
+
+.quickinstall: function [
+    'arg [any-type! unset!] 
+][
+
+    switch type?/word get/any 'arg [
+        unset! [
+            do https://quickinstall.red
+            exit
+        ]
+    ] 
+
+    .do/quickinstall (arg)
+]
+quickinstall: :.quickinstall
+print [{type "help quickinstall"}]
+
+
+.codeops: function [
+    'arg [any-type! unset!] 
+][
+
+    switch type?/word get/any 'arg [
+        unset! [
+            do https://codeops.red
+            exit
+        ]
+    ] 
+
+    .do/codeops (arg)
+]
+codeops: :.codeops
+print [{type "help codeops"}]
 
 
