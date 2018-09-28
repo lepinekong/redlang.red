@@ -3,6 +3,11 @@ Red [
     Note: {used by save-readable.red}
 ]
 
+if not value? '.redlang [
+    do https://redlang.red
+]
+.redlang [read]
+
 .get-block-content: function [>block][
     lines: .read/lines mold >block
     lines: skip lines 1
