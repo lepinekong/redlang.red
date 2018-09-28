@@ -6,7 +6,7 @@ Red [
 if not value? '.redlang [
     do https://redlang.red
 ]
-.redlang [read]
+.redlang [read remove-last]
 
 .get-block-content: function [>block][
     lines: .read/lines mold >block
