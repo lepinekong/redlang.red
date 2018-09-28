@@ -13,7 +13,7 @@ if not value? '.redlang [
     lines: .read/lines mold >block
     lines: skip lines 1
 
-    remove-last lines
+    .remove-last lines
 
     forall lines [
         line: lines/1
