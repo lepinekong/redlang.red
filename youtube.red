@@ -20,7 +20,7 @@ if __OFFLINE__ or error? try [
 ]
 
 
-youtube: function [
+.youtube: function [
     >id_or_url [
         word! string! url! 
         block!
@@ -41,7 +41,7 @@ youtube: function [
         >id_or_urls: >id_or_url
         forall >id_or_urls [
             >id_or_url: >id_or_urls/1
-            youtube-parsed: youtube >id_or_url
+            youtube-parsed: .youtube >id_or_url
             append/only result youtube-parsed         
         ]
 
@@ -135,6 +135,10 @@ youtube: function [
         return it
     ]
 
+]
+
+if not value? 'youtube [
+    youtube: :.youtube
 ]
 
 ; dependencies
