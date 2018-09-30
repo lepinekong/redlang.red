@@ -67,5 +67,8 @@ if not value? '.redlang [
             ..create-out-file
         ]
     ]
+]
 
+if not value? 'cache [
+    cache: :.cache
 ]
