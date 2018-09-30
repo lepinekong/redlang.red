@@ -1,6 +1,10 @@
 Red [
     Title: "Cache Management"
     File: "cache.red"
+    Builds: [
+        0.0.0.1.2 {Block support}
+        0.0.0.1.1 {Initial version}
+    ]
 ]
 
 if not value? '.redlang [
@@ -10,29 +14,57 @@ if not value? '.redlang [
 .redlang [files]
 
 .cache: function [
-    path 
+    >paths 
     /folder >lib-folder
-    /force
+    /force ; force update if already exists
+    /update ; same as force
 ][
 
     unless folder [
         >lib-folder: %libs/
     ]
+    
     .lib-folder: :>lib-folder
-    short-filename: get-short-filename path
-    out-file: rejoin [.lib-folder short-filename]
 
-    create-out-file: does [
-        make-dir/deep .lib-folder
-        write out-file read path        
-    ]
+    either block? >paths [
+        forall >paths [
+            >path: >paths/1
 
-    either exists? out-file [
-        if force   [
-            create-out-file
+            either folder [
+                either force or update [
+                    .cache/folder/force (>path) (>lib-folder)
+                ][
+                    .cache/folder (>path) (>lib-folder)
+                ]
+                
+            ][
+                either force or update [
+                    .cache/force (>path)
+                ][
+                    .cache (>path)
+                ]
+                
+            ]
+            
         ]
     ][
-        create-out-file
+        >path: >paths
+        short-filename: get-short-filename >path
+        out-file: rejoin [.lib-folder short-filename]
+
+        ..create-out-file: does [
+            print [out-file {already exists, use /force or /update to update}]
+            make-dir/deep .lib-folder
+            write out-file read >path      
+        ]
+
+        either exists? out-file [
+            if force or update  [
+                ..create-out-file
+            ]
+        ][
+            ..create-out-file
+        ]
     ]
+
 ]
-cache: :.cache
