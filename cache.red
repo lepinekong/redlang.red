@@ -5,6 +5,7 @@ Red [
         0.0.0.1.2 {Block support}
         0.0.0.1.1 {Initial version}
     ]
+    GUID: #c1bbd2d0-d7d1-48b6-b3c6-a1997530bbc5
 ]
 
 if not value? '.redlang [
