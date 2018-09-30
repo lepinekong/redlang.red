@@ -165,6 +165,8 @@ if not value? 'youtube [
         ]
     ]
 
+    .title: replace/all .title {&#39;} {'}
+
     return compose [
         id: (.id)
         title: (.title)
