@@ -40,8 +40,6 @@ if not value? 'syscd [
 
             if found: search-dir/up (thepath) [
                 cd (found)
-                print what-dir ; 0.0.0.4.01.2
-                dir ; 0.0.0.4.01.2
                 return what-dir
             ]
             exit
@@ -51,8 +49,6 @@ if not value? 'syscd [
             
             either found: search-dir/folder (searchString) (path) [
                 cd (found)
-                print what-dir ; 0.0.0.4.01.2
-                dir ; 0.0.0.4.01.2                
             ][
 
             ]
@@ -64,8 +60,6 @@ if not value? 'syscd [
                 print what-dir
                 path: request-dir
                 cd (path)
-                print what-dir ; 0.0.0.4.01.2
-                dir ; 0.0.0.4.01.2                
             ] 
 
             string! file! url! [ 
@@ -75,8 +69,6 @@ if not value? 'syscd [
                 if error? try [
                     change-dir to-file path
                     print [{cd} to-file path]
-                    print what-dir ; 0.0.0.4.01.2
-                    dir ; 0.0.0.4.01.2                    
                 ][
                     dir-not-found %. searchString
                 ]
@@ -89,8 +81,7 @@ if not value? 'syscd [
                         the-path: (get in system/words >path)
                         if not logic? the-path [
                             cd (the-path)
-                            print what-dir ; 0.0.0.4.01.2
-                            dir ; 0.0.0.4.01.2
+                            what-dir
                             exit
                         ]
                     ]
@@ -98,8 +89,7 @@ if not value? 'syscd [
 
                     the-path: to-red-file form >path
                     cd (the-path)
-                    print what-dir ; 0.0.0.4.01.2
-                    dir ; 0.0.0.4.01.2
+                    what-dir
                     exit
                 ]
 
@@ -107,8 +97,6 @@ if not value? 'syscd [
                 if error? try [
                     change-dir to-file path
                     print [{cd} to-file path]
-                    print what-dir ; 0.0.0.4.01.2
-                    dir ; 0.0.0.4.01.2                    
                 ][
                     searchString: form path                      
                     dir-not-found %. searchString
