@@ -1,11 +1,6 @@
 Red [
     Title: "make-dir.red"
-    Builds: [
-        0.0.0.1.10 {md alias}
-    ]
 ]
-
-;do http://redlang.red/do-trace
 
 if not value? 'sysmake-dir [
     sysmake-dir: :make-dir
@@ -14,46 +9,24 @@ if not value? 'sysmake-dir [
 .make-dir:  function[
     '>folder [word! string! file! path! url! paren! unset!]
     /no-deep {don't create subdirectories}
-    /_build {Build number for developer}
-    /silent {don't print message on console}
-
+    /build {Build number for developer}
 ][
 
-    >builds: 0.0.0.1.10
+    >build: 0.0.0.1.4
 
-    if _build [
-        unless silent [
-            print >builds
-        ]
-        return >builds
+    if build [
+        print >build
+        return >build
     ]
-
-
-do-trace 22 [
-    ?? >folder
-] %make-dir.4.red
 
 
     switch/default type?/word get/any '>folder [
         unset! [
             print {TODO:}
         ]
-        word! [
-            .folder: get :>folder
-            either no-deep [
-                do c: rejoin [{sysmake-dir %} .folder] 
-                print c
-            ][
-                do c: rejoin [{sysmake-dir/deep %} .folder] 
-                print c
-            ]            
-        ]
-        string! file! path! url! paren! [
+        word! string! file! path! url! paren! [
 
-            .folder: to-red-file  form :>folder ;0.0.0.1.9
-do-trace 47 [
-    ?? .folder
-] %make-dir.4.red            
+            .folder: form :>folder
             either no-deep [
                 do c: rejoin [{sysmake-dir %} .folder] 
                 print c
@@ -68,7 +41,4 @@ do-trace 47 [
 ]
 
 make-dir: :.make-dir
-md: :.make-dir
-.md: :.make-dir
-create-dir: :.make-dir
-.create-dir: :.make-dir
+
