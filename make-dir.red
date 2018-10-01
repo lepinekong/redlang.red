@@ -1,5 +1,8 @@
 Red [
     Title: "make-dir.red"
+    Builds: [
+        0.0.0.2.2 {md alias}
+    ]    
 ]
 
 if not value? 'sysmake-dir [
@@ -10,13 +13,17 @@ if not value? 'sysmake-dir [
     '>folder [word! string! file! path! url! paren! unset!]
     /no-deep {don't create subdirectories}
     /build {Build number for developer}
+    /_build {Build number for developer}
+    /silent {don't print message on console}    
 ][
 
-    >build: 0.0.0.1.4
+    >builds: 0.0.0.1.10
 
-    if build [
-        print >build
-        return >build
+    if _build [
+        unless silent [
+            print >builds
+        ]
+        return >builds
     ]
 
 
@@ -41,4 +48,8 @@ if not value? 'sysmake-dir [
 ]
 
 make-dir: :.make-dir
+md: :.make-dir
+.md: :.make-dir
+create-dir: :.make-dir
+.create-dir: :.make-dir
 
