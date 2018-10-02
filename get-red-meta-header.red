@@ -11,18 +11,20 @@ if not value? '.redlang [
 
 .redlang [alias]
 
-.Get-Red-Header: function[.src [string! file! url!]][
+.Get-Red-Meta-Header: function[
+    .src [string! file! url!]
+][
 
     {Purpose: 
         Contrary to Interpreter,
         Red compiler doesn't play well with all text above Red [] 
         so we must clean all above Red [...] before compiling
+        accept:
+        c:\test\test.red ; windows format without space
+        "c:\test with space\test.red" ; windows format
+        %/c/test/test.red ; red file format        
     }
 
-    ; accept:
-    ; c:\test\test.red ; windows format without space
-    ; "c:\test with space\test.red" ; windows format
-    ; %/c/test/test.red ; red file format
     case [
         string! = type? .src [src: .src]
         (file! = type? .src) or (url! = type? .src) [
@@ -40,9 +42,9 @@ if not value? '.redlang [
     return meta    
 ]
 
-.alias .Get-Red-Header [
-    Get-Red-Header 
-    Redlang.Get-Meta ; old names
-    .Redlang.Get-Meta ; old names
+.alias .Get-Red-Meta-Header [
+    .Get-Red-Meta
+    Redlang.Get-Meta 
+    .Redlang.Get-Meta 
 ]
 
