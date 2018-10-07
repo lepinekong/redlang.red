@@ -5,12 +5,10 @@ Red [
     ]    
 ]
 
-if not value? '.cd [
-    if not value? '.redlang [
-        do https://redlang.red
-    ]
-    .redlang [cd alias]
+if not value? '.redlang [
+    do https://redlang.red
 ]
+.redlang [cd alias]
 
 if not value? '.sysmake-dir [
     .sysmake-dir: :make-dir
