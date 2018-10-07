@@ -2,6 +2,7 @@ Red [
     Title: "cd.red"
     Version: [0.0.1 {searching subfolder automatically}]
     Builds: [
+        0.0.0.4 {/only for preventing dir list}
         0.0.0.2.8 {searching up if not found TBC}
     ]
 ]
@@ -14,6 +15,7 @@ if not value? 'syscd [
         "Change directory (shell shortcut function)." 
         [catch] 
         'path [file! word! path! unset! string! paren! url!] "Accepts %file, :variables and just words (as dirs)"
+        /only {do not list folders}
         /search
         /up
         /build 
@@ -52,7 +54,9 @@ if not value? 'syscd [
             either found: search-dir/folder (searchString) (path) [
                 cd (found)
                 print what-dir ; 0.0.0.4.01.2
-                dir ; 0.0.0.4.01.2                
+                unless only [ ; 0.0.0.4.01.3
+                    dir ; 0.0.0.4.01.2 
+                ]           
             ][
 
             ]
@@ -65,7 +69,9 @@ if not value? 'syscd [
                 path: request-dir
                 cd (path)
                 print what-dir ; 0.0.0.4.01.2
-                dir ; 0.0.0.4.01.2                
+                unless only [ ; 0.0.0.4.01.3
+                    dir ; 0.0.0.4.01.2 
+                ]        
             ] 
 
             string! file! url! [ 
@@ -76,7 +82,9 @@ if not value? 'syscd [
                     change-dir to-file path
                     print [{cd} to-file path]
                     print what-dir ; 0.0.0.4.01.2
-                    dir ; 0.0.0.4.01.2                    
+                    unless only [ ; 0.0.0.4.01.3
+                        dir ; 0.0.0.4.01.2 
+                    ]                    
                 ][
                     dir-not-found %. searchString
                 ]
@@ -90,7 +98,9 @@ if not value? 'syscd [
                         if not logic? the-path [
                             cd (the-path)
                             print what-dir ; 0.0.0.4.01.2
-                            dir ; 0.0.0.4.01.2
+                            unless only [ ; 0.0.0.4.01.3
+                                dir ; 0.0.0.4.01.2 
+                            ]  
                             exit
                         ]
                     ]
@@ -99,7 +109,9 @@ if not value? 'syscd [
                     the-path: to-red-file form >path
                     cd (the-path)
                     print what-dir ; 0.0.0.4.01.2
-                    dir ; 0.0.0.4.01.2
+                    unless only [ ; 0.0.0.4.01.3
+                        dir ; 0.0.0.4.01.2 
+                    ]  
                     exit
                 ]
 
@@ -108,7 +120,9 @@ if not value? 'syscd [
                     change-dir to-file path
                     print [{cd} to-file path]
                     print what-dir ; 0.0.0.4.01.2
-                    dir ; 0.0.0.4.01.2                    
+                    unless only [ ; 0.0.0.4.01.3
+                        dir ; 0.0.0.4.01.2 
+                    ]                    
                 ][
                     searchString: form path                      
                     dir-not-found %. searchString

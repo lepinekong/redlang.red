@@ -17,23 +17,19 @@ if not value? '.sysmake-dir [
 ]
 
 .make-dir:  function [
-    'param>folder [word! string! file! path! url! paren! block! unset!]
+    'param>folder [word! string! file! path! url! paren! unset!]
     /no-deep {don't create subdirectories}
     /no-create /not-create {same as no-deep}
-    /no-cd
     /_build {Build number for developer}
     /silent {don't print message on console}   
     /_debug {debug mode} 
 ][
 
-    >builds: [
-        0.0.0.2.2.1 {block arg support}
-        0.0.0.2.1.11 {previous stable version}
-    ]
+    >builds: 0.0.0.2.1.2
 
     if _build [
         unless silent [
-            ?? >builds
+            print >builds
         ]
         return >builds
     ]
@@ -48,29 +44,21 @@ Optional:
     /no-cd don't change directory        
             }
         ]
-
         word! string! file! path! url! paren! [
 
             local>folder: form :param>folder
             local>command: rejoin [
-                ".sysmake-dir" if ((not no-deep) or (no-create) or (not-create)) ["/deep"]
-                space {%} local>folder ; bug 0.0.0.2.01.3: space missing
+                ".sysmake-dir" 
+                if ((not no-deep) or (no-create) or (not-create)) ["/deep"]
+                "%" local>folder ; bug 0.0.0.2.01.3: space missing
             ]
-            if _debug [print local>command] 
             do local>command
-                 
+                if _debug [print local>command]  
             unless no-cd [
                 cd (local>folder)
-            ]
-        ]
-
-        block! [
+            ]          
             
-            forall param>folder [
-                make-dir (param>folder/1)
-            ]
         ]
-
     ] [
         throw error 'script 'expect-arg param>folder
     ]
