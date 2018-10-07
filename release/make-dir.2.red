@@ -50,7 +50,7 @@ Optional:
             local>command: rejoin [
                 ".sysmake-dir" 
                 if ((not no-deep) or (no-create) or (not-create)) ["/deep"]
-                "%" local>folder ; bug 0.0.0.2.01.3: space missing
+                "%" local>folder
             ]
             do local>command
                 if _debug [print local>command]  
