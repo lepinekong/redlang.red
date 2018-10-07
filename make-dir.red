@@ -1,5 +1,6 @@
 Red [
     Title: "make-dir.red"
+    Url: 
     Builds: [
         0.0.0.2.2 {md alias}
     ]    
@@ -16,7 +17,7 @@ if not value? '.sysmake-dir [
 ]
 
 .make-dir:  function [
-    '>folder [word! string! file! path! url! paren! unset!]
+    'param>folder [word! string! file! path! url! paren! unset!]
     /no-deep {don't create subdirectories}
     /no-create /not-create {same as no-deep}
     /_build {Build number for developer}
