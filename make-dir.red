@@ -1,7 +1,7 @@
 Red [
     Title: "make-dir.red"
     Builds: [
-        0.0.0.2.2 {md alias}
+        0.0.0.2.2 {md alias _debug}
     ]    
 ]
 
@@ -18,7 +18,6 @@ if not value? '.sysmake-dir [
     '>folder [word! string! file! path! url! paren! unset!]
     /no-deep {don't create subdirectories}
     /no-create /not-create {same as no-deep}
-    /build {Build number for developer}
     /_build {Build number for developer}
     /silent {don't print message on console}   
     /_debug {debug mode} 
