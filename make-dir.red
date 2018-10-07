@@ -5,19 +5,28 @@ Red [
     ]    
 ]
 
-if not value? 'sysmake-dir [
-    sysmake-dir: :make-dir
+if not value? '.cd [
+    if not value? '.redlang [
+        do https://redlang.red
+    ]
+    .redlang [cd alias]
 ]
 
-.make-dir:  function[
+if not value? '.sysmake-dir [
+    .sysmake-dir: :make-dir
+]
+
+.make-dir:  function [
     '>folder [word! string! file! path! url! paren! unset!]
     /no-deep {don't create subdirectories}
+    /no-create /not-create {same as no-deep}
     /build {Build number for developer}
     /_build {Build number for developer}
-    /silent {don't print message on console}    
+    /silent {don't print message on console}   
+    /_debug {debug mode} 
 ][
 
-    >builds: 0.0.0.1.10
+    >builds: 0.0.0.2.1.2
 
     if _build [
         unless silent [
@@ -26,30 +35,43 @@ if not value? 'sysmake-dir [
         return >builds
     ]
 
-
-    switch/default type?/word get/any '>folder [
+    switch/default type?/word get/any 'param>folder [
         unset! [
-            print {TODO:}
+            print {
+Description:
+    Create a folder. 
+Optional:
+    /no-deep don't create subdirectories
+    /no-cd don't change directory        
+            }
         ]
         word! string! file! path! url! paren! [
 
-            .folder: form :>folder
-            either no-deep [
-                do c: rejoin [{sysmake-dir %} .folder] 
-                print c
-            ][
-                do c: rejoin [{sysmake-dir/deep %} .folder] 
-                print c
+            local>folder: form :param>folder
+            local>command: rejoin [
+                ".sysmake-dir" 
+                if ((not no-deep) or (no-create) or (not-create)) ["/deep"]
+                "%" local>folder
             ]
+            do local>command
+                if _debug [print local>command]  
+            unless no-cd [
+                cd (local>folder)
+            ]          
+            
         ]
     ] [
-        throw error 'script 'expect-arg >folder
+        throw error 'script 'expect-arg param>folder
     ]
 ]
+.alias .make-dir [
+    make-dir
+    md
+    .md
+    create-dir
+    .create-dir
+    create-directory
+    .create-directory
+]
 
-make-dir: :.make-dir
-md: :.make-dir
-.md: :.make-dir
-create-dir: :.make-dir
-.create-dir: :.make-dir
 
