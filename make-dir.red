@@ -20,7 +20,6 @@ if not value? '.sysmake-dir [
     '>folder [word! string! file! path! url! paren! unset!]
     /no-deep {don't create subdirectories}
     /no-create /not-create {same as no-deep}
-    /build {Build number for developer}
     /_build {Build number for developer}
     /silent {don't print message on console}   
     /_debug {debug mode} 
@@ -64,8 +63,8 @@ Optional:
         throw error 'script 'expect-arg param>folder
     ]
 ]
+make-dir: :.make-dir
 .alias .make-dir [
-    make-dir
     md
     .md
     create-dir
