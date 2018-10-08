@@ -65,9 +65,10 @@ Optional:
         ]
 
         block! [
-            
+            memo-folder: what-dir
             forall param>folder [
                 make-dir (param>folder/1)
+                cd (memo-folder)
             ]
         ]
 
