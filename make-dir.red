@@ -2,7 +2,7 @@ Red [
     Title: "make-dir.red"
     Url: 
     Builds: [
-        0.0.0.2.2 {md alias}
+        0.0.0.2.2 {md block}
     ]    
 ]
 
@@ -18,6 +18,7 @@ if not value? '.sysmake-dir [
 
 .make-dir:  function [
     'param>folder [word! string! file! path! url! paren! block! unset!]
+    /deep {not necessary - for compatibility only}
     /no-deep {don't create subdirectories}
     /no-create /not-create {same as no-deep}
     /no-cd
@@ -68,7 +69,7 @@ Optional:
             memo-folder: what-dir
             forall param>folder [
                 make-dir (param>folder/1)
-                cd (memo-folder)
+                cd/only (memo-folder)
             ]
         ]
 
