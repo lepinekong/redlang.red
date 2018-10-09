@@ -38,7 +38,7 @@ compare-checksum: function [>file1 >file2][
     return (checksum-file1 = checksum-file2)  
 ]
 
-copy-file: function [>source >target /force /no-checksum][
+.copy-file: function [>source >target /force /no-checksum][
 
     >source: to-red-file form >source
     >target: to-red-file form >target
@@ -48,7 +48,16 @@ copy-file: function [>source >target /force /no-checksum][
             write >target read >source
             print [>target "created."]
         ][
-            print [{error line 42 copy-file} >source {to} >target]
+            either exists? >source [
+                either exists? >target [
+                    print [{error line 53 copy-file:} {check} >target {is not protected.}]
+                ][
+                    print [{error line 53 copy-file:} {unknown error}]
+                ]
+            ][
+                print [{error line 53 copy-file:} >source {does not exist.}]
+            ]
+            
         ]        
         
     ][
@@ -80,7 +89,7 @@ copy-file: function [>source >target /force /no-checksum][
 
             do https://redlang.red/list-files
             list-files: get-list-files target-folder
-            ?? list-files
+            ;?? list-files
 
             if previous-file <> >target [
                 unless no-checksum [
@@ -115,8 +124,11 @@ copy-file: function [>source >target /force /no-checksum][
     ]
 
 ]
+if not value? 'copy-file [
+    copy-file: :.copy-file
+]
 
-copy-files: function[>list][
+.copy-files: function[>list][
 
     list: >list
     forall list [
@@ -125,4 +137,7 @@ copy-files: function[>list][
         target: files/2
         copy-file source target   
     ]
+]
+if not value? 'copy-files [
+    copy-files: :.copy-files
 ]
