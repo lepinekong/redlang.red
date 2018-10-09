@@ -38,7 +38,12 @@ compare-checksum: function [>file1 >file2][
     return (checksum-file1 = checksum-file2)  
 ]
 
-.copy-file: function [>source >target /force /no-checksum][
+.copy-file: function [
+    >source >target 
+    /force 
+    /no-checksum
+    /no-quit-if-error
+][
 
     >source: to-red-file form >source
     >target: to-red-file form >target
@@ -56,6 +61,11 @@ compare-checksum: function [>file1 >file2][
                 ]
             ][
                 print [{error line 53 copy-file:} >source {does not exist.}]
+            ]
+
+            unless no-quit-if-error [
+                print "quit (unless /no-quit-if-error)"
+                quit
             ]
             
         ]        
