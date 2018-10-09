@@ -4,6 +4,10 @@ Red [
         0.0.0.1 {Initial build with file versioning or /force and checksum}
     ]
     Iterations: [
+        0.0.0.1.18: [
+            Purpose: {Error management}
+            Change: {Quit if error except /no-quit-if-error}
+        ]
         0.0.0.1.16 [
             Purpose: {support windows path for >target}
             Change: {>target: to-red-file form >target}
