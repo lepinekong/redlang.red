@@ -7,10 +7,7 @@ Red [
     ]
 ]
 
-if not value? '.redlang [
-    do https://redlang.red
-]
-.redlang [search-dir]
+do https://redlang.red/search-dir
 
 if not value? 'syscd [
     syscd: :cd
@@ -146,33 +143,5 @@ if not value? 'syscd [
         what-dir  
     ]   
     system/words/cd: :.cd 
-    system/words/..: function [][
-        cd ..
-        return what-dir
-    ]
-    system/words/.1: function [][
-        cd ..
-        return what-dir
-    ]
-    system/words/.2: function [][
-        cd ../..
-        return what-dir
-    ]  
-    system/words/.3: function [][
-        cd ../../..
-        return what-dir
-    ]  
-    if not value? '.c [
-        system/words/.c: function [][
-            cd %/c/
-            return what-dir
-        ]           
-    ]
-    if not value? '.d [
-        system/words/.d: function [][
-            cd %/d/
-            return what-dir
-        ]           
-    ]             
 ]
 
