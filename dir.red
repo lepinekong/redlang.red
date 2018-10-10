@@ -12,12 +12,11 @@ unless value? '.dir [
         /only
 ][
         either only [
-            dir-tree/expand %./ 1
+            print dir-tree/expand %./ 1
         ][
             print return>value: dir-tree/expand %./ 1
             return return>value
         ]
-
     ]
         
 ]
