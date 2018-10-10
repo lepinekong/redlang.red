@@ -10,7 +10,7 @@ Red [
 if not value? '.redlang [
     do https://redlang.red
 ]
-.redlang [search-dir]
+.redlang [search-dir dir-tree]
 
 if not value? 'syscd [
     syscd: :cd
@@ -28,13 +28,15 @@ if not value? 'syscd [
 
         search: true
 
-        >build: 0.0.0.2.13
+        >builds: [
+            0.0.0.4.7 {dir-tree}
+        ]
 
         if build [
             unless silent [
-                print >build
+                ?? >builds
             ]
-            return >build
+            return >builds
         ]
 
         >path: :path
@@ -45,7 +47,7 @@ if not value? 'syscd [
 
             if found: search-dir/up (thepath) [
                 cd (found)
-                print what-dir ; 0.0.0.4.01.2
+                dir-tree/expand %./ 0 ; 0.0.0.4.01.2
                 dir ; 0.0.0.4.01.2
                 return what-dir
             ]
@@ -56,7 +58,7 @@ if not value? 'syscd [
             
             either found: search-dir/folder (searchString) (path) [
                 cd (found)
-                print what-dir ; 0.0.0.4.01.2
+                dir-tree/expand %./ 0 ; 0.0.0.4.01.2
                 unless only [ ; 0.0.0.4.01.3
                     dir ; 0.0.0.4.01.2 
                 ]           
@@ -68,10 +70,10 @@ if not value? 'syscd [
         if paren? get/any 'path [set/any 'path do path] 
         switch/default type?/word get/any 'path [
             unset! [
-                print what-dir
+                dir-tree/expand %./ 0
                 path: request-dir
                 cd (path)
-                print what-dir ; 0.0.0.4.01.2
+                dir-tree/expand %./ 0 ; 0.0.0.4.01.2
                 unless only [ ; 0.0.0.4.01.3
                     dir ; 0.0.0.4.01.2 
                 ]        
@@ -84,7 +86,7 @@ if not value? 'syscd [
                 if error? try [
                     change-dir to-file path
                     print [{cd} to-file path]
-                    print what-dir ; 0.0.0.4.01.2
+                    dir-tree/expand %./ 0 ; 0.0.0.4.01.2
                     unless only [ ; 0.0.0.4.01.3
                         dir ; 0.0.0.4.01.2 
                     ]                    
@@ -100,7 +102,7 @@ if not value? 'syscd [
                         the-path: (get in system/words >path)
                         if not logic? the-path [
                             cd (the-path)
-                            print what-dir ; 0.0.0.4.01.2
+                            dir-tree/expand %./ 0 ; 0.0.0.4.01.2
                             unless only [ ; 0.0.0.4.01.3
                                 dir ; 0.0.0.4.01.2 
                             ]  
@@ -111,7 +113,7 @@ if not value? 'syscd [
 
                     the-path: to-red-file form >path
                     cd (the-path)
-                    print what-dir ; 0.0.0.4.01.2
+                    dir-tree/expand %./ 0 ; 0.0.0.4.01.2
                     unless only [ ; 0.0.0.4.01.3
                         dir ; 0.0.0.4.01.2 
                     ]  
@@ -122,7 +124,7 @@ if not value? 'syscd [
                 if error? try [
                     change-dir to-file path
                     print [{cd} to-file path]
-                    print what-dir ; 0.0.0.4.01.2
+                    dir-tree/expand %./ 0 ; 0.0.0.4.01.2
                     unless only [ ; 0.0.0.4.01.3
                         dir ; 0.0.0.4.01.2 
                     ]                    
