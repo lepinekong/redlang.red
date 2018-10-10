@@ -2,6 +2,7 @@ Red [
     Title: "cd.red"
     Version: [0.0.1 {searching subfolder automatically}]
     Builds: [
+        0.0.0.4.13 {refactoring and unless only [.dir/only]}
         0.0.0.4 {/only for preventing dir list}
         0.0.0.2.8 {searching up if not found TBC}
     ]
@@ -12,21 +13,6 @@ if not value? '.redlang [
 ]
 .redlang [search-dir dir-tree dir]
 
-; if not value? '.dir [
-;     .dir: function [
-;         /only
-; ][
-;         either only [
-;             dir-tree/expand %./ 1
-;         ][
-;             print return>value: dir-tree/expand %./ 1
-;             return return>value
-;         ]
-
-;     ]
-        
-; ]
-
 if not value? 'syscd [
     syscd: :cd
     .cd: func [
@@ -36,7 +22,7 @@ if not value? 'syscd [
         /only {do not list folders}
         /search
         /up
-        /build 
+        /_build 
         /no-autoexec {don't autoexecute %.red and %autoload.red}
         /silent
     ][
@@ -44,10 +30,10 @@ if not value? 'syscd [
         search: true
 
         >builds: [
-            0.0.0.4.7 {dir-tree}
+            0.0.0.4.13 {refactoring and unless only [.dir/only]}
         ]
 
-        if build [
+        if _build [
             unless silent [
                 ?? >builds
             ]
@@ -62,7 +48,7 @@ if not value? 'syscd [
 
             if found: search-dir/up (thepath) [
                 cd (found)
-                .dir/only ; 0.0.0.4.01.2 0.0.0.4.1.11
+                unless only [unless only [.dir/only]] ; 0.0.0.4.01.2 0.0.0.4.1.11
                 
                 return what-dir
             ]
@@ -73,10 +59,7 @@ if not value? 'syscd [
             
             either found: search-dir/folder (searchString) (path) [
                 cd (found)
-                .dir/only ; 0.0.0.4.01.2
-                unless only [ ; 0.0.0.4.01.3
-                     
-                ]           
+                unless only [.dir/only] ; 0.0.0.4.01.2          
             ][
 
             ]
@@ -85,13 +68,10 @@ if not value? 'syscd [
         if paren? get/any 'path [set/any 'path do path] 
         switch/default type?/word get/any 'path [
             unset! [
-                .dir/only
+                unless only [.dir/only]
                 path: request-dir
                 cd (path)
-                .dir/only ; 0.0.0.4.01.2
-                unless only [ ; 0.0.0.4.01.3
-                     
-                ]        
+                unless only [.dir/only] ; 0.0.0.4.01.2       
             ] 
 
             string! file! url! [ 
@@ -101,10 +81,7 @@ if not value? 'syscd [
                 if error? try [
                     change-dir to-file path
                     print [{cd} to-file path]
-                    .dir/only ; 0.0.0.4.01.2
-                    unless only [ ; 0.0.0.4.01.3
-                         
-                    ]                    
+                    unless only [.dir/only] ; 0.0.0.4.01.2                   
                 ][
                     dir-not-found %. searchString
                 ]
@@ -117,10 +94,7 @@ if not value? 'syscd [
                         the-path: (get in system/words >path)
                         if not logic? the-path [
                             cd (the-path)
-                            .dir/only ; 0.0.0.4.01.2
-                            unless only [ ; 0.0.0.4.01.3
-                                 
-                            ]  
+                            unless only [.dir/only] ; 0.0.0.4.01.2 
                             exit
                         ]
                     ]
@@ -128,10 +102,7 @@ if not value? 'syscd [
 
                     the-path: to-red-file form >path
                     cd (the-path)
-                    .dir/only ; 0.0.0.4.01.2
-                    unless only [ ; 0.0.0.4.01.3
-                         
-                    ]  
+                    unless only [.dir/only] ; 0.0.0.4.01.2 
                     exit
                 ]
 
@@ -139,10 +110,7 @@ if not value? 'syscd [
                 if error? try [
                     change-dir to-file path
                     print [{cd} to-file path]
-                    .dir/only ; 0.0.0.4.01.2
-                    unless only [ ; 0.0.0.4.01.3
-                         
-                    ]                    
+                    unless only [.dir/only] ; 0.0.0.4.01.2                    
                 ][
                     searchString: form path                      
                     dir-not-found %. searchString
