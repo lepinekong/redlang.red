@@ -42,11 +42,21 @@ compare-checksum: function [>file1 >file2][
     return (checksum-file1 = checksum-file2)  
 ]
 
+
+unless value? '.get-short-filename [
+    do https://redlang.red/file-path
+]
+
+unless value? 'list-files [
+    do https://redlang.red/list-files
+]
+
 .copy-file: function [
     >source >target 
     /force 
     /no-checksum
     /no-quit-if-error
+    /_debug
 ][
 
     >source: to-red-file form >source
@@ -56,15 +66,16 @@ compare-checksum: function [>file1 >file2][
         if error? try [
             write >target read >source
             print [>target "created."]
+            return (>target)
         ][
             either exists? >source [
                 either exists? >target [
-                    print [{error line 53 copy-file:} {check} >target {is not protected.}]
+                    print [{error line 73 copy-file:} {check} >target {is not protected.}]
                 ][
-                    print [{error line 53 copy-file:} {unknown error}]
+                    print [{error line 75 copy-file:} {unknown error}]
                 ]
             ][
-                print [{error line 53 copy-file:} >source {does not exist.}]
+                print [{error line 78 copy-file:} >source {does not exist.}]
             ]
 
             unless no-quit-if-error [
@@ -88,8 +99,7 @@ compare-checksum: function [>file1 >file2][
                 i: counter/1
                 next-file: rejoin [short-filename-wo-extension "."  i  extension]                
             ]
-
-            do https://redlang.red/file-path
+            
             short-filename: .get-short-filename >target
             short-filename-wo-extension: get-short-filename-without-extension >target
             extension: .get-file-extension >target
@@ -101,16 +111,17 @@ compare-checksum: function [>file1 >file2][
                 next-file: rejoin [target-folder get-next-file] 
             ]
 
-            do https://redlang.red/list-files
             list-files: get-list-files target-folder
-            ;?? list-files
-
+            unless _debug [
+                ?? list-files
+            ]
+            
             if previous-file <> >target [
                 unless no-checksum [
                     either false = compare-checksum >source previous-file [    
                         write next-file read >source
                         print [next-file "created."]
-                        return true
+                        return (next-file )
                     ][
                         print [previous-file "is up to date."]
                         return false
@@ -122,8 +133,10 @@ compare-checksum: function [>file1 >file2][
             if error? try [
                 write next-file read >source
                 print [next-file "created."]
+                return (next-file )
             ][
                 print [{error line 87 copy-file} >source {to} next-file ]
+                return false
             ]
             ;return true
             return next-file; 0.0.0.1.19 
@@ -131,8 +144,9 @@ compare-checksum: function [>file1 >file2][
             if error? try [
                 write >target read >source
                 print [>target "created."]
+                return (>target)
             ][
-                print [{error line 96 copy-file} >source {to} >target]
+                print [{error line 149 copy-file} >source {to} >target]
             ]
         ]
     ]
