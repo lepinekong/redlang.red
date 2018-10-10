@@ -150,18 +150,29 @@ if not value? 'syscd [
         cd ".."
         return what-dir
     ]
-    system/words/.1: function [][
+    system/words/...: function [][
+        cd ".."
         cd ".."
         return what-dir
-    ]
-    system/words/.2: function [][
-        cd ../..
+    ]   
+    system/words/....: function [][
+        cd ".."
+        cd ".."
+        cd ".."        
         return what-dir
-    ]  
-    system/words/.3: function [][
-        cd ../../..
-        return what-dir
-    ]  
+    ]      
+    ; system/words/.1: function [][
+    ;     cd ".."
+    ;     return what-dir
+    ; ]
+    ; system/words/.2: function [][
+    ;     cd ../..
+    ;     return what-dir
+    ; ]  
+    ; system/words/.3: function [][
+    ;     cd ../../..
+    ;     return what-dir
+    ; ]  
     if not value? '.c [
         system/words/.c: function [][
             cd %/c/
@@ -173,6 +184,7 @@ if not value? 'syscd [
             cd %/d/
             return what-dir
         ]           
-    ]             
+    ] 
+
 ]
 
