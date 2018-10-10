@@ -47,7 +47,7 @@ if not value? 'syscd [
 
             if found: search-dir/up (thepath) [
                 cd (found)
-                dir-tree/expand %./ 1 ; 0.0.0.4.01.2
+                print dir-tree/expand %./ 1 ; 0.0.0.4.01.2
                 
                 return what-dir
             ]
@@ -58,7 +58,7 @@ if not value? 'syscd [
             
             either found: search-dir/folder (searchString) (path) [
                 cd (found)
-                dir-tree/expand %./ 1 ; 0.0.0.4.01.2
+                print dir-tree/expand %./ 1 ; 0.0.0.4.01.2
                 unless only [ ; 0.0.0.4.01.3
                      
                 ]           
@@ -70,10 +70,10 @@ if not value? 'syscd [
         if paren? get/any 'path [set/any 'path do path] 
         switch/default type?/word get/any 'path [
             unset! [
-                dir-tree/expand %./ 1
+                print dir-tree/expand %./ 1
                 path: request-dir
                 cd (path)
-                dir-tree/expand %./ 1 ; 0.0.0.4.01.2
+                print dir-tree/expand %./ 1 ; 0.0.0.4.01.2
                 unless only [ ; 0.0.0.4.01.3
                      
                 ]        
@@ -86,7 +86,7 @@ if not value? 'syscd [
                 if error? try [
                     change-dir to-file path
                     print [{cd} to-file path]
-                    dir-tree/expand %./ 1 ; 0.0.0.4.01.2
+                    print dir-tree/expand %./ 1 ; 0.0.0.4.01.2
                     unless only [ ; 0.0.0.4.01.3
                          
                     ]                    
@@ -102,7 +102,7 @@ if not value? 'syscd [
                         the-path: (get in system/words >path)
                         if not logic? the-path [
                             cd (the-path)
-                            dir-tree/expand %./ 1 ; 0.0.0.4.01.2
+                            print dir-tree/expand %./ 1 ; 0.0.0.4.01.2
                             unless only [ ; 0.0.0.4.01.3
                                  
                             ]  
@@ -113,7 +113,7 @@ if not value? 'syscd [
 
                     the-path: to-red-file form >path
                     cd (the-path)
-                    dir-tree/expand %./ 1 ; 0.0.0.4.01.2
+                    print dir-tree/expand %./ 1 ; 0.0.0.4.01.2
                     unless only [ ; 0.0.0.4.01.3
                          
                     ]  
@@ -124,7 +124,7 @@ if not value? 'syscd [
                 if error? try [
                     change-dir to-file path
                     print [{cd} to-file path]
-                    dir-tree/expand %./ 1 ; 0.0.0.4.01.2
+                    print dir-tree/expand %./ 1 ; 0.0.0.4.01.2
                     unless only [ ; 0.0.0.4.01.3
                          
                     ]                    
