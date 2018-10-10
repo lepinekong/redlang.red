@@ -10,22 +10,22 @@ Red [
 if not value? '.redlang [
     do https://redlang.red
 ]
-.redlang [search-dir dir-tree]
+.redlang [search-dir dir-tree dir]
 
-if not value? '.dir [
-    .dir: function [
-        /only
-][
-        either only [
-            dir-tree/expand %./ 1
-        ][
-            print return>value: dir-tree/expand %./ 1
-            return return>value
-        ]
+; if not value? '.dir [
+;     .dir: function [
+;         /only
+; ][
+;         either only [
+;             dir-tree/expand %./ 1
+;         ][
+;             print return>value: dir-tree/expand %./ 1
+;             return return>value
+;         ]
 
-    ]
+;     ]
         
-]
+; ]
 
 if not value? 'syscd [
     syscd: :cd

@@ -7,15 +7,31 @@ unless value? 'dir-tree [
     do https://redlang.red/dir-tree.red
 ]
 
-unless value? 'sysDir [
-    sysDir: :dir
-]
+unless value? '.dir [
+    .dir: function [
+        /only
+][
+        either only [
+            dir-tree/expand %./ 1
+        ][
+            print return>value: dir-tree/expand %./ 1
+            return return>value
+        ]
 
-dir: function ['>folder [any-type!] /tree ][
-
-    either tree [
-        dir-tree %./
-    ][
-        list-dir :>folder
     ]
+        
 ]
+
+; TODO:
+; unless value? 'sysDir [
+;     sysDir: :dir
+; ]
+
+; dir: function ['>folder [any-type!] /tree ][
+
+;     either tree [
+;         dir-tree %./
+;     ][
+;         list-dir :>folder
+;     ]
+; ]
