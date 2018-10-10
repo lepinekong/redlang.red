@@ -125,8 +125,7 @@ compare-checksum: function [>file1 >file2][
             ][
                 print [{error line 87 copy-file} >source {to} next-file ]
             ]
-            ;return true
-            return next-file; 0.0.0.1.19 
+            return true
         ][
             if error? try [
                 write >target read >source
@@ -134,6 +133,7 @@ compare-checksum: function [>file1 >file2][
             ][
                 print [{error line 96 copy-file} >source {to} >target]
             ]
+
         ]
     ]
 
