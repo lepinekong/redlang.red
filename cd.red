@@ -147,11 +147,11 @@ if not value? 'syscd [
     ]   
     system/words/cd: :.cd 
     system/words/..: function [][
-        cd ..
+        cd ".."
         return what-dir
     ]
     system/words/.1: function [][
-        cd ..
+        cd ".."
         return what-dir
     ]
     system/words/.2: function [][
