@@ -4,6 +4,10 @@ Red [
         0.0.0.1 {Initial build with file versioning or /force and checksum}
     ]
     Iterations: [
+        0.0.0.1.18 [
+            Purpose: {Error management}
+            Change: {Quit if error except /no-quit-if-error}
+        ]
         0.0.0.1.16 [
             Purpose: {support windows path for >target}
             Change: {>target: to-red-file form >target}
@@ -38,7 +42,12 @@ compare-checksum: function [>file1 >file2][
     return (checksum-file1 = checksum-file2)  
 ]
 
-.copy-file: function [>source >target /force /no-checksum][
+.copy-file: function [
+    >source >target 
+    /force 
+    /no-checksum
+    /no-quit-if-error
+][
 
     >source: to-red-file form >source
     >target: to-red-file form >target
@@ -48,7 +57,21 @@ compare-checksum: function [>file1 >file2][
             write >target read >source
             print [>target "created."]
         ][
-            print [{error line 42 copy-file} >source {to} >target]
+            either exists? >source [
+                either exists? >target [
+                    print [{error line 53 copy-file:} {check} >target {is not protected.}]
+                ][
+                    print [{error line 53 copy-file:} {unknown error}]
+                ]
+            ][
+                print [{error line 53 copy-file:} >source {does not exist.}]
+            ]
+
+            unless no-quit-if-error [
+                print "quit (unless /no-quit-if-error)"
+                quit
+            ]
+            
         ]        
         
     ][
@@ -80,7 +103,7 @@ compare-checksum: function [>file1 >file2][
 
             do https://redlang.red/list-files
             list-files: get-list-files target-folder
-            ?? list-files
+            ;?? list-files
 
             if previous-file <> >target [
                 unless no-checksum [
