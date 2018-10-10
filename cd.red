@@ -12,6 +12,21 @@ if not value? '.redlang [
 ]
 .redlang [search-dir dir-tree]
 
+if not value? '.dir [
+    .dir: function [
+        /only
+][
+        either only [
+            dir-tree/expand %./ 1
+        ][
+            print return>value: dir-tree/expand %./ 1
+            return return>value
+        ]
+
+    ]
+        
+]
+
 if not value? 'syscd [
     syscd: :cd
     .cd: func [
@@ -47,7 +62,7 @@ if not value? 'syscd [
 
             if found: search-dir/up (thepath) [
                 cd (found)
-                print dir-tree/expand %./ 1 ; 0.0.0.4.01.2
+                .dir/only ; 0.0.0.4.01.2 0.0.0.4.1.11
                 
                 return what-dir
             ]
@@ -58,7 +73,7 @@ if not value? 'syscd [
             
             either found: search-dir/folder (searchString) (path) [
                 cd (found)
-                print dir-tree/expand %./ 1 ; 0.0.0.4.01.2
+                .dir/only ; 0.0.0.4.01.2
                 unless only [ ; 0.0.0.4.01.3
                      
                 ]           
@@ -70,10 +85,10 @@ if not value? 'syscd [
         if paren? get/any 'path [set/any 'path do path] 
         switch/default type?/word get/any 'path [
             unset! [
-                print dir-tree/expand %./ 1
+                .dir/only
                 path: request-dir
                 cd (path)
-                print dir-tree/expand %./ 1 ; 0.0.0.4.01.2
+                .dir/only ; 0.0.0.4.01.2
                 unless only [ ; 0.0.0.4.01.3
                      
                 ]        
@@ -86,7 +101,7 @@ if not value? 'syscd [
                 if error? try [
                     change-dir to-file path
                     print [{cd} to-file path]
-                    print dir-tree/expand %./ 1 ; 0.0.0.4.01.2
+                    .dir/only ; 0.0.0.4.01.2
                     unless only [ ; 0.0.0.4.01.3
                          
                     ]                    
@@ -102,7 +117,7 @@ if not value? 'syscd [
                         the-path: (get in system/words >path)
                         if not logic? the-path [
                             cd (the-path)
-                            print dir-tree/expand %./ 1 ; 0.0.0.4.01.2
+                            .dir/only ; 0.0.0.4.01.2
                             unless only [ ; 0.0.0.4.01.3
                                  
                             ]  
@@ -113,7 +128,7 @@ if not value? 'syscd [
 
                     the-path: to-red-file form >path
                     cd (the-path)
-                    print dir-tree/expand %./ 1 ; 0.0.0.4.01.2
+                    .dir/only ; 0.0.0.4.01.2
                     unless only [ ; 0.0.0.4.01.3
                          
                     ]  
@@ -124,7 +139,7 @@ if not value? 'syscd [
                 if error? try [
                     change-dir to-file path
                     print [{cd} to-file path]
-                    print dir-tree/expand %./ 1 ; 0.0.0.4.01.2
+                    .dir/only ; 0.0.0.4.01.2
                     unless only [ ; 0.0.0.4.01.3
                          
                     ]                    
