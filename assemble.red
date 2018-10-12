@@ -6,9 +6,7 @@ Red [
     ]
 ]
 
-if not value? '.redlang [
-    do https://redlang.red
-]
+do https://redlang.red
 .redlang [files get-folder alias to-dir]
 
 .include: function [
@@ -17,8 +15,12 @@ if not value? '.redlang [
     /silent
     /no-newline ; 0.0.0.4.7    
     /separator ; 0.0.0.6.6
+    /out out-file> ; 0.0.0.6.2
+    /overwrite  ; 0.0.0.6.2
 ][
     builds>: [
+        0.0.0.7.1 {Fix files sort missing bug}
+        0.0.0.6.2 {/out out-file>}
         0.0.0.5.9 {fix bug .log.red instead of .log only}
         0.0.0.5.8 {automatic newline unless /no-newline}
         0.0.0.5.1 {separator with filename}
@@ -44,7 +46,9 @@ if not value? '.redlang [
         ]
     ]
 
-    files: read directory
+
+
+    files: sort read directory
 
     forall files [
         file: rejoin [directory files/1]
@@ -107,7 +111,25 @@ if not value? '.redlang [
 
         
     ]
+    write-out-file: does [
+        write out-file> src
+    ]
+    
+    either out [
+        if exists? out-file> [
+            unless overwrite [
+                if confirm rejoin [{Overwrite } out-file ": "] [
+                    write-out-file
+                    return src
+                ]
+            ]
+        ]
+        write-out-file
+    ][
+
+    ]
     return src
+
 
 ]
 .alias .include [include assemble .assemble ]
