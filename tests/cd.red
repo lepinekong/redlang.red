@@ -2,9 +2,14 @@ Red [
     Title: "cd.red"
     Version: [0.0.1 {searching subfolder automatically}]
     Builds: [
+        0.0.0.4.2.2 {small refactoring again}
+        0.0.0.4.2.1 {small refactoring cd ".."}
         0.0.0.4.13 {refactoring and unless only [.dir/only]}
         0.0.0.4 {/only for preventing dir list}
         0.0.0.2.8 {searching up if not found TBC}
+    ]
+    TODO: [
+        1 {Fix duplicate tree: should run dir only if target is same as original arg}
     ]
 ]
 
@@ -13,8 +18,8 @@ if not value? '.redlang [
 ]
 .redlang [search-dir dir-tree dir]
 
-if not value? 'syscd [
-    syscd: :cd
+if not value? '.syscd [
+    .syscd: :cd
     .cd: func [
         "Change directory (shell shortcut function)." 
         [catch] 
@@ -47,7 +52,7 @@ if not value? 'syscd [
             thepath: form >path
 
             if found: search-dir/up (thepath) [
-                cd (found)
+                change-dir (found)
                 unless only [unless only [.dir/only]] ; 0.0.0.4.01.2 0.0.0.4.1.11
                 
                 return what-dir
@@ -55,10 +60,10 @@ if not value? 'syscd [
             exit
         ]
 
-        dir-not-found: function [path searchString][
+        ..dir-not-found: function [path searchString][
             
             either found: search-dir/folder (searchString) (path) [
-                cd (found)
+                change-dir (found)
                 unless only [.dir/only] ; 0.0.0.4.01.2          
             ][
 
@@ -68,22 +73,21 @@ if not value? 'syscd [
         if paren? get/any 'path [set/any 'path do path] 
         switch/default type?/word get/any 'path [
             unset! [
-                unless only [.dir/only]
-                path: request-dir
-                cd (path)
+                local>path: request-dir
+                change-dir (local>path)
                 unless only [.dir/only] ; 0.0.0.4.01.2       
             ] 
 
             string! file! url! [ 
-                searchString: form path
-                path: to-file searchString
+                searchString: form local>path
+                local>path: to-file searchString
                 
                 if error? try [
-                    change-dir to-file path
-                    print [{cd} to-file path]
+                    change-dir to-file local>path
+                    print [{cd} to-file local>path]
                     unless only [.dir/only] ; 0.0.0.4.01.2                   
                 ][
-                    dir-not-found %. searchString
+                    ..dir-not-found %. searchString
                 ]
                 
             ] 
@@ -93,7 +97,7 @@ if not value? 'syscd [
                     if value? to-word >path [ 
                         the-path: (get in system/words >path)
                         if not logic? the-path [
-                            cd (the-path)
+                            change-dir (the-path)
                             unless only [.dir/only] ; 0.0.0.4.01.2 
                             exit
                         ]
@@ -101,7 +105,7 @@ if not value? 'syscd [
                 ][
 
                     the-path: to-red-file form >path
-                    cd (the-path)
+                    change-dir (the-path)
                     unless only [.dir/only] ; 0.0.0.4.01.2 
                     exit
                 ]
@@ -113,7 +117,7 @@ if not value? 'syscd [
                     unless only [.dir/only] ; 0.0.0.4.01.2                    
                 ][
                     searchString: form path                      
-                    dir-not-found %. searchString
+                    ..dir-not-found %. searchString
                 ]                    
                 
                 ; unless no-autoexec [
@@ -132,18 +136,15 @@ if not value? 'syscd [
     ]   
     system/words/cd: :.cd 
     system/words/..: function [][
-        cd ".."
+        cd/only ".."
         return what-dir
     ]
     system/words/...: function [][
-        cd ".."
-        cd ".."
+        repeat n 2 [cd/only ".."]
         return what-dir
     ]   
     system/words/....: function [][
-        cd ".."
-        cd ".."
-        cd ".."        
+        repeat n 3 [cd/only ".."]
         return what-dir
     ]      
     ; system/words/.1: function [][
@@ -164,12 +165,17 @@ if not value? 'syscd [
             return what-dir
         ]           
     ]
+    if not value? 'c [
+        system/words/c: :.c
+    ]
     if not value? '.d [
         system/words/.d: function [][
             cd %/d/
             return what-dir
         ]           
     ] 
-
+    if not value? 'd [
+        system/words/d: :.d
+    ]
 ]
 
