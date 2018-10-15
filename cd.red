@@ -239,7 +239,7 @@ if not value? 'syscd [
         ]
         what-dir  
     ]   
-    system/words/cd: :.cd 
+    ;system/words/cd: :.cd 
     system/words/..: function [][
         .cd ".."
         return what-dir
@@ -282,5 +282,38 @@ if not value? 'syscd [
     ] 
     if not value? 'd [d: :.d]
 
+]
+
+
+cd: function [
+    'param>folder [word! string! path! file! url! paren! unset!] 
+    /_build {Build number for developer}
+    /silent {don't print message on console}   
+    /_debug {debug mode} 
+][
+
+    >builds: 0.0.0.5.1.12
+
+    if _build [
+        unless silent [
+            print >builds
+        ]
+        return >builds
+    ]
+
+    switch/default type?/word get/any 'param>folder [
+        unset! [
+            param>folder: request-dir/dir (what-dir)
+            if none? param>folder [
+                return none
+            ]
+        ]
+        file! word! path! string! paren! url! [
+            param>folder: form param>folder
+        ]
+    ] [
+        throw error 'script 'expect-arg param>folder
+    ]
+    .cd (param>folder)
 ]
 
