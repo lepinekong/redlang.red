@@ -73,7 +73,7 @@ if not value? 'syscd [
                     ] %cd.5.red
                     
                 ]
-                cd (found)
+                .cd (found)
                 unless only [.dir/only] ; 0.0.0.4.01.2 0.0.0.4.1.11
                 
                 return what-dir
@@ -98,7 +98,7 @@ if not value? 'syscd [
                     change-dir (found)
                     unless only [.dir/only] ; 0.0.0.4.01.2
                 ][
-                    cd (found)
+                    .cd (found)
                 ]                        
             ][
                 if _debug [
@@ -136,7 +136,7 @@ if not value? 'syscd [
             unset! [
                 unless only [.dir/only]
                 path: request-dir
-                cd (path)
+                .cd (path)
                 unless only [.dir/only] ; 0.0.0.4.01.2       
             ] 
 
@@ -180,7 +180,7 @@ if not value? 'syscd [
                                 ] %cd.5.red
                                 
                             ]                            
-                            cd (the-path)
+                            .cd (the-path)
                             unless only [.dir/only] ; 0.0.0.4.01.2 
                             exit
                         ]
@@ -205,9 +205,9 @@ if not value? 'syscd [
                             
                         ]  
                         either _debug [
-                            cd/_debug (the-path)
+                            .cd/_debug (the-path)
                         ][
-                            cd (the-path)
+                            .cd (the-path)
                         ]                         
                         
                     ]                  
@@ -241,18 +241,18 @@ if not value? 'syscd [
     ]   
     system/words/cd: :.cd 
     system/words/..: function [][
-        cd ".."
+        .cd ".."
         return what-dir
     ]
     system/words/...: function [][
-        cd ".."
-        cd ".."
+        .cd ".."
+        .cd ".."
         return what-dir
     ]   
     system/words/....: function [][
-        cd ".."
-        cd ".."
-        cd ".."        
+        .cd ".."
+        .cd ".."
+        .cd ".."        
         return what-dir
     ]      
     ; system/words/.1: function [][
@@ -269,16 +269,18 @@ if not value? 'syscd [
     ; ]  
     if not value? '.c [
         system/words/.c: function [][
-            cd %/c/
+            .cd %/c/
             return what-dir
         ]           
     ]
+    if not value? 'c [c: :.c]
     if not value? '.d [
         system/words/.d: function [][
-            cd %/d/
+            .cd %/d/
             return what-dir
         ]           
     ] 
+    if not value? 'd [d: :.d]
 
 ]
 
