@@ -2,10 +2,10 @@ Red [
     Title: "dir.red"
 ]
 
-unless value? '.redlang [
-    do https://redlang.red
+
+unless value? 'dir-tree [
+    do https://redlang.red/dir-tree.red
 ]
-.redlang [dir-tree]
 
 unless value? '.dir [
     .dir: function [
@@ -20,9 +20,16 @@ unless value? '.dir [
     ]  
 ]
 
-unless value? '.sysDir [
-    .sysDir: :dir
-]
+; TODO:
+; unless value? 'sysDir [
+;     sysDir: :dir
+; ]
 
-.alias .dir [dir]
+; dir: function ['>folder [any-type!] /tree ][
 
+;     either tree [
+;         dir-tree %./
+;     ][
+;         list-dir :>folder
+;     ]
+; ]
