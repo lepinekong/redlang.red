@@ -2,7 +2,6 @@ Red [
     Title: "cd.red"
     Version: [0.0.1 {searching subfolder automatically}]
     Builds: [
-        0.0.0.5.1.7 {support for partial subfolder, example cd redlang/github}
         0.0.0.5.6 {fixed tree duplicates}
         0.0.0.5.3 {revert to 1}
         0.0.0.4.13 {refactoring and unless only [.dir/only]}
@@ -14,8 +13,8 @@ Red [
 if not value? '.redlang [
     do https://redlang.red
 ]
-.redlang [search-dir dir-tree dir block-to-string
-    do-trace
+.redlang [search-dir dir-tree dir
+    ;do-trace
 ]
 
 if not value? 'syscd [
@@ -88,11 +87,12 @@ if not value? 'syscd [
             
             either found: search-dir/folder (searchString) (path) [
                 if _debug [
-                    do-trace 91 [
+                    do-trace 87 [
                         ?? searchString
                         ?? path
                         ?? found
                     ] %cd.5.red
+                    
                 ] 
                 either exists? (found) [
                     change-dir (found)
@@ -101,33 +101,7 @@ if not value? 'syscd [
                     cd (found)
                 ]                        
             ][
-                if _debug [
-                    do-trace 104 [
-                        ?? searchString
-                        ?? path
-                        ?? found
-                    ] %cd.5.red 
-                ]
- 
-                if find searchString "/" [
-                    searchString: pick (splitted-path: split searchString "/") 1         
 
-                    if _debug [
-                        do-trace 118 [
-                            ?? path
-                            ?? searchString
-                        ] %cd.7.red
-                        ;dir-not-found/_debug %./ (searchString)                       
-                    ]
-                    found: search-dir/folder (searchString) %./
-                    if found [
-                        change-dir to-file (found)
-                        remove splitted-path
-                        searchString: block-to-string splitted-path "/"
-                        .cd (searchString)
-                        return what-dir
-                    ]
-                ]
             ]
         ]
     
@@ -145,7 +119,7 @@ if not value? 'syscd [
                 path: to-file searchString
                 
                 if _debug [
-                    do-trace 123 [
+                    do-trace 110 [
                         ?? path
                     ] %cd.5.red
                 ]
@@ -155,11 +129,7 @@ if not value? 'syscd [
                     print [{cd} to-file path]
                     unless only [.dir/only] ; 0.0.0.4.01.2                   
                 ][
-                    
                     either _debug [
-                        do-trace 135 [
-                            ?? searchString
-                        ] %cd.7.red
                         dir-not-found/_debug %. (searchString)
                     ][
                         dir-not-found %. (searchString)
@@ -175,7 +145,7 @@ if not value? 'syscd [
                         the-path: (get in system/words >path)
                         if not logic? the-path [
                             if _debug [
-                                do-trace 155 [
+                                do-trace 133 [
                                     ?? the-path
                                 ] %cd.5.red
                                 
@@ -190,7 +160,7 @@ if not value? 'syscd [
 
                     either exists? (the-path) [
                         if _debug [
-                            do-trace 170 [
+                            do-trace 148 [
                                 ?? the-path
                             ] %cd.5.red
                             
@@ -199,7 +169,7 @@ if not value? 'syscd [
                         unless only [.dir/only] ; 0.0.0.4.01.2 
                     ][
                         if _debug [
-                            do-trace 179 [
+                            do-trace 157 [
                                 ?? the-path
                             ] %cd.5.red
                             
