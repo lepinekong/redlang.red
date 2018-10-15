@@ -2,7 +2,6 @@ Red [
     Title: "cd.red"
     Version: [0.0.1 {searching subfolder automatically}]
     Builds: [
-        0.0.0.5.3 {revert to 1}
         0.0.0.4.13 {refactoring and unless only [.dir/only]}
         0.0.0.4 {/only for preventing dir list}
         0.0.0.2.8 {searching up if not found TBC}
@@ -31,10 +30,7 @@ if not value? 'syscd [
         search: true
 
         >builds: [
-            0.0.0.5.3 {revert to 1}
             0.0.0.4.13 {refactoring and unless only [.dir/only]}
-            0.0.0.4 {/only for preventing dir list}
-            0.0.0.2.8 {searching up if not found TBC}
         ]
 
         if _build [
@@ -51,7 +47,7 @@ if not value? 'syscd [
             thepath: form >path
 
             if found: search-dir/up (thepath) [
-                change-dir (found)
+                cd (found)
                 unless only [unless only [.dir/only]] ; 0.0.0.4.01.2 0.0.0.4.1.11
                 
                 return what-dir
@@ -62,7 +58,7 @@ if not value? 'syscd [
         dir-not-found: function [path searchString][
             
             either found: search-dir/folder (searchString) (path) [
-                change-dir (found)
+                cd (found)
                 unless only [.dir/only] ; 0.0.0.4.01.2          
             ][
 
@@ -74,7 +70,7 @@ if not value? 'syscd [
             unset! [
                 unless only [.dir/only]
                 path: request-dir
-                change-dir (path)
+                cd (path)
                 unless only [.dir/only] ; 0.0.0.4.01.2       
             ] 
 
@@ -97,7 +93,7 @@ if not value? 'syscd [
                     if value? to-word >path [ 
                         the-path: (get in system/words >path)
                         if not logic? the-path [
-                            change-dir (the-path)
+                            cd (the-path)
                             unless only [.dir/only] ; 0.0.0.4.01.2 
                             exit
                         ]
@@ -105,7 +101,7 @@ if not value? 'syscd [
                 ][
 
                     the-path: to-red-file form >path
-                    change-dir (the-path)
+                    cd (the-path)
                     unless only [.dir/only] ; 0.0.0.4.01.2 
                     exit
                 ]
