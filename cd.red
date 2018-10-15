@@ -13,8 +13,7 @@ Red [
 if not value? '.redlang [
     do https://redlang.red
 ]
-.redlang [search-dir dir-tree dir]
-.codeops [do-trace]
+.redlang [search-dir dir-tree dir do-trace]
 
 if not value? 'syscd [
     syscd: :cd
