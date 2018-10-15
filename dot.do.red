@@ -2,6 +2,7 @@ Red [
     Title: "do.red"
     SemVer: [1.0.0 {Alpha version}]
     Builds: [
+        0.0.0.5.2.2 {performance optimization}
         0.0.0.5.2 {/codeops}
         0.0.0.5.1 {/quickinstall}
         0.0.0.3.3 {/quickrun}
@@ -31,14 +32,16 @@ unless value? '.do [
         /_build
 
     ][
-        >build: [0.0.0.4.3 {
+        >builds: [
+            0.0.0.5.2.2 {performance optimization}
+            0.0.0.4.3 {
             - /silent deprecated
             - /_build added
         }]
 
         if _build [
-            print >build
-            return >build
+            ?? >builds
+            return >builds
             exit
         ]
 
