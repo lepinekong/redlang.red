@@ -17,12 +17,11 @@ unless value? '.dir [
             print return>value: dir-tree/expand %./ 1
             return return>value
         ]
-    ]  
+    ]
+    dir: :.dir  
 ]
 
-unless value? '.sysDir [
-    .sysDir: :dir
-]
 
-.alias .dir [dir]
+
+
 
