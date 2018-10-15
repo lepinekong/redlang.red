@@ -7,7 +7,7 @@ Red [
         0.0.0.3.3 {/quickrun}
     ]
 ]
-unless value? '.do [
+if not value? '.do [
 
     .do: function [
 
@@ -350,68 +350,66 @@ unless value? '.do [
     
     ] 
 ]  
-unless value? '.redlang [
-    .redlang: function ['arg [any-type!] ][
-        .do/redlang (arg)
-    ]
-    redlang: :.redlang
-    print [{type "help redlang"}]
+.redlang: function ['arg [any-type!] ][
+    .do/redlang (arg)
 ]
+redlang: :.redlang
+print [{type "help redlang"}]
 
-unless value? '.quickrun [
-    .quickrun: function [
-        'arg [any-type! unset!] 
-    ][
+.quickrun: function [
+    'arg [any-type! unset!] 
+][
 
-        switch type?/word get/any 'arg [
-            unset! [
-                do https://quickrun.red
-                exit
-            ]
-        ]    
+    switch type?/word get/any 'arg [
+        unset! [
+            do https://quickrun.red
+            exit
+        ]
+    ]    
+    ; either (find arg "/") [
+    ;     splitted-arg: split arg "/"
+    ;     arg: splitted-arg/1
+    ; ][
 
-        .do/quickrun (arg)
-    ]
-    quickrun: :.quickrun
-    print [{type "help quickrun"}]
+    ; ]
+
+    .do/quickrun (arg)
 ]
+quickrun: :.quickrun
+print [{type "help quickrun"}]
 
-unless value? '.quickinstall [
-    .quickinstall: function [
-        'arg [any-type! unset!] 
-    ][
 
-        switch type?/word get/any 'arg [
-            unset! [
-                do https://quickinstall.red
-                exit
-            ]
-        ] 
+.quickinstall: function [
+    'arg [any-type! unset!] 
+][
 
-        .do/quickinstall (arg)
-    ]
-    quickinstall: :.quickinstall
-    print [{type "help quickinstall"}]
+    switch type?/word get/any 'arg [
+        unset! [
+            do https://quickinstall.red
+            exit
+        ]
+    ] 
+
+    .do/quickinstall (arg)
 ]
+quickinstall: :.quickinstall
+print [{type "help quickinstall"}]
 
 
+.codeops: function [
+    'arg [any-type! unset!] 
+][
 
+    switch type?/word get/any 'arg [
+        unset! [
+            do https://codeops.red
+            exit
+        ]
+    ] 
 
-unless value? '.codeops [
-    .codeops: function [
-        'arg [any-type! unset!] 
-    ][
-
-        switch type?/word get/any 'arg [
-            unset! [
-                do https://codeops.red
-                exit
-            ]
-        ] 
-
-        .do/codeops (arg)
-    ]
-    codeops: :.codeops
-    print [{type "help codeops"}]
+    .do/codeops (arg)
 ]
+codeops: :.codeops
+print [{type "help codeops"}]
+
 
