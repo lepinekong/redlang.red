@@ -2,7 +2,7 @@ Red [
     Title: "cd.red"
     Version: [0.0.1 {searching subfolder automatically}]
     Builds: [
-        0.0.0.5.6 {fixed tree duplicates}
+        0.0.0.5.6 {fixed tree duplicates !}
         0.0.0.5.3 {revert to 1}
         0.0.0.4.13 {refactoring and unless only [.dir/only]}
         0.0.0.4 {/only for preventing dir list}
@@ -13,9 +13,7 @@ Red [
 if not value? '.redlang [
     do https://redlang.red
 ]
-.redlang [search-dir dir-tree dir
-    ;do-trace
-]
+.redlang [search-dir dir-tree dir do-trace]
 
 if not value? 'syscd [
     syscd: :cd
