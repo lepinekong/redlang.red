@@ -2,7 +2,6 @@ Red [
     Title: "cd.red"
     Version: [0.0.1 {searching subfolder automatically}]
     Builds: [
-        0.0.0.5.1.12 {alpha release - support for partial subfolder, example cd redlang/github}
         0.0.0.5.1.7 {support for partial subfolder, example cd redlang/github}
         0.0.0.5.6 {fixed tree duplicates}
         0.0.0.5.3 {revert to 1}
@@ -285,4 +284,36 @@ if not value? 'syscd [
 
 ]
 
-cd: :.cd
+
+cd: function [
+    'param>folder [word! string! path! file! url! paren! unset!] 
+    /_build {Build number for developer}
+    /silent {don't print message on console}   
+    /_debug {debug mode} 
+][
+
+    >builds: 0.0.0.5.1.12
+
+    if _build [
+        unless silent [
+            print >builds
+        ]
+        return >builds
+    ]
+
+    switch/default type?/word get/any 'param>folder [
+        unset! [
+            param>folder: request-dir/dir (what-dir)
+            if none? param>folder [
+                return none
+            ]
+        ]
+        file! word! path! string! paren! url! [
+            param>folder: form param>folder
+        ]
+    ] [
+        throw error 'script 'expect-arg param>folder
+    ]
+    .cd (param>folder)
+]
+
