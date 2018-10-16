@@ -1,8 +1,7 @@
 Red [
     Title: "build-markup.red"
-    Build: 0.0.0.1.2
+    Build: 0.0.0.4
     History: [
-        0.0.0.1.2 {added path! type}
         0.0.0.4 {.string-expand alias}
         0.0.0.3 {keep only build-markup}
     ]
@@ -19,7 +18,7 @@ Red [
 
 .build-markup: func [
     {Return markup text replacing <%tags%> with their evaluated results.}
-    content [string! file! url! path!]
+    content [string! file! url!]
     /bind obj [object!] "Object to bind"    ;ability to run in a local context
     /quiet "Do not show errors in the output."
     /delimiters >delimiters [block!]
@@ -63,14 +62,7 @@ Red [
     rule: copy []
     any-block: [
             end break
-            | "<%" [copy value 
-            [
-                to "/" 1 skip to "%>" 2 skip
-                |
-                to "%>" 2 skip
-            ]
-            | copy value to end
-            ] (eval value)
+            | "<%" [copy value to "%>" 2 skip | copy value to end] (eval value)
             | copy value [to "<%" | to end] (append out value)
         ]
     append/only rule [any any-block]
