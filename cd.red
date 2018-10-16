@@ -2,6 +2,7 @@ Red [
     Title: "cd.red"
     Version: [0.0.1 {searching subfolder automatically}]
     Builds: [
+        0.0.0.5.1.14 {request-dir if no arg}
         0.0.0.5.1.12 {alpha release - support for partial subfolder, example cd redlang/github}
         0.0.0.5.1.7 {support for partial subfolder, example cd redlang/github}
         0.0.0.5.6 {fixed tree duplicates}
@@ -16,7 +17,7 @@ if not value? '.redlang [
     do https://redlang.red
 ]
 .redlang [search-dir dir-tree dir block-to-string
-    do-trace
+    ;do-trace
 ]
 
 if not value? '.syscd [
@@ -38,6 +39,9 @@ if not value? '.syscd [
         search: true
 
         >builds: [
+            0.0.0.5.1.14 {request-dir if no arg}
+            0.0.0.5.1.12 {alpha release - support for partial subfolder, example cd redlang/github}
+            0.0.0.5.1.7 {support for partial subfolder, example cd redlang/github}
             0.0.0.5.6 {fixed tree duplicates}
             0.0.0.5.3 {revert to 1}
             0.0.0.4.13 {refactoring and unless only [.dir/only]}
@@ -52,7 +56,19 @@ if not value? '.syscd [
             return >builds
         ]
 
-        >path: :path
+        switch type?/word get/any 'path [
+            unset! [
+                >path: request-dir/dir (what-dir)
+                if none? >path [
+                    return none
+                ]
+            ]
+            file! word! path! unset! string! paren! url! [
+                >path: :path
+            ]
+        ]      
+
+        ;>path: :path
 
         _counter: []
         _first_path: []
