@@ -2,12 +2,13 @@ Red [
     Title: "do.red"
     SemVer: [1.0.0 {Alpha version}]
     Builds: [
+        0.0.0.5.2.2 {performance optimization}
         0.0.0.5.2 {/codeops}
         0.0.0.5.1 {/quickinstall}
         0.0.0.3.3 {/quickrun}
     ]
 ]
-if not value? '.do [
+unless value? '.do [
 
     .do: function [
 
@@ -31,14 +32,16 @@ if not value? '.do [
         /_build
 
     ][
-        >build: [0.0.0.4.3 {
+        >builds: [
+            0.0.0.5.2.2 {performance optimization}
+            0.0.0.4.3 {
             - /silent deprecated
             - /_build added
         }]
 
         if _build [
-            print >build
-            return >build
+            ?? >builds
+            return >builds
             exit
         ]
 
@@ -350,66 +353,68 @@ if not value? '.do [
     
     ] 
 ]  
-.redlang: function ['arg [any-type!] ][
-    .do/redlang (arg)
+unless value? '.redlang [
+    .redlang: function ['arg [any-type!] ][
+        .do/redlang (arg)
+    ]
+    redlang: :.redlang
+    print [{type "help redlang"}]
 ]
-redlang: :.redlang
-print [{type "help redlang"}]
 
-.quickrun: function [
-    'arg [any-type! unset!] 
-][
+unless value? '.quickrun [
+    .quickrun: function [
+        'arg [any-type! unset!] 
+    ][
 
-    switch type?/word get/any 'arg [
-        unset! [
-            do https://quickrun.red
-            exit
-        ]
-    ]    
-    ; either (find arg "/") [
-    ;     splitted-arg: split arg "/"
-    ;     arg: splitted-arg/1
-    ; ][
+        switch type?/word get/any 'arg [
+            unset! [
+                do https://quickrun.red
+                exit
+            ]
+        ]    
 
-    ; ]
-
-    .do/quickrun (arg)
+        .do/quickrun (arg)
+    ]
+    quickrun: :.quickrun
+    print [{type "help quickrun"}]
 ]
-quickrun: :.quickrun
-print [{type "help quickrun"}]
 
+unless value? '.quickinstall [
+    .quickinstall: function [
+        'arg [any-type! unset!] 
+    ][
 
-.quickinstall: function [
-    'arg [any-type! unset!] 
-][
+        switch type?/word get/any 'arg [
+            unset! [
+                do https://quickinstall.red
+                exit
+            ]
+        ] 
 
-    switch type?/word get/any 'arg [
-        unset! [
-            do https://quickinstall.red
-            exit
-        ]
-    ] 
-
-    .do/quickinstall (arg)
+        .do/quickinstall (arg)
+    ]
+    quickinstall: :.quickinstall
+    print [{type "help quickinstall"}]
 ]
-quickinstall: :.quickinstall
-print [{type "help quickinstall"}]
 
 
-.codeops: function [
-    'arg [any-type! unset!] 
-][
 
-    switch type?/word get/any 'arg [
-        unset! [
-            do https://codeops.red
-            exit
-        ]
-    ] 
 
-    .do/codeops (arg)
+unless value? '.codeops [
+    .codeops: function [
+        'arg [any-type! unset!] 
+    ][
+
+        switch type?/word get/any 'arg [
+            unset! [
+                do https://codeops.red
+                exit
+            ]
+        ] 
+
+        .do/codeops (arg)
+    ]
+    codeops: :.codeops
+    print [{type "help codeops"}]
 ]
-codeops: :.codeops
-print [{type "help codeops"}]
-
 
