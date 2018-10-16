@@ -111,7 +111,7 @@ unless value? 'list-files [
                 next-file: rejoin [target-folder get-next-file] 
             ]
 
-            list-files: get-list-files target-folder
+            list-files: .get-list-files (target-folder)
             unless _debug [
                 ?? list-files
             ]
