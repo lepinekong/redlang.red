@@ -19,8 +19,8 @@ if not value? '.redlang [
     do-trace
 ]
 
-if not value? 'syscd [
-    syscd: :cd
+if not value? '.syscd [
+    .syscd: :cd
     .cd: func [
         "Change directory (shell shortcut function)." 
         [catch] 
@@ -256,18 +256,7 @@ if not value? 'syscd [
         .cd ".."        
         return what-dir
     ]      
-    ; system/words/.1: function [][
-    ;     cd ".."
-    ;     return what-dir
-    ; ]
-    ; system/words/.2: function [][
-    ;     cd ../..
-    ;     return what-dir
-    ; ]  
-    ; system/words/.3: function [][
-    ;     cd ../../..
-    ;     return what-dir
-    ; ]  
+  
     if not value? '.c [
         system/words/.c: function [][
             .cd %/c/
