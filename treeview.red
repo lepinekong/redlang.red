@@ -28,7 +28,6 @@ if not value? '>default-extension [
 		>default-extension: %.html
 	}
 	'>folder [any-type! unset!] {optional directory}
-	/edit {launch an editor}
 	/help {print help}
 	/extension '>extension [any-type!]  {filter by extension}
 	/ext '>ext [any-type!]  {same as /extension} ; 0.0.0.2.12
@@ -154,16 +153,6 @@ if not value? '>default-extension [
 		]			
 		return lines
 	][
-
-		if edit [
-			lines: split the-tree> newline ; fix bug 0.0.0.2.10 bad variable name in 0.0.0.2.11
-			remove lines ; remove first line
-			view [
-				text-list 300x700 data lines
-				area 800x700
-			]
-		]		
-
 		either not silent [
 			print the-tree>
 		][
