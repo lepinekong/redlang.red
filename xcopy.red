@@ -44,9 +44,13 @@ unless value? '.redlang [
             param>target-folder: %./
         ]
         word! string! file! url! path! [
-            param>source-folder: to-local-file form param>source-folder
+            param>source-folder: to-red-file form param>source-folder
+            param>target-folder: to-red-file form param>target-folder
 
-            cmd: rejoin [{XCOPY "} param>source-folder {*.*} {" "} to-local-file param>target-folder {" /H /R /S /E /Y /C}] 
+            cmd: rejoin [{XCOPY "} 
+                (to-local-file param>source-folder) {*.*} {" "} 
+                (to-local-file param>target-folder) {" /H /R /S /E /Y /C}
+            ] 
             print cmd
             out: copy ""
             call/wait/output cmd out
