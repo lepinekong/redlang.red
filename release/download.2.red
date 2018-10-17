@@ -1,9 +1,9 @@
 Red [
     Title: ""
-    Builds: [
-        0.0.0.1.01.7 {
-            - config
-        }
+    Notes: [
+        {Fixed bug with:
+[string]::IsNullOrEmpty($FileName)
+}
     ]
 ]
 
@@ -53,48 +53,5 @@ if not value? '.redlang [
 
 ]
 
-download: function [
-    'param>url [word! string! file! url!] 
-    'param>download-folder [word! string! file! url! unset!] 
-    /_build {Build number for developer}
-    /silent {don't print message on console}   
-    /_debug {debug mode} 
-][
-
-    >builds: 0.0.0.0.1.1
-
-    if _build [
-        unless silent [
-            print >builds
-        ]
-        return >builds
-    ]
-
-    switch/default type?/word get/any 'param>download-folder [
-        unset! [
-            param>config-file: %download.config.red
-            param>log-filename: %download.log 
-            either exists? param>config-file [
-                object>config: load param>config-file
-            ][
-                param>download-folder: request-dir/dir (what-dir)
-                if none? param>download-folder [
-                    print "abort download."
-                    return false
-                ]
-                object>config/download-folder: param>download-folder
-                save (param>config-file) object>config
-            ]
-        ]
-        word! string! file! url! block! [
-            param>download-folder: to-red-file form param>download-folder
-            .download (param>url) (param>download-folder) 
-        ]
-    ] [
-        throw error 'script 'expect-arg param>url
-    ]
-]
-
-
-
+alias .download [download]
 
