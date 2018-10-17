@@ -204,6 +204,12 @@ unless value? '.do [
 
                     command: copy []
                     main-command: copy rejoin [".do/" .refinement]
+
+                    ;0.0.0.5.03.8
+                    if load-only [
+                        main-command: rejoin [main-command "/load-only"]
+                    ]
+                    
                     if expand [
                         main-command: rejoin [main-command "/expand"]
                     ]
@@ -426,6 +432,11 @@ unless value? '.quickinstall [
                 exit
             ]
         ] 
+
+        ; 0.0.0.5.03.8
+        if _debug [
+            do https://redlang.red/do-trace
+        ]        
 
         ; !!! 0.0.0.5.03.1 BUGGED: _debug and load-only have been inverted
         ;.do/quickinstall (arg)
