@@ -1,4 +1,3 @@
-
 Red [
 	Authors: [
 		"Toomas Vooglaid" {original code: https://gist.github.com/toomasv/ed9e15d0173f9f80b8bc50c734727b11}
@@ -14,18 +13,11 @@ Red [
 	Purpose: "Print a directory tree or current directory with filter"
 	File: "%treeview.red"
 ]
+
 if not value? '>default-extension [
 	>default-extension: %.txt
 ]
-;lib: https://redlang.red/toomasv/dir-tree5.red ; in 0.0.0.2.8
-lib: https://redlang.red/toomasv/dir-tree6.red ; in 0.0.0.2.13
-do lib
 
-unless value? '.redlang [
-	do https://redlang.red
-]
-.redlang [do-events alias]
-.treeview: function 
 [
 	{Examples:
 		.treeview
@@ -48,16 +40,28 @@ unless value? '.redlang [
 	/_debug {show debug messages for developer}
 	]
 [
-	>build: [0.0.0.2.13 {
-		- Requirement aliases /ext /out-block
-		- By default exclude empty directories unless /empty-dir
+	if not value? 'tempSysRead [
+		;tempSysRead: :Read
+		tempSysRead: get in system/words 'read ; 0.0.0.3.4
+
+		system/words/read: function [
+			"Reads from a file, URL, or other port" 
+			source [file! url!] 
+		][
+			block: reverse (tempSysRead source)
+		] 	
+		
+	]    
+	>builds: [
+		0.0.0.3.4 {
+		- Override read for sortinv
 		}]
 
 	if _build [
 		unless silent [
-			print >build
+			?? >builds
 		]
-		return >build
+		return >builds
 	]
 
 	if help [
@@ -142,7 +146,6 @@ unless value? '.redlang [
 	the-tree>: do command
 
 	either return-block [
-		;lines: split the-tree newline ; bug 0.0.0.2.10 bad variable name
 		lines: split the-tree> newline ; fix bug 0.0.0.2.10 bad variable name in 0.0.0.2.11
 		remove lines ; remove first line	
 		unless silent [
@@ -157,5 +160,11 @@ unless value? '.redlang [
 		]
 	]
     
+
+	system/words/read: :tempSysRead
 ]
+
+.treeview: function <%parts%>
+
 .alias .treeview [treeview tree .tree tree-view .tree-view .dir-tree]
+
