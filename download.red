@@ -35,6 +35,7 @@ if not value? '.redlang [
     /subfolder '>subfolder
     /no-explorer ; doesn't not open explorer
     /_build
+    /_debug
     /silent
 ][
 
