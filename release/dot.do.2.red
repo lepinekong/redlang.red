@@ -48,10 +48,6 @@ unless value? '.do [
 
         silent: true
 
-        if _debug [
-            do https://redlang.red/do-trace ; 0.0.0.5.03.1
-        ]        
-
         value: :value
 
         if redlang [
@@ -241,24 +237,14 @@ unless value? '.do [
                 url-string: form value
 
                 if not find url-string .refinement [
-
-                    ; !!! 0.0.0.5.03.1
-                    value: copy []      
-
                     either find url-string "https" [
                         parse url-string [
                             thru "https://" start: (insert start rejoin [.domain "/"])
                         ]
-                        ; !!! 0.0.0.5.03.1
-                        ;value: to-url url-string
-                        append value to-url url-string
+                        value: to-url url-string
                     ][
-                        ; !!! 0.0.0.5.03.1
-                        ;value: to-url rejoin ["https://" .domain "/" url-string]
-                        append value to-url rejoin ["https://" .domain "/" url-string]
+                        value: to-url rejoin ["https://" .domain "/" url-string]
                     ]
-                    ; !!! 0.0.0.5.03.1
-                    append value to-word rejoin [".install-" url-string]
                 ]
             ]
 
@@ -397,7 +383,6 @@ unless value? '.quickrun [
 unless value? '.quickinstall [
     .quickinstall: function [
         'arg [any-type! unset!] 
-        /_debug ; !!! 0.0.0.5.03.1
     ][
 
         switch type?/word get/any 'arg [
@@ -407,13 +392,7 @@ unless value? '.quickinstall [
             ]
         ] 
 
-        ; !!! 0.0.0.5.03.1
-        ;.do/quickinstall (arg)
-        either _debug [
-            .do/quickinstall/_debug (arg)
-        ][
-            .do/quickinstall (arg)
-        ]        
+        .do/quickinstall (arg)
     ]
     quickinstall: :.quickinstall
     print [{type "help quickinstall"}]
