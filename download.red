@@ -70,7 +70,7 @@ download: function [
         return >builds
     ]
 
-    switch/default type?/word get/any 'param>download-folder [
+    switch type?/word get/any 'param>download-folder [
         unset! [
             param>config-file: %download.config.red
             param>log-filename: %download.log 
@@ -87,15 +87,15 @@ download: function [
                 append external>config reduce [(to-set-word 'download-folder) (param>download-folder)]
                 ;object>config: context config
                 save (param>config-file) external>config
+
             ]
         ]
         word! string! file! url! block! [
             param>download-folder: to-red-file form param>download-folder
-            .download (param>url) (param>download-folder) 
+            ;.download (param>url) (param>download-folder) 
         ]
-    ] [
-        throw error 'script 'expect-arg param>url
     ]
+    .download (param>url) (param>download-folder) 
 ]
 
 
