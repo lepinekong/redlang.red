@@ -34,14 +34,7 @@ if not value? '.redlang [
 
     .file-path: to-red-file form .file-path
     
-
-    ;folder>: pick split-path .file-path 1 ; 0.0.0.1.18 fix bug redlang.red\build\debug\download.red\0.0.0.1\02\cache\get-folder.1.red
-    either dir? .file-path [
-        folder>: .file-path
-    ][
-        folder>: pick split-path .file-path 1
-    ]
-
+    folder>: pick split-path .file-path 1
     return folder>
 ]
 
