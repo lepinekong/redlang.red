@@ -9,6 +9,9 @@ Red [
             - config buggy to fix
         }
     ]
+    TODO: [
+        1 {select file in download folder}
+    ]
 ]
 
 if not value? '.redlang [
