@@ -1,6 +1,7 @@
 Red [
     Title: "TODO: fix explorer bug"
     Builds: [
+        0.0.0.1.01.25 {minor refactoring for _debug}
         0.0.0.1.01.24 {fixed opens download folder if still bug due to explorer.red}
         0.0.0.1.01.17 {fix opens download folder if still bug due to explorer.red}
         0.0.0.1.01.16 {opens download folder} 
@@ -79,7 +80,12 @@ if not value? '.redlang [
     .call-powershell/out oneline-powershell
     unless no-explorer [
         local>download-folder: rejoin [>folder "\" >subfolder]
-        .explorer/_debug (local>download-folder)
+        either _debug [
+            .explorer/_debug (local>download-folder)
+        ][
+            .explorer (local>download-folder)
+        ]
+        
     ]
 ]
 
@@ -133,7 +139,12 @@ download: function [
 
     param>download-folder: to-local-file to-red-file form param>download-folder
 
-    .download (param>url) (param>download-folder) 
+    either _debug [
+        .download/_debug (param>url) (param>download-folder)
+    ][
+        .download (param>url) (param>download-folder)
+    ]
+     
 ]
 
 
