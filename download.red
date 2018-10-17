@@ -1,8 +1,8 @@
 Red [
     Title: ""
     Builds: [
-        0.0.0.1.01.7 {
-            - config
+        0.0.0.1.01.8 {
+            - config buggy to fix
         }
     ]
 ]
@@ -75,15 +75,18 @@ download: function [
             param>config-file: %download.config.red
             param>log-filename: %download.log 
             either exists? param>config-file [
-                object>config: load param>config-file
+                external>config: load param>config-file
             ][
                 param>download-folder: request-dir/dir (what-dir)
                 if none? param>download-folder [
                     print "abort download."
                     return false
                 ]
-                object>config/download-folder: param>download-folder
-                save (param>config-file) object>config
+                external>config: copy []
+                ;append config reduce [download-folder: (param>download-folder)] ; BUG
+                append external>config reduce [(to-set-word 'download-folder) (param>download-folder)]
+                ;object>config: context config
+                save (param>config-file) external>config
             ]
         ]
         word! string! file! url! block! [
