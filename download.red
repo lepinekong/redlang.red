@@ -1,6 +1,7 @@
 Red [
     Title: ""
     Builds: [
+        0.0.0.1.01.17 {fix opens download folder if still bug due to explorer.red}
         0.0.0.1.01.16 {opens download folder} 
         0.0.0.1.01.15 {
             - config bug fixed
@@ -62,7 +63,8 @@ if not value? '.redlang [
     ; TODO: alternative use curl if it doesn't work or on linux
     .call-powershell/out oneline-powershell
     unless no-explorer [
-        .explorer rejoin [>folder "\" >subfolder]
+        local>download-folder: rejoin [>folder "\" >subfolder]
+        .explorer (local>download-folder)
     ]
 ]
 
