@@ -2,6 +2,7 @@ Red [
     Title: "do.red"
     SemVer: [1.0.0 {Alpha version}]
     Builds: [
+        0.0.0.5.3.1 {autoexec quickinstall except load-only}
         0.0.0.5.02.5 {alias .install/install for quickinstall}
         0.0.0.5.2.2 {performance optimization}
         0.0.0.5.2 {/codeops}
@@ -15,6 +16,7 @@ unless value? '.do [
 
         {.do/redlang allows you to load multiples redlang libraries with a shortcut syntax.} 
         'value [any-type! unset!] 
+        /load-only "only load quickinstall component, do not auto-execute it for example vscode"
         /expand "Expand directives before evaluation" 
         /args {If value is a script, this will set its system/script/args} 
         arg "Args passed to a script (normally a string)" 
@@ -34,6 +36,7 @@ unless value? '.do [
 
     ][
         >builds: [
+            0.0.0.5.3.1 {autoexec quickinstall except load-only}
             0.0.0.5.2.2 {performance optimization}
             0.0.0.4.3 {
             - /silent deprecated
@@ -46,11 +49,11 @@ unless value? '.do [
             exit
         ]
 
-        if _debug [
-            do https://redlang.red/do-trace ; 0.0.0.5.02.6
-        ]
-
         silent: true
+
+        if _debug [
+            do https://redlang.red/do-trace ; 0.0.0.5.03.1
+        ]        
 
         value: :value
 
@@ -232,13 +235,6 @@ unless value? '.do [
                         msg-debug: {.do 02.main/01.redlang.red line 42: }
                         print rejoin [msg-debug command]
                     ]
-
-                    if _debug [
-                        do-trace 237 [
-                            ?? command
-                        ] %dot.do.6.red
-                        
-                    ]
                     do command
                 ]
                 exit ; if missing => bug
@@ -247,55 +243,39 @@ unless value? '.do [
 [
                 url-string: form value
 
-                ; 0.0.0.5.02.6
-                if _debug [
-                    do-trace 253 [
-                        ?? .refinement
-                        ?? url-string
-                    ] %dot.do.6.red
-                    
-                ]
-
                 if not find url-string .refinement [
-                    ; !!! 0.0.0.5.02.6
-                    value: copy []
+
+                    ; !!! 0.0.0.5.03.1
+                    value: copy []      
 
                     either find url-string "https" [
                         parse url-string [
                             thru "https://" start: (insert start rejoin [.domain "/"])
                         ]
-                        ; !!! 0.0.0.5.02.6
+                        ; !!! 0.0.0.5.03.1
+                        ;value: to-url url-string
                         append value to-url url-string
                     ][
-                        ; !!! 0.0.0.5.02.6
+                        ; !!! 0.0.0.5.03.1
+                        ;value: to-url rejoin ["https://" .domain "/" url-string]
                         append value to-url rejoin ["https://" .domain "/" url-string]
                     ]
+                    ; !!! 0.0.0.5.03.1
+                    ;append value compose/deep [unless load-only [(to-word rejoin [".install-" url-string])] ] 
 
-                    do-trace 274 [
-                        ?? url-string
-                    ] %dot.do.7.red
-                    
-                    ; !!! 0.0.0.5.02.6
-                    ;append value to-word rejoin [".install-" url-string]
+                    ; !!! 0.0.0.5.03.2
+                    unless load-only [
+                        ; !!! 0.0.0.5.03.3
+                        either find url-string "/" [
+                            keyword: last split url-string "/"
 
-                    ; !!! 0.0.0.5.03.3
-                    either find url-string "/" [
-                        keyword: last split url-string "/"
-
-                        do-trace 285 [
-                            ?? keyword
-                        ] %dot.do.7.red
-                        replace keyword "install-" ""
-                        append value to-word rejoin [".install-" keyword]
-                    ][
-                        append value to-word rejoin [".install-" url-string]
-                    ]                    
-
-                    ; 0.0.0.5.02.6
-                    if _debug [
-                        do-trace 272 [
-                            ?? value
-                        ] %dot.do.6.red
+                            ; !!! 0.0.0.5.03.4
+                            replace keyword "install-" ""
+                            
+                            append value to-word rejoin [".install-" keyword]
+                        ][
+                            append value to-word rejoin [".install-" url-string]
+                        ]
                         
                     ]
                 ]
@@ -389,15 +369,6 @@ unless value? '.do [
 
         append command compose [(value)]
 
-        if _debug [
-            ; 0.0.0.5.02.6
-            do-trace 368 [
-                ?? value
-                ?? command
-            ] %dot.do.6.red
-            
-        ]
-
         if args [
             append command to-word 'arg
         ]
@@ -407,16 +378,10 @@ unless value? '.do [
 
         unless silent [
             msg-debug: ""
-            if _debug [msg-debug: {.do line 348: }]
+            if _debug [msg-debug: {.do line 112: }]
             print rejoin [msg-debug command]
         ]
 
-        ;; 0.0.0.5.02.6
-        if _debug [
-            do-trace 372 [
-                ?? command 
-            ] %dot.do.6.red
-        ]
         do command   
 
     
@@ -451,7 +416,8 @@ unless value? '.quickrun [
 unless value? '.quickinstall [
     .quickinstall: function [
         'arg [any-type! unset!] 
-        /_debug ; 0.0.0.5.02.6
+        /load-only "only load quickinstall component, do not auto-execute it for example vscode"
+        /_debug ; !!! 0.0.0.5.03.1
     ][
 
         switch type?/word get/any 'arg [
@@ -461,13 +427,39 @@ unless value? '.quickinstall [
             ]
         ] 
 
-        ; 0.0.0.5.02.6
-        either _debug [
-            .do/quickinstall/_debug (arg)
+        ; !!! 0.0.0.5.03.1 BUGGED: _debug and load-only have been inverted
+        ;.do/quickinstall (arg)
+        ; either _debug [
+        ;     ; !!! 0.0.0.5.03.2
+        ;     either load-only [
+        ;         .do/quickinstall/load-only/_debug (arg)
+        ;     ][
+        ;         .do/quickinstall/_debug (arg)
+        ;     ]
+        ; ][
+        ;     ; !!! 0.0.0.5.03.2
+        ;     either load-only [
+        ;         .do/quickinstall/load-only (arg)
+        ;     ][
+        ;         .do/quickinstall (arg)
+        ;     ]
+            
+        ; ]
+
+        ; !!! 0.0.0.5.03.6
+        either load-only [
+            either _debug [
+                .do/quickinstall/load-only/_debug (arg)
+            ][
+                .do/quickinstall/load-only (arg)
+            ]
         ][
-            .do/quickinstall (arg)
-        ]
-        
+            either _debug [
+                .do/quickinstall/_debug (arg)
+            ][
+                .do/quickinstall (arg)
+            ]
+        ]                 
     ]
     quickinstall: :.quickinstall
     print [{type "help quickinstall"}]
