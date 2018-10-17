@@ -17,7 +17,8 @@ Red [
 if not value? '.redlang [
     do https://redlang.red
 ]
-.redlang [call-powershell expand-string make-dir explorer alias]
+.redlang [call-powershell expand-string make-dir alias]
+.quickrun [explorer]
 
 .download: function [
     {
