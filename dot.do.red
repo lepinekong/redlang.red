@@ -15,6 +15,7 @@ unless value? '.do [
 
         {.do/redlang allows you to load multiples redlang libraries with a shortcut syntax.} 
         'value [any-type! unset!] 
+        /load-only "only load quickinstall component, do not auto-execute it for example vscode"
         /expand "Expand directives before evaluation" 
         /args {If value is a script, this will set its system/script/args} 
         arg "Args passed to a script (normally a string)" 
@@ -258,7 +259,12 @@ unless value? '.do [
                         append value to-url rejoin ["https://" .domain "/" url-string]
                     ]
                     ; !!! 0.0.0.5.03.1
-                    append value to-word rejoin [".install-" url-string]
+                    ;append value compose/deep [unless load-only [(to-word rejoin [".install-" url-string])] ] 
+
+                    ; !!! 0.0.0.5.03.2
+                    unless load-only [
+                        append value to-word rejoin [".install-" url-string]
+                    ]
                 ]
             ]
 
@@ -397,6 +403,7 @@ unless value? '.quickrun [
 unless value? '.quickinstall [
     .quickinstall: function [
         'arg [any-type! unset!] 
+        /load-only "only load quickinstall component, do not auto-execute it for example vscode"
         /_debug ; !!! 0.0.0.5.03.1
     ][
 
@@ -410,9 +417,20 @@ unless value? '.quickinstall [
         ; !!! 0.0.0.5.03.1
         ;.do/quickinstall (arg)
         either _debug [
-            .do/quickinstall/_debug (arg)
+            ; !!! 0.0.0.5.03.2
+            either load-only [
+                .do/quickinstall/load-only/_debug (arg)
+            ][
+                .do/quickinstall/_debug (arg)
+            ]
         ][
-            .do/quickinstall (arg)
+            ; !!! 0.0.0.5.03.2
+            either load-only [
+                .do/quickinstall/load-only (arg)
+            ][
+                .do/quickinstall (arg)
+            ]
+            
         ]        
     ]
     quickinstall: :.quickinstall
