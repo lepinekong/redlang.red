@@ -36,6 +36,8 @@ if not value? '.redlang [
         print [{creating folder} (local>download-path)]
     ]
         
+    >folder: to-local-file >folder ; added in download.13
+    >subfolder: to-local-file >subfolder ; added in download.13
 
     oneline-powershell: {Function Get-RedirectedUrl {Param ([Parameter(Mandatory=$true)][String]$url);$request = [System.Net.WebRequest]::Create($url);$request.AllowAutoRedirect=$false;$response=$request.GetResponse();If ($response.StatusCode -eq "Found"){$response.GetResponseHeader("Location")}};function downloadFile {param ([string]$url,[string]$folder,[string]$subFolder);[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12;$webRequest = [net.WebRequest]::Create($url);$uri = $webrequest.GetResponse().ResponseUri.Segments;[string]$fileName=$uri[3];if ([string]::IsNullOrEmpty($FileName)) {$FileName = [System.IO.Path]::GetFileName((Get-RedirectedUrl "$url"))};$target_folder="$folder\$subFolder";[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12;$Webcli=New-Object System.Net.WebClient;if (!(Test-Path `"$target_folder\$fileName`")) {$Webcli.DownloadFile("$url","$target_folder\$fileName")}}}
     oneline-powershell: rejoin [
@@ -76,6 +78,8 @@ download: function [
             param>log-filename: %download.log 
             either exists? param>config-file [
                 external>config: load param>config-file
+                ; FORGOT to set param>download-folder in download.11.red !!!
+                param>download-folder: external>config/download-folder
             ][
                 param>download-folder: request-dir/dir (what-dir)
                 if none? param>download-folder [
@@ -91,10 +95,13 @@ download: function [
             ]
         ]
         word! string! file! url! block! [
-            param>download-folder: to-red-file form param>download-folder
+            ;param>download-folder: to-red-file form param>download-folder
             ;.download (param>url) (param>download-folder) 
         ]
     ]
+
+    param>download-folder: to-red-file form param>download-folder
+
     .download (param>url) (param>download-folder) 
 ]
 
