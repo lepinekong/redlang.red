@@ -1,7 +1,6 @@
 Red [
     Title: ""
     Builds: [
-        0.0.0.1.01.16 {opens download folder} 
         0.0.0.1.01.15 {
             - config bug fixed
         }        
@@ -14,7 +13,7 @@ Red [
 if not value? '.redlang [
     do https://redlang.red
 ]
-.redlang [call-powershell expand-string make-dir explorer alias]
+.redlang [call-powershell expand-string make-dir alias]
 
 .download: function [
     {
@@ -25,7 +24,6 @@ if not value? '.redlang [
     >url
     >folder
     /subfolder '>subfolder
-    /no-explorer ; doesn't not open explorer
 ][
 
     >folder: form >folder
@@ -57,15 +55,12 @@ if not value? '.redlang [
 
     ; TODO: alternative use curl if it doesn't work or on linux
     .call-powershell/out oneline-powershell
-    unless no-explorer [
-        .explorer rejoin [>folder "\" >subfolder]
-    ]
+
 ]
 
 download: function [
     'param>url [word! string! file! url!] 
     'param>download-folder [word! string! file! url! unset!] 
-    /no-explorer ; doesn't not open explorer
     /_build {Build number for developer}
     /silent {don't print message on console}   
     /_debug {debug mode} 
