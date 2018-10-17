@@ -1,7 +1,7 @@
 Red [
     Title: "TODO: fix explorer bug"
     Builds: [
-
+        0.0.0.1.01.24 {fixed opens download folder if still bug due to explorer.red}
         0.0.0.1.01.17 {fix opens download folder if still bug due to explorer.red}
         0.0.0.1.01.16 {opens download folder} 
         0.0.0.1.01.15 {
@@ -33,7 +33,20 @@ if not value? '.redlang [
     >folder
     /subfolder '>subfolder
     /no-explorer ; doesn't not open explorer
+    /_build
+    /silent
 ][
+
+    >builds: [
+        0.0.0.1.01.24 {fixed opens download folder if still bug due to explorer.red}        
+    ]
+
+    if _build [
+        unless silent [
+            print >builds
+        ]
+        return >builds
+    ]    
 
     >folder: form >folder
 
@@ -79,7 +92,9 @@ download: function [
     /_debug {debug mode} 
 ][
 
-    >builds: 0.0.0.0.1.1
+    >builds: [
+        0.0.0.1.01.24 {fixed opens download folder if still bug due to explorer.red}        
+    ]
 
     if _build [
         unless silent [
