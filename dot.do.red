@@ -426,36 +426,18 @@ unless value? '.quickinstall [
         /_debug ; !!! 0.0.0.5.03.1
     ][
 
-        switch type?/word get/any 'arg [
-            unset! [
-                do https://quickinstall.red
-                exit
-            ]
-        ] 
+        ;!!!!! 0.0.0.5.03.9
+        ; switch type?/word get/any 'arg [
+        ;     unset! [
+        ;         do https://quickinstall.red
+        ;         exit
+        ;     ]
+        ; ] 
 
         ; 0.0.0.5.03.8
         if _debug [
             do https://redlang.red/do-trace
-        ]        
-
-        ; !!! 0.0.0.5.03.1 BUGGED: _debug and load-only have been inverted
-        ;.do/quickinstall (arg)
-        ; either _debug [
-        ;     ; !!! 0.0.0.5.03.2
-        ;     either load-only [
-        ;         .do/quickinstall/load-only/_debug (arg)
-        ;     ][
-        ;         .do/quickinstall/_debug (arg)
-        ;     ]
-        ; ][
-        ;     ; !!! 0.0.0.5.03.2
-        ;     either load-only [
-        ;         .do/quickinstall/load-only (arg)
-        ;     ][
-        ;         .do/quickinstall (arg)
-        ;     ]
-            
-        ; ]
+        ] 
 
         ; !!! 0.0.0.5.03.6
         either load-only [
@@ -477,12 +459,17 @@ unless value? '.quickinstall [
 ]
 
 ; dot.do.5.red
-unless value? '.install [
-    .install: :.quickinstall
-]
+; unless value? '.install [
+;     .install: :.quickinstall
+; ]
 
-unless value? 'install [
-    install: :.quickinstall
+; unless value? 'install [
+;     install: :.quickinstall
+; ]
+
+;!!!!! 0.0.0.5.03.9
+unless value? '.install [
+    do https://quickinstall.red
 ]
 
 
