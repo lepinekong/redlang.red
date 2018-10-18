@@ -16,6 +16,7 @@ Red [
 .call-powershell: function[
     .powershell-command 
         /out /silent
+        /_build
         /_debug
     ][
 
@@ -31,6 +32,12 @@ Red [
             ]
 
         ]
+    ]
+
+    if _build [
+        Builds: [
+            0.0.0.1.5 {Debug message}
+        ]  
     ]
 
     if _debug [
