@@ -42,6 +42,7 @@ if not value? '.redlang [
 ][
 
     >builds: [
+        0.0.0.1.02.15 {debug message}
         0.0.0.1.01.24 {fixed opens download folder if still bug due to explorer.red}        
     ]
 
@@ -51,6 +52,10 @@ if not value? '.redlang [
         ]
         return >builds
     ]     
+
+    if _debug [
+        do https://redlang.red/do-trace
+    ]
 
     const>config-file: %download.config.red
     const>log-filename: %download.log 
@@ -104,7 +109,19 @@ if not value? '.redlang [
         ]
     ] 
 
-    file-path>out: .call-powershell/out/silent oneline-powershell
+    either _debug [
+        file-path>out: .call-powershell/out/silent/_debug oneline-powershell
+    ][
+        file-path>out: .call-powershell/out/silent oneline-powershell
+    ]
+    
+
+    if _debug [
+        do-trace 120 [
+            ?? file-path>out
+        ] %download.15.red
+    ]
+
     while [find file-path>out "\\"][
         replace/all file-path>out "\\" "\"
     ] 
@@ -122,6 +139,13 @@ if not value? '.redlang [
         
     ]
 
+    if _debug [
+        ;do http://redlang.red/do-trace
+        do-trace 130 [
+            ?? file-path>out
+        ] %download.15.red
+        
+    ]
     return file-path>out
 ]
 

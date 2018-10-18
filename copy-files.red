@@ -89,21 +89,30 @@ unless value? 'list-files [
         either exists? >target [
 
             print [>target "already exists."]
+            short-filename-wo-extension: get-short-filename-without-extension >target
+            short-filename: .get-short-filename >target
+            extension: .get-file-extension >target
+            target-folder: pick (split-path >target) 1
 
-            get-next-file: function [/local counter][
+            get-next-file: function [
+                /_debug
+                /local counter
+            ][
                 counter: []
                 if empty? counter [
                     append counter 0
                 ]
                 counter/1: counter/1 + 1
                 i: counter/1
+
+                if _debug [
+                    do-trace 105 [
+                        ?? short-filename-wo-extension
+                    ] %copy-files.20.red
+                    
+                ]
                 next-file: rejoin [short-filename-wo-extension "."  i  extension]                
             ]
-            
-            short-filename: .get-short-filename >target
-            short-filename-wo-extension: get-short-filename-without-extension >target
-            extension: .get-file-extension >target
-            target-folder: pick (split-path >target) 1
 
             next-file: >target
             while [exists? next-file][
