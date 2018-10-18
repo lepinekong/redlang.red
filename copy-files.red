@@ -43,7 +43,7 @@ compare-checksum: function [>file1 >file2][
 ]
 
 
-unless value? '.get-short-filename [
+unless value? 'get-short-filename-without-extension [ ; fixed bug
     do https://redlang.red/file-path
 ]
 
