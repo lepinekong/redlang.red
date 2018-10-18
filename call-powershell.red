@@ -13,7 +13,11 @@ Red [
     ]
 ]
 
-.call-powershell: function[.powershell-command /out /silent][
+.call-powershell: function[
+    .powershell-command 
+        /out /silent
+        /_debug
+    ][
 
     unless value? '.to-powershell [
         if error? try [
@@ -29,8 +33,25 @@ Red [
         ]
     ]
 
+    if _debug [
+        do https://redlang.red/do-trace
+    ]
+
+    if _debug [
+        do-trace 41 [
+            ?? .powershell-command 
+        ] %call-powershell.5.red
+    ]
+
     powershell-command: .to-powershell .powershell-command 
-    print powershell-command
+    ;print powershell-command
+
+    if _debug [
+        do-trace 43 [
+            ?? powershell-command
+        ] %call-powershell.5.red
+        
+    ]    
 
     either not out [
         call powershell-command 
@@ -40,12 +61,6 @@ Red [
         unless value? '.do-events [
             do https://redlang.red/do-events.red
         ]
-
-        .do-events/no-wait
-
-        ; unless silent [
-        ;     print powershell-command
-        ; ]
         
         .do-events/no-wait
         call/output powershell-command output
