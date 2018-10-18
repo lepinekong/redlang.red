@@ -5,7 +5,7 @@ Red [
 unless value? '.redlang [
     do https://redlang.red
 ]
-.redlang [to-file]
+.redlang [alias to-file]
 
 .compare-checksum: function [
     >file1 
@@ -20,4 +20,5 @@ unless value? '.redlang [
     return (checksum-file1 = checksum-file2)  
 ]
 
-compare-checksum: :.compare-checksum
+.alias .compare-checksum [compare-files .compare-files compare-checksum]
+
