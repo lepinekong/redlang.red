@@ -2,7 +2,17 @@ Red [
     Title: "compare-files.red"
 ]
 
-.compare-checksum: function [>file1 >file2][
+unless value? '.redlang [
+    do https://redlang.red
+]
+.redlang [to-file]
+
+.compare-checksum: function [
+    >file1 
+    >file2
+][
+    >file1: .to-file >file1
+    >file2: .to-file >file2
     file1-content: read >file1
     checksum-file1: checksum file1-content 'SHA256
     file2-content: read >file2
