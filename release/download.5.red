@@ -16,14 +16,13 @@ Red [
     TODO: [
         1 {select file in download folder}
         2 {CD/Bookmark}
-        3 {alternative use curl if it doesn't work or on Linux}
     ]
 ]
 
 if not value? '.redlang [
     do https://redlang.red
 ]
-.redlang [call-powershell expand-string make-dir alias log join]
+.redlang [call-powershell expand-string make-dir alias]
 .quickrun [explorer]
 
 .download: function [
@@ -33,7 +32,7 @@ if not value? '.redlang [
         - .download/subfolder https://aka.ms/win32-x64-user-stable D:\Download test
     }
     >url
-    /folder >folder
+    >folder
     /subfolder '>subfolder
     /no-explorer ; doesn't not open explorer
     /_build
@@ -50,33 +49,8 @@ if not value? '.redlang [
             print >builds
         ]
         return >builds
-    ]     
+    ]    
 
-    const>config-file: %download.config.red
-    const>log-filename: %download.log 
-    either exists? const>config-file [
-        external>config: load const>config-file
-        param>download-folder: external>config/download-folder
-    ][
-        param>download-folder: request-dir/dir (what-dir)
-        if none? param>download-folder [
-            print "abort download."
-            return false
-        ]
-        external>config: copy []
-        
-        append external>config reduce [
-            (to-set-word 'download-folder) 
-            (to-local-file param>download-folder)
-        ]
-        ;object>config: context config
-        save (const>config-file) external>config
-
-    ]
-
-    unless folder [
-        >folder: to-local-file to-red-file form param>download-folder
-    ]
     >folder: form >folder
 
     unless subfolder [
@@ -104,13 +78,8 @@ if not value? '.redlang [
         ]
     ] 
 
+    ; TODO: alternative use curl if it doesn't work or on linux
     file-path>out: .call-powershell/out/silent oneline-powershell
-    while [find file-path>out "\\"][
-        replace/all file-path>out "\\" "\"
-    ] 
-    replace/all file-path>out "^/" ""    
-
-    .log (const>log-filename) (.join [>url "-" file-path>out])
 
     unless no-explorer [
         local>download-folder: rejoin [>folder "\" >subfolder]
@@ -121,7 +90,10 @@ if not value? '.redlang [
         ]
         
     ]
-
+    while [find file-path>out "\\"][
+        replace/all file-path>out "\\" "\"
+    ] 
+    replace/all file-path>out "^/" ""
     return file-path>out
 ]
 
@@ -147,29 +119,25 @@ download: function [
 
     switch type?/word get/any 'param>download-folder [
         unset! [
-            ; const>config-file: %download.config.red
-            ; const>log-filename: %download.log 
-            ; either exists? const>config-file [
-            ;     external>config: load const>config-file
-            ;     ; FORGOT to set param>download-folder in download.11.red !!!
-            ;     param>download-folder: external>config/download-folder
-            ; ][
-            ;     param>download-folder: request-dir/dir (what-dir)
-            ;     if none? param>download-folder [
-            ;         print "abort download."
-            ;         return false
-            ;     ]
-            ;     external>config: copy []
-                
-            ;     append external>config reduce [
-            ;         (to-set-word 'download-folder) 
-            ;         (to-local-file param>download-folder)
-            ;     ]
-            ;     ;object>config: context config
-            ;     save (const>config-file) external>config
+            param>config-file: %download.config.red
+            param>log-filename: %download.log 
+            either exists? param>config-file [
+                external>config: load param>config-file
+                ; FORGOT to set param>download-folder in download.11.red !!!
+                param>download-folder: external>config/download-folder
+            ][
+                param>download-folder: request-dir/dir (what-dir)
+                if none? param>download-folder [
+                    print "abort download."
+                    return false
+                ]
+                external>config: copy []
+                ;append config reduce [download-folder: (param>download-folder)] ; BUG
+                append external>config reduce [(to-set-word 'download-folder) (param>download-folder)]
+                ;object>config: context config
+                save (param>config-file) external>config
 
-            ; ]
-            return .download-file (:param>url)
+            ]
         ]
         word! string! file! url! block! [
             ;param>download-folder: to-red-file form param>download-folder
@@ -180,12 +148,10 @@ download: function [
     param>download-folder: to-local-file to-red-file form param>download-folder
 
     either _debug [
-        downloaded-file>: .download/folder/_debug (param>url) (param>download-folder)
+        return .download/_debug (param>url) (param>download-folder)
     ][
-        downloaded-file>: .download/folder (param>url) (param>download-folder)
+        return .download (param>url) (param>download-folder)
     ]
-    ;.log %download.log (rejoin [param>url " - " downloaded-file>])
-    return downloaded-file>
      
 ]
 
