@@ -6,7 +6,7 @@ Red [
     ]
 ]
 
-.to-file: function [.file [file! string! word! path! block!]][
+.to-file: function [.file [file! string! word! url! path! block!]][
 
     either block? .file [
         return to-red-file rejoin .file
