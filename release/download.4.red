@@ -1,7 +1,6 @@
 Red [
     Title: "TODO: fix explorer bug"
     Builds: [
-        0.0.0.1.02.2 {return path of downloaded file}
         0.0.0.1.01.25 {minor refactoring for _debug}
         0.0.0.1.01.24 {fixed opens download folder if still bug due to explorer.red}
         0.0.0.1.01.17 {fix opens download folder if still bug due to explorer.red}
@@ -67,7 +66,7 @@ if not value? '.redlang [
     >folder: to-local-file >folder ; added in download.13
     >subfolder: to-local-file >subfolder ; added in download.13
 
-    oneline-powershell: {Function Get-RedirectedUrl {Param ([Parameter(Mandatory=$true)][String]$url);$request = [System.Net.WebRequest]::Create($url);$request.AllowAutoRedirect=$false;$response=$request.GetResponse();If ($response.StatusCode -eq "Found"){$response.GetResponseHeader("Location")}};function downloadFile {param ([string]$url,[string]$folder,[string]$subFolder);[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12;$webRequest = [net.WebRequest]::Create($url);$uri = $webrequest.GetResponse().ResponseUri.Segments;[string]$fileName=$uri[3];if ([string]::IsNullOrEmpty($FileName)) {$FileName = [System.IO.Path]::GetFileName((Get-RedirectedUrl "$url"))};$target_folder="$folder\$subFolder";[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12;$Webcli=New-Object System.Net.WebClient;if (!(Test-Path `"$target_folder\$fileName`")) {$Webcli.DownloadFile("$url","$target_folder\$fileName");Write-Host "$target_folder\$fileName"}}}
+    oneline-powershell: {Function Get-RedirectedUrl {Param ([Parameter(Mandatory=$true)][String]$url);$request = [System.Net.WebRequest]::Create($url);$request.AllowAutoRedirect=$false;$response=$request.GetResponse();If ($response.StatusCode -eq "Found"){$response.GetResponseHeader("Location")}};function downloadFile {param ([string]$url,[string]$folder,[string]$subFolder);[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12;$webRequest = [net.WebRequest]::Create($url);$uri = $webrequest.GetResponse().ResponseUri.Segments;[string]$fileName=$uri[3];if ([string]::IsNullOrEmpty($FileName)) {$FileName = [System.IO.Path]::GetFileName((Get-RedirectedUrl "$url"))};$target_folder="$folder\$subFolder";[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12;$Webcli=New-Object System.Net.WebClient;if (!(Test-Path `"$target_folder\$fileName`")) {$Webcli.DownloadFile("$url","$target_folder\$fileName")}}}
     oneline-powershell: rejoin [
         oneline-powershell
         ";"
@@ -79,8 +78,7 @@ if not value? '.redlang [
     ] 
 
     ; TODO: alternative use curl if it doesn't work or on linux
-    file-path>out: .call-powershell/out/silent oneline-powershell
-
+    .call-powershell/out oneline-powershell
     unless no-explorer [
         local>download-folder: rejoin [>folder "\" >subfolder]
         either _debug [
@@ -90,11 +88,6 @@ if not value? '.redlang [
         ]
         
     ]
-    while [find file-path>out "\\"][
-        replace/all file-path>out "\\" "\"
-    ] 
-    replace/all file-path>out "^/" ""
-    return file-path>out
 ]
 
 download: function [
@@ -148,9 +141,9 @@ download: function [
     param>download-folder: to-local-file to-red-file form param>download-folder
 
     either _debug [
-        return .download/_debug (param>url) (param>download-folder)
+        .download/_debug (param>url) (param>download-folder)
     ][
-        return .download (param>url) (param>download-folder)
+        .download (param>url) (param>download-folder)
     ]
      
 ]
