@@ -23,7 +23,6 @@ unless value? '.redlang [
 .redlang [alias]
 
 .console-type?: function [
-    'param>options [word! string! file! url! block! unset!] 
     /_build {Build number for developer}
     /silent {don't print message on console}   
     /_debug {debug mode} 
@@ -40,28 +39,19 @@ unless value? '.redlang [
         return >builds
     ]
 
-    switch/default type?/word get/any 'param>options [
-        unset! [
-            either (system/console = none) [ 
-                ; for compiled version (no console)
-                return 'none
-            ][ 
-                either system/console/gui? [
-                    ; for interpreted version with gui console
-                    return 'gui
-                ][
-                    ; for interpreted version with non-gui console (vscode)
-                    return 'cli
-                ]
-            ] 
+    either (system/console = none) [ 
+        ; for compiled version (no console)
+        return 'none
+    ][ 
+        either system/console/gui? [
+            ; for interpreted version with gui console
+            return 'gui
+        ][
+            ; for interpreted version with non-gui console (vscode)
+            return 'cli
         ]
-        word! string! file! url! block! [
-            param>options: form param>options
-            print {TODO:}
-        ]
-    ] [
-        throw error 'script 'expect-arg param>options
-    ]
+    ] 
+
 ]
 
 .alias .console-type? [console-type?]
