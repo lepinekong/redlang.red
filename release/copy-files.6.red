@@ -42,16 +42,13 @@ compare-checksum: function [>file1 >file2][
     return (checksum-file1 = checksum-file2)  
 ]
 
-unless value? '.redlang [
-    do https://redlang.red
-]
 
 unless value? 'get-short-filename-without-extension [ ; fixed bug
-    .redlang file-path ; 0.0.0.1.22
+    do https://redlang.red/file-path
 ]
 
 unless value? 'list-files [
-    .redlang list-files ; 0.0.0.1.22
+    do https://redlang.red/list-files
 ]
 
 .copy-file: function [
@@ -64,11 +61,6 @@ unless value? 'list-files [
 
     >source: to-red-file form >source
     >target: to-red-file form >target
-
-    if not exists? >source [ ; 0.0.0.1.01.23
-        print [{error line 69 copy-file:} >source {does not exist.}] 
-        return false
-    ]
 
     either force [
         if error? try [
@@ -90,8 +82,6 @@ unless value? 'list-files [
                 print "quit (unless /no-quit-if-error)"
                 quit
             ]
-
-            return false
             
         ]        
         
