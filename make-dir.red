@@ -1,9 +1,6 @@
 Red [
     Title: "make-dir.red"
-    Url: 
-    Builds: [
-        0.0.0.2.2 {md block}
-    ]    
+    Url:  
 ]
 
 if not value? '.redlang [
@@ -21,6 +18,7 @@ if not value? '.sysmake-dir [
     /deep {not necessary - for compatibility only}
     /no-deep {don't create subdirectories}
     /no-create /not-create {same as no-deep}
+    /cd-only {cd only don't show treeview}
     /no-cd
     /_build {Build number for developer}
     /silent {don't print message on console}   
@@ -28,6 +26,7 @@ if not value? '.sysmake-dir [
 ][
 
     >builds: [
+        0.0.0.2.2.6 {cd/only for multiple directories creation}
         0.0.0.2.2.1 {block arg support}
         0.0.0.2.1.11 {previous stable version}
     ]
@@ -61,15 +60,22 @@ Optional:
             do local>command
                  
             unless no-cd [
-                cd (local>folder)
+                either cd-only [
+                    cd/only (local>folder)
+                ][
+                    cd (local>folder)
+                ]
+                
             ]
         ]
 
         block! [
             memo-folder: what-dir
             forall param>folder [
-                make-dir (param>folder/1)
-                cd/only (memo-folder)
+                ;make-dir (param>folder/1) ; 0.0.0.2.02.6
+                make-dir/no-cd (param>folder/1)
+                ;cd/only (memo-folder) ; 0.0.0.2.02.6
+                cd (memo-folder)
             ]
         ]
 
