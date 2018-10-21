@@ -33,7 +33,6 @@ unless value? '.do [
         /silent { [DEPRECATED] Don't print command}
         /_debug {debug mode for developer only}
         /_build
-        /local static>loaded-urls
 
     ][
         >builds: [
@@ -54,16 +53,7 @@ unless value? '.do [
 
         if _debug [
             do https://redlang.red/do-trace ; 0.0.0.5.03.1
-        ] 
-
-        ; 0.0.0.6.03.2
-        static>loaded-urls: []
-        if _debug [
-            do-trace 50 [
-                ?? static>loaded-urls
-            ] %02.dot.do.function.red
-            
-        ]               
+        ]        
 
         value: :value
 
@@ -414,27 +404,16 @@ unless value? '.do [
         command: copy []
 
         main-command: copy "do"
-
-        const>refinements: [ ; 0.0.0.6.03.1
-            expand args next
-        ]                    
-        forall const>refinements [
-            word>refinement: const>refinements/1
-            val>refinement: (get word>refinement)
-            if val>refinement [
-                main-command: rejoin [main-command "/" form word>refinement]
-            ]
-        ]        
         
-        ; if expand [
-        ;     main-command: rejoin [main-command "/expand"]
-        ; ]
-        ; if args [
-        ;     main-command: rejoin [main-command "/args"]
-        ; ]
-        ; if next[
-        ;     main-command: rejoin [main-command "/next"]
-        ; ]
+        if expand [
+            main-command: rejoin [main-command "/expand"]
+        ]
+        if args [
+            main-command: rejoin [main-command "/args"]
+        ]
+        if next[
+            main-command: rejoin [main-command "/next"]
+        ]
 
         command: to block! main-command
 
@@ -451,35 +430,16 @@ unless value? '.do [
             msg-debug: ""
             if _debug [msg-debug: {.do line 112: }]
             print rejoin [msg-debug command]
-        ] 
+        ]
 
-        ; 0.0.0.6.03.2
-        either find static>loaded-urls value [
-            if _debug [
-                do-trace 46 [
-                    print [value "already loaded"]
-                ] %06.default.case.red
-                
-            ]
-        ][
-            do command  
-            append static>loaded-urls value
-        ]        
+        do command   
 
     
     ] 
 ]  
 unless value? '.redlang [
-    .redlang: function [
-        'arg [any-type!] 
-        /_debug
-    ][
-        either _debug [
-            .do/redlang/_debug (arg)
-        ][
-            .do/redlang (arg)
-        ]
-        
+    .redlang: function ['arg [any-type!] ][
+        .do/redlang (arg)
     ]
     redlang: :.redlang
     print [{type "help redlang"}]
