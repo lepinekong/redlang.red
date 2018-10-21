@@ -148,21 +148,32 @@ unless value? '.do [
 
                     command: copy []
                     main-command: copy rejoin [".do/" .refinement]
-                    if expand [
-                        main-command: rejoin [main-command "/expand"]
+
+                    const>refinements: [ ; 0.0.0.6.03.1
+                        expand args next silent _debug
+                    ]                    
+                    forall const>refinements [
+                        word>refinement: const>refinements/1
+                        val>refinement: (get word>refinement)
+                        if val>refinement [
+                            main-command: rejoin [main-command "/" form word>refinement]
+                        ]
                     ]
-                    if args [
-                        main-command: rejoin [main-command "/args"]
-                    ]
-                    if next[
-                        main-command: rejoin [main-command "/next"]
-                    ]
-                    if silent[
-                        main-command: rejoin [main-command "/silent"]
-                    ]
-                    if _debug[
-                        main-command: rejoin [main-command "/_debug"]
-                    ] 
+                    ; if expand [
+                    ;     main-command: rejoin [main-command "/expand"]
+                    ; ]
+                    ; if args [
+                    ;     main-command: rejoin [main-command "/args"]
+                    ; ]
+                    ; if next[
+                    ;     main-command: rejoin [main-command "/next"]
+                    ; ]
+                    ; if silent[
+                    ;     main-command: rejoin [main-command "/silent"]
+                    ; ]
+                    ; if _debug[
+                    ;     main-command: rejoin [main-command "/_debug"]
+                    ; ] 
 
                     command: to block! main-command
 
@@ -216,26 +227,37 @@ unless value? '.do [
                     command: copy []
                     main-command: copy rejoin [".do/" .refinement]
 
+                    const>refinements: [ ; 0.0.0.6.03.1
+                        load-only expand args next silent _debug
+                    ]                    
+                    forall const>refinements [
+                        word>refinement: const>refinements/1
+                        val>refinement: (get word>refinement)
+                        if val>refinement [
+                            main-command: rejoin [main-command "/" form word>refinement]
+                        ]
+                    ]                    
+
                     ;0.0.0.5.03.8
-                    if load-only [
-                        main-command: rejoin [main-command "/load-only"]
-                    ]
+                    ; if load-only [
+                    ;     main-command: rejoin [main-command "/load-only"]
+                    ; ]
                     
-                    if expand [
-                        main-command: rejoin [main-command "/expand"]
-                    ]
-                    if args [
-                        main-command: rejoin [main-command "/args"]
-                    ]
-                    if next[
-                        main-command: rejoin [main-command "/next"]
-                    ]
-                    if silent[
-                        main-command: rejoin [main-command "/silent"]
-                    ]
-                    if _debug[
-                        main-command: rejoin [main-command "/_debug"]
-                    ] 
+                    ; if expand [
+                    ;     main-command: rejoin [main-command "/expand"]
+                    ; ]
+                    ; if args [
+                    ;     main-command: rejoin [main-command "/args"]
+                    ; ]
+                    ; if next[
+                    ;     main-command: rejoin [main-command "/next"]
+                    ; ]
+                    ; if silent[
+                    ;     main-command: rejoin [main-command "/silent"]
+                    ; ]
+                    ; if _debug[
+                    ;     main-command: rejoin [main-command "/_debug"]
+                    ; ] 
 
                     command: to block! main-command
 
@@ -314,21 +336,32 @@ unless value? '.do [
 
                     command: copy []
                     main-command: copy rejoin [".do/" .refinement]
-                    if expand [
-                        main-command: rejoin [main-command "/expand"]
-                    ]
-                    if args [
-                        main-command: rejoin [main-command "/args"]
-                    ]
-                    if next[
-                        main-command: rejoin [main-command "/next"]
-                    ]
-                    if silent[
-                        main-command: rejoin [main-command "/silent"]
-                    ]
-                    if _debug[
-                        main-command: rejoin [main-command "/_debug"]
-                    ] 
+
+                    const>refinements: [ ; 0.0.0.6.03.1
+                        expand args next silent _debug
+                    ]                    
+                    forall const>refinements [
+                        word>refinement: const>refinements/1
+                        val>refinement: (get word>refinement)
+                        if val>refinement [
+                            main-command: rejoin [main-command "/" form word>refinement]
+                        ]
+                    ]                     
+                    ; if expand [
+                    ;     main-command: rejoin [main-command "/expand"]
+                    ; ]
+                    ; if args [
+                    ;     main-command: rejoin [main-command "/args"]
+                    ; ]
+                    ; if next[
+                    ;     main-command: rejoin [main-command "/next"]
+                    ; ]
+                    ; if silent[
+                    ;     main-command: rejoin [main-command "/silent"]
+                    ; ]
+                    ; if _debug[
+                    ;     main-command: rejoin [main-command "/_debug"]
+                    ; ] 
 
                     command: to block! main-command
 
