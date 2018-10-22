@@ -1,6 +1,6 @@
 Red [
     Title: "do.red"
-    SemVer: [1.0.0 {Alpha version}]
+    SemVer: [1.0.1 {Alpha version}]
     Builds: [
         0.0.0.6.03.2 {optimization}
         0.0.0.5.3.1 {autoexec quickinstall except load-only}
@@ -38,7 +38,7 @@ unless value? '.do [
 
     ][
         >builds: [
-            0.0.0.6.03.2 {optimization}
+            0.0.0.6.03.2 {optimization of loading}
             0.0.0.5.3.1 {autoexec quickinstall except load-only}
             0.0.0.5.2.2 {performance optimization}
             0.0.0.4.3 {
