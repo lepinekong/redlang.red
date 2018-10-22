@@ -2,6 +2,7 @@ Red [
     Title: "do.red"
     SemVer: [1.0.0 {Alpha version}]
     Builds: [
+        0.0.0.6.03.2 {optimization}
         0.0.0.5.3.1 {autoexec quickinstall except load-only}
         0.0.0.5.02.5 {alias .install/install for quickinstall}
         0.0.0.5.2.2 {performance optimization}
@@ -555,6 +556,8 @@ unless value? '.quickinstall [
 unless value? '.install [
     do https://quickinstall.red
 ]
+
+
 
 unless value? '.codeops [
     .codeops: function [
