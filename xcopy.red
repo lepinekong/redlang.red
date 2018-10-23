@@ -12,7 +12,7 @@ Red [
         1 {logging}
     ]
     Builds:[
-        0.0.0.1.1.1 {initial build/iteration}
+        0.0.0.1.1.2 {logging}
     ]
     Status: [to-test]
 ]
