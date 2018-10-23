@@ -9,7 +9,7 @@ Red [
         https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/xcopy
     ]
     Features: [
-        
+        1 {logging}
     ]
     Builds:[
         0.0.0.1.1.1 {initial build/iteration}
@@ -20,11 +20,12 @@ Red [
 unless value? '.redlang [
     do https://redlang.red
 ]
-.redlang [alias]
+.redlang [log alias]
 
 .xcopy: function [
     'param>source-folder [word! string! file! path! url!] 
     'param>target-folder [word! string! file! path! url! unset!] 
+    /no-log
     /_build {Build number for developer}
     /silent {don't print message on console}   
     /_debug {debug mode} 
@@ -55,6 +56,9 @@ unless value? '.redlang [
             out: copy ""
             call/wait/output cmd out
             print out
+
+            ;0.0.0.1.01.2
+            .log (%xcopy.log) (out)
         ]
     ] [
         throw error 'script 'expect-arg param>source-folder
