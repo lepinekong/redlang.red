@@ -193,7 +193,7 @@ download: function [
             ;     save (const>config-file) external>config
 
             ; ]
-            return .download-file (:param>url)
+            return .download (:param>url) ; 16: fixed bug doesn't exist
         ]
         word! string! file! url! block! [
             ;param>download-folder: to-red-file form param>download-folder
