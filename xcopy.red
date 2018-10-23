@@ -31,7 +31,9 @@ unless value? '.redlang [
     /_debug {debug mode} 
 ][
 
-    >builds: 0.0.0.0.1.1
+    >builds:[
+        0.0.0.1.1.2 {logging}
+    ]
 
     if _build [
         unless silent [
