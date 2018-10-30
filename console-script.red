@@ -20,6 +20,7 @@ unless value? '.console [
             param>background-color
             /local static>counter
             /_build
+            /_debug
         ][
 
             static>counter: []
@@ -37,15 +38,19 @@ unless value? '.console [
                 124.25.13 ; https://htmlcolors.com/hex/7C190D sang
                 21.12.20 ; https://htmlcolors.com/hex/150C14 marron-noir
             ]
+            ;random/seed form now/precise ; 0.0.0.1.1.10 STILL BUG
+            random/seed now/precise ; 0.0.0.1.1.11 WORKS ***
             n: length? (palette>colors)
             ;random/seed n ; 0.0.0.1.1.7: BUG !!!
-            ;p: random/only n ; 0.0.0.1.1.7: STILL BUG !!!
-            p: random n
+            ;p: random/only n ; 0.0.0.1.1.8: STILL BUG !!!
+            p: random n ; 0.0.0.1.1.9: STILL BUG !!!
             
-            do-trace 44 [
-                ?? n
-                ?? p ; BUG ???? always 1
-            ] %console-script.9.red
+            if _debug [
+                do-trace 44 [
+                    ?? n
+                    ?? p ; BUG ???? always 1
+                ] %console-script.11.red
+            ]
             
             if param>background-color = 'random [
                 param>background-color: pick palette>colors (p)
