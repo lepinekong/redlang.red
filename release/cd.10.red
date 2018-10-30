@@ -1,10 +1,5 @@
-; / -------------------  header file  ------------------
 Red [
     Title: "cd.red"
-    TODO: [
-        1 {cd github should not open browser}
-        2 {put in config list of libraries}
-    ]
     Version: [0.0.1 {searching subfolder automatically}]
     Builds: [
         0.0.0.5.1.14 {request-dir if no arg}
@@ -17,20 +12,14 @@ Red [
         0.0.0.2.8 {searching up if not found TBC}
     ]
 ]
-; ------------------- header file ------------------ /
 
-
-; / -------------------  load libraries  ------------------
 if not value? '.redlang [
     do https://redlang.red
 ]
 .redlang [search-dir dir-tree dir block-to-string
     ;do-trace
 ]
-; ------------------- load libraries ------------------ /
 
-
-; / -------------------  cd function  ------------------
 if not value? '.syscd [
     .syscd: :cd
     .cd: func [
@@ -49,28 +38,24 @@ if not value? '.syscd [
 
         search: true
 
-; // ------------------- build number ------------------
-        if _build [
+        >builds: [
+            0.0.0.5.1.14 {request-dir if no arg}
+            0.0.0.5.1.12 {alpha release - support for partial subfolder, example cd redlang/github}
+            0.0.0.5.1.7 {support for partial subfolder, example cd redlang/github}
+            0.0.0.5.6 {fixed tree duplicates}
+            0.0.0.5.3 {revert to 1}
+            0.0.0.4.13 {refactoring and unless only [.dir/only]}
+            0.0.0.4 {/only for preventing dir list}
+            0.0.0.2.8 {searching up if not found TBC}
+        ]
 
-            >builds: [
-                0.0.0.5.2.6 {exclude function type}
-                0.0.0.5.2.3 {splitting file}
-                0.0.0.5.1.14 {request-dir if no arg}
-                0.0.0.5.1.12 {alpha release - support for partial subfolder, example cd redlang/github}
-                0.0.0.5.1.7 {support for partial subfolder, example cd redlang/github}
-                0.0.0.5.6 {fixed tree duplicates}
-                0.0.0.5.3 {revert to 1}
-                0.0.0.4.13 {refactoring and unless only [.dir/only]}
-                0.0.0.4 {/only for preventing dir list}
-                0.0.0.2.8 {searching up if not found TBC}
-            ]
+        if _build [
             unless silent [
                 ?? >builds
             ]
             return >builds
         ]
-; ------------------- build number ------------------ //
-; // ------------------- param path ------------------
+
         switch type?/word get/any 'path [
             unset! [
                 >path: request-dir/dir (what-dir)
@@ -82,20 +67,18 @@ if not value? '.syscd [
                 >path: :path
             ]
         ]      
-; ------------------- param path ------------------ //
-; // ------------------- debug counter ------------------
-        if _debug [
-            _counter: []
-            _first_path: []
-            either empty? _counter [
-                append _counter 1
-                append _first_path >path
-            ][
-                _counter/1: _counter/1 + 1
-            ]  
-        ]
-; ------------------- debug counter ------------------ // 
-; // ------------------- up refinement ------------------
+
+        ;>path: :path
+
+        _counter: []
+        _first_path: []
+        either empty? _counter [
+            append _counter 1
+            append _first_path >path
+        ][
+            _counter/1: _counter/1 + 1
+        ]        
+
         if up [
 
             thepath: form >path
@@ -114,8 +97,7 @@ if not value? '.syscd [
             ]
             exit
         ]
-; ------------------- up refinement ------------------ //
-; // ------------------- dir-not-found function ------------------
+
         dir-not-found: function [
             path searchString
             /_debug
@@ -165,8 +147,7 @@ if not value? '.syscd [
                 ]
             ]
         ]
-; ------------------- dir-not-found function ------------------ //
-; // ------------------- switch path type ------------------
+    
         if paren? get/any 'path [set/any 'path do path] 
         switch/default type?/word get/any 'path [
             unset! [
@@ -193,7 +174,7 @@ if not value? '.syscd [
                 ][
                     
                     either _debug [
-                        do-trace 180 [
+                        do-trace 135 [
                             ?? searchString
                         ] %cd.7.red
                         dir-not-found/_debug %. (searchString)
@@ -207,43 +188,20 @@ if not value? '.syscd [
             word! path! [
 
                 if error? try [
-                    ; if value? to-word >path [ 
-                    ;     the-path: (get in system/words >path)
-                    ;     if not logic? the-path [
-                    ;         if _debug [
-                    ;             do-trace 155 [
-                    ;                 ?? the-path
-                    ;             ] %cd.5.red
-                                
-                    ;         ]                            
-                    ;         .cd (the-path)
-                    ;         unless only [.dir/only] ; 0.0.0.4.01.2 
-                    ;         exit
-                    ;     ]
-                    ; ]
                     if value? to-word >path [ 
-
-                        ; start 0.0.0.5.02.4
-                        local>keyword: to-word >path
-                        local>type: type? get :local>keyword
-                        either (function! = local>type) [
-                            >path: form >path
-                            .cd (>path)
-                        ][
-                            the-path: (get in system/words >path)
-                            if not logic? the-path [
-                                if _debug [
-                                    do-trace 155 [
-                                        ?? the-path
-                                    ] %cd.5.red
-                                ]                            
-                                .cd (the-path)
-                                unless only [.dir/only] ; 0.0.0.4.01.2 
-                                exit
-                            ]
+                        the-path: (get in system/words >path)
+                        if not logic? the-path [
+                            if _debug [
+                                do-trace 155 [
+                                    ?? the-path
+                                ] %cd.5.red
+                                
+                            ]                            
+                            .cd (the-path)
+                            unless only [.dir/only] ; 0.0.0.4.01.2 
+                            exit
                         ]
-                        ; finish 0.0.0.5.02.4
-                    ]                    
+                    ]
                 ][
                     the-path: to-red-file form >path
 
@@ -297,10 +255,8 @@ if not value? '.syscd [
             throw error 'script 'expect-arg reduce ['cd 'path type? get/any 'path]
         ]
         what-dir  
-; ------------------- switch path type ------------------ //
-
     ]   
-
+    ;system/words/cd: :.cd 
     system/words/..: function [][
         .cd ".."
         return what-dir
@@ -331,11 +287,7 @@ if not value? '.syscd [
         ]           
     ] 
     if not value? 'd [d: :.d]
+
 ]
-; ------------------- cd function ------------------ /
 
-
-; / -------------------  cd alias  ------------------
 cd: :.cd
-; ------------------- cd alias ------------------ /
-

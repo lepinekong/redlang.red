@@ -1,6 +1,7 @@
+; / ------------------- file header ------------------
 Red [
     Title: "do.red"
-    SemVer: [1.0.1 {Alpha version}]
+    SemVer: [1.0.0 {Alpha version}]
     Builds: [
         0.0.0.6.03.2 {optimization}
         0.0.0.5.3.1 {autoexec quickinstall except load-only}
@@ -11,6 +12,9 @@ Red [
         0.0.0.3.3 {/quickrun}
     ]
 ]
+; ------------------- file header ------------------ /
+
+; / -------------------.do ------------------
 unless value? '.do [
 
     .do: function [
@@ -38,7 +42,7 @@ unless value? '.do [
 
     ][
         >builds: [
-            0.0.0.6.03.2 {optimization of loading}
+            0.0.0.6.03.2 {optimization}
             0.0.0.5.3.1 {autoexec quickinstall except load-only}
             0.0.0.5.2.2 {performance optimization}
             0.0.0.4.3 {
@@ -470,7 +474,9 @@ unless value? '.do [
 
     
     ] 
-]  
+]
+; -------------------.do ------------------ /
+; / ------------------- alias redlang ------------------
 unless value? '.redlang [
     .redlang: function [
         'arg [any-type!] 
@@ -486,7 +492,8 @@ unless value? '.redlang [
     redlang: :.redlang
     print [{type "help redlang"}]
 ]
-
+; ------------------- alias redlang ------------------ /
+; / ------------------- alias quickrun ------------------
 unless value? '.quickrun [
     .quickrun: function [
         'arg [any-type! unset!] 
@@ -504,7 +511,8 @@ unless value? '.quickrun [
     quickrun: :.quickrun
     print [{type "help quickrun"}]
 ]
-
+; ------------------- alias quickrun ------------------ /
+; / ------------------- alias quickinstall ------------------
 unless value? '.quickinstall [
     .quickinstall: function [
         'arg [any-type! unset!] 
@@ -557,14 +565,20 @@ unless value? '.quickinstall [
 unless value? '.install [
     do https://quickinstall.red
 ]
+; ------------------- alias quickinstall ------------------ /
 
-
-
+; / ------------------- alias codeops ------------------
 unless value? '.codeops [
     .codeops: function [
         'arg [any-type! unset!] 
+        /_build
     ][
 
+        if _build [
+            >builds: [
+                0.0.0.7.1.2 {if error? try}
+            ]
+        ]
         switch type?/word get/any 'arg [
             unset! [
                 do https://codeops.red
@@ -572,9 +586,15 @@ unless value? '.codeops [
             ]
         ] 
 
-        .do/codeops (arg)
+        if error? try [
+            .do/codeops (arg)
+        ][
+            print ["error executing: .do/codeops " arg] ; 0.0.0.7.01.2
+        ]
+        
     ]
     codeops: :.codeops
     print [{type "help codeops"}]
 ]
+; ------------------- alias codeops ------------------ /
 
