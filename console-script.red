@@ -38,9 +38,10 @@ unless value? '.console [
                 124.25.13 ; https://htmlcolors.com/hex/7C190D sang
                 21.12.20 ; https://htmlcolors.com/hex/150C14 marron-noir
             ]
+            n: length? (palette>colors)
+
             ;random/seed form now/precise ; 0.0.0.1.1.10 STILL BUG
             random/seed now/precise ; 0.0.0.1.1.11 WORKS ***
-            n: length? (palette>colors)
             ;random/seed n ; 0.0.0.1.1.7: BUG !!!
             ;p: random/only n ; 0.0.0.1.1.8: STILL BUG !!!
             p: random n ; 0.0.0.1.1.9: STILL BUG !!!
