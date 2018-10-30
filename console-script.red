@@ -38,13 +38,14 @@ unless value? '.console [
                 21.12.20 ; https://htmlcolors.com/hex/150C14 marron-noir
             ]
             n: length? (palette>colors)
-            random/seed n
+            ;random/seed n ; 0.0.0.1.1.7: BUG !!!
+            ;p: random/only n ; 0.0.0.1.1.7: STILL BUG !!!
             p: random n
             
-            do-trace 39 [
+            do-trace 44 [
                 ?? n
                 ?? p ; BUG ???? always 1
-            ] %console-script.7.red
+            ] %console-script.9.red
             
             if param>background-color = 'random [
                 param>background-color: pick palette>colors (p)
